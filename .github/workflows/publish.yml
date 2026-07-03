@@ -6,18 +6,17 @@ on:
   workflow_dispatch:
     inputs:
       version:
-        description: Optional package version (e.g. 0.1.0-preview.1)
+        description: Optional package version (e.g. 0.5.0)
         required: false
         type: string
-
-permissions:
-  contents: read
-  id-token: write
 
 jobs:
   build-test-pack-publish:
     runs-on: ubuntu-latest
     environment: release
+    permissions:
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout
@@ -36,19 +35,20 @@ jobs:
         id: version
         shell: bash
         run: |
-          if [ -n "${{ inputs.version }}" ]; then
+          if [[ "${{ github.event_name }}" == "release" ]]; then
+            VERSION="${{ github.event.release.tag_name }}"
+            VERSION="${VERSION#v}"
+          elif [[ -n "${{ inputs.version }}" ]]; then
             VERSION="${{ inputs.version }}"
           else
-            VERSION="${GITHUB_REF_NAME#v}"
-          fi
-
-          if [ -z "$VERSION" ]; then
             echo "Unable to resolve version from tag or input."
             exit 1
           fi
-
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+            echo "❌ Invalid version: '$VERSION'"; exit 1
+          fi
           echo "value=$VERSION" >> "$GITHUB_OUTPUT"
-          echo "Resolved version: $VERSION"
+          echo "📦 Publishing version: $VERSION"
 
       - name: Restore
         run: dotnet restore ElBruno.Speech.sln
@@ -75,9 +75,22 @@ jobs:
           /p:Version=${{ steps.version.outputs.value }}
           --output ./artifacts/packages
 
-      - name: Publish to NuGet.org
-        run: |
-          dotnet nuget push ./artifacts/packages/*.nupkg \
-            --source https://api.nuget.org/v3/index.json \
-            --api-key "${{ secrets.NUGET_API_KEY }}" \
-            --skip-duplicate
+      - name: NuGet login (OIDC → temp API key)
+        uses: NuGet/login@v1
+        id: login
+        with:
+          user: ${{ secrets.NUGET_USER }}
+
+      - name: Push to NuGet.org
+        run: >
+          dotnet nuget push ./artifacts/packages/*.nupkg
+          --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
+          --source https://api.nuget.org/v3/index.json
+          --skip-duplicate
+
+      - name: Upload packages artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nuget-packages
+          path: ./artifacts/packages/*.nupkg
+
