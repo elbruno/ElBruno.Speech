@@ -75,8 +75,9 @@ jobs:
           /p:Version=${{ steps.version.outputs.value }}
           --output ./artifacts/packages
 
-      - name: Publish to NuGet.org (Trusted Publishing)
+      - name: Publish to NuGet.org
         run: >
           dotnet nuget push ./artifacts/packages/*.nupkg
           --source https://api.nuget.org/v3/index.json
+          --api-key ${{ secrets.NUGET_API_KEY }}
           --skip-duplicate
