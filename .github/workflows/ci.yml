@@ -31,14 +31,14 @@ jobs:
             10.0.x
 
       - name: Restore
-        run: dotnet restore ElBruno.Speech.slnx
+        run: dotnet restore ElBruno.Speech.sln
 
       - name: Build
-        run: dotnet build ElBruno.Speech.slnx --configuration Release --no-restore
+        run: dotnet build ElBruno.Speech.sln --configuration Release --no-restore
 
       - name: Test
         run: >
-          dotnet test ElBruno.Speech.slnx
+          dotnet test ElBruno.Speech.sln
           --configuration Release
           --no-build
           --filter "Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
@@ -69,11 +69,11 @@ jobs:
             10.0.x
 
       - name: Restore
-        run: dotnet restore ElBruno.Speech.slnx
+        run: dotnet restore ElBruno.Speech.sln
 
       - name: Pack
         run: >
-          dotnet pack ElBruno.Speech.slnx
+          dotnet pack ElBruno.Speech.sln
           --configuration Release
           --no-restore
           --output ./artifacts/packages
