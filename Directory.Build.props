@@ -14,6 +14,9 @@
     <NoWarn>$(NoWarn);MEAI001;CS1591;NU5118</NoWarn>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
 
+    <!-- Version — override at publish time with /p:Version=X.Y.Z -->
+    <Version>1.0.0</Version>
+
     <!-- Package metadata -->
     <Authors>Bruno Capuano</Authors>
     <Company>ElBruno</Company>
