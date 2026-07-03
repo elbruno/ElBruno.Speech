@@ -2,6 +2,18 @@
 
 You are working on a project that uses **Squad**, an AI team framework. When picking up issues autonomously, follow these guidelines.
 
+## Project: ElBruno.Speech
+
+A reusable, local-first .NET 8/10 speech runtime. It orchestrates a **VAD → STT → LLM → TTS** pipeline using `Microsoft.Extensions.AI` provider boundaries. Full spec: `docs/PRD.md`. Implementation plan and current status: `docs/PLAN.md`.
+
+**When the user says "continue with the plan":**
+1. Read `docs/PLAN.md` to find the first phase marked as `⬅️ NEXT`
+2. Read `.squad/identity/now.md` for the current focus and next task
+3. Read `.squad/team.md` to identify the right agent to lead that phase
+4. Proceed to implement it following the PRD and plan
+
+**Current state:** Phase 0 complete. **Phase 1 (Audio Primitives) is next.** See `docs/PLAN.md`.
+
 ## Coordinator Canary Check
 
 **IMPORTANT — run this check on EVERY session start, before doing any work:**
