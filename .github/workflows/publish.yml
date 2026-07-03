@@ -75,11 +75,34 @@ jobs:
           /p:Version=${{ steps.version.outputs.value }}
           --output ./artifacts/packages
 
-      - name: Publish to NuGet.org
+      - name: Publish to NuGet.org (Trusted Publishing)
         env:
-          NUGET_KEY: ${{ secrets.NUGET_USER }}
-        run: >
-          dotnet nuget push ./artifacts/packages/*.nupkg
-          --source https://api.nuget.org/v3/index.json
-          --api-key "$NUGET_KEY"
-          --skip-duplicate
+          NUGET_USER: ${{ vars.NUGET_USER }}
+        run: |
+          # Exchange GitHub OIDC token for a scoped NuGet API key
+          OIDC_TOKEN=$(curl -sSfL \
+            -H "Authorization: Bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=nuget.org" \
+            | jq -r '.value')
+
+          NUGET_KEY=$(curl -sSf \
+            -X POST \
+            -H "Content-Type: application/json" \
+            -H "Accept: application/json" \
+            -d "{\"Token\":\"${OIDC_TOKEN}\"}" \
+            "https://www.nuget.org/packages/publish" \
+            | jq -r '.apiKey // empty')
+
+          if [ -z "$NUGET_KEY" ]; then
+            echo "::error::Failed to exchange OIDC token for NuGet API key."
+            echo "Ensure '$NUGET_USER' has configured GitHub Actions as a Trusted Publisher on nuget.org."
+            echo "Visit: https://www.nuget.org/account/manage/packages"
+            exit 1
+          fi
+
+          echo "::add-mask::$NUGET_KEY"
+
+          dotnet nuget push ./artifacts/packages/*.nupkg \
+            --source https://api.nuget.org/v3/index.json \
+            --api-key "$NUGET_KEY" \
+            --skip-duplicate
