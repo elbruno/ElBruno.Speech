@@ -1,5 +1,7 @@
 # ElBruno.Speech
 
+![ElBruno.Speech Banner](assets/banner.png)
+
 [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Pipeline.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline)
 [![NuGet Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Pipeline.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline)
 [![Build Status](https://github.com/elbruno/ElBruno.Speech/actions/workflows/ci.yml/badge.svg)](https://github.com/elbruno/ElBruno.Speech/actions/workflows/ci.yml)
