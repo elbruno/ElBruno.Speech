@@ -1,6 +1,6 @@
 ---
-updated_at: 2026-07-03T21:57:00Z
-focus_area: v0.5.0 NuGet publish — BLOCKED, NUGET_USER secret value is empty
+updated_at: 2026-07-03T22:04:00Z
+focus_area: v0.5.0 NuGet publish — BLOCKED, Trusted Publisher not configured on nuget.org
 active_issues:
   - nuget-publish-v0.5.0-blocked
 ---
