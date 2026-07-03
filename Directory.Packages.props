@@ -19,7 +19,7 @@
     <!-- ASP.NET Core (framework reference — version comes from SDK) -->
 
     <!-- ONNX Runtime -->
-    <PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.22.0" />
+    <PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.27.0" />
 
     <!-- OpenTelemetry -->
     <PackageVersion Include="OpenTelemetry" Version="1.13.0" />
