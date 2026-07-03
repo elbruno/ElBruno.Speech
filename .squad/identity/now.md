@@ -1,8 +1,7 @@
 ---
-updated_at: 2026-07-03T22:04:00Z
-focus_area: v0.5.0 NuGet publish — BLOCKED, Trusted Publisher not configured on nuget.org
-active_issues:
-  - nuget-publish-v0.5.0-blocked
+updated_at: 2026-07-03T22:48:00Z
+focus_area: v0.5.0 NuGet publish — COMPLETE, all 8 packages live on nuget.org
+active_issues: []
 ---
 
 # What We're Focused On
