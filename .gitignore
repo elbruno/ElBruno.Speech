@@ -8,3 +8,54 @@
 .squad/.cache/
 # Squad: SubSquad activation file (local to this machine)
 .squad-workstream
+
+## .NET build output
+bin/
+obj/
+*.nupkg
+*.snupkg
+
+## Visual Studio
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Rider / JetBrains
+.idea/
+*.iml
+
+## VS Code
+.vscode/
+!.vscode/extensions.json
+
+## OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+## Test results
+TestResults/
+coverage/
+*.trx
+*.coverage
+*.coveragexml
+
+## Benchmarks output
+BenchmarkDotNet.Artifacts/
+
+## NuGet local
+nuget.lock
+
+## Secrets / local config
+*.secrets.json
+appsettings.Development.json
+appsettings.Local.json
+.env
+
+## Models (large binary files)
+*.onnx
+*.pt
+*.bin
+models/

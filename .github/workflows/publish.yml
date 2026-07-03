@@ -1,0 +1,83 @@
+name: Publish NuGet packages
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Optional package version (e.g. 0.1.0-preview.1)
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  build-test-pack-publish:
+    runs-on: ubuntu-latest
+    environment: release
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+
+      - name: Resolve version
+        id: version
+        shell: bash
+        run: |
+          if [ -n "${{ inputs.version }}" ]; then
+            VERSION="${{ inputs.version }}"
+          else
+            VERSION="${GITHUB_REF_NAME#v}"
+          fi
+
+          if [ -z "$VERSION" ]; then
+            echo "Unable to resolve version from tag or input."
+            exit 1
+          fi
+
+          echo "value=$VERSION" >> "$GITHUB_OUTPUT"
+          echo "Resolved version: $VERSION"
+
+      - name: Restore
+        run: dotnet restore ElBruno.Speech.slnx
+
+      - name: Build
+        run: >
+          dotnet build ElBruno.Speech.slnx
+          --configuration Release
+          --no-restore
+          /p:Version=${{ steps.version.outputs.value }}
+
+      - name: Test
+        run: >
+          dotnet test ElBruno.Speech.slnx
+          --configuration Release
+          --no-build
+          --filter "Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
+
+      - name: Pack
+        run: >
+          dotnet pack ElBruno.Speech.slnx
+          --configuration Release
+          --no-build
+          /p:Version=${{ steps.version.outputs.value }}
+          --output ./artifacts/packages
+
+      - name: Publish to NuGet.org (Trusted Publishing)
+        run: >
+          dotnet nuget push ./artifacts/packages/*.nupkg
+          --source https://api.nuget.org/v3/index.json
+          --api-key ${{ secrets.NUGET_USER }}
+          --skip-duplicate

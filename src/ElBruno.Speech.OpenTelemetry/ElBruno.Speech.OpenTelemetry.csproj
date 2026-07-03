@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <PackageId>ElBruno.Speech.OpenTelemetry</PackageId>
+    <Description>OpenTelemetry instrumentation for ElBruno.Speech — activities, metrics, and Aspire-compatible setup.</Description>
+    <PackageTags>speech;opentelemetry;metrics;tracing;aspire;dotnet</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ElBruno.Speech.Abstractions\ElBruno.Speech.Abstractions.csproj" />
+    <ProjectReference Include="..\ElBruno.Speech.Pipeline\ElBruno.Speech.Pipeline.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTelemetry.Api" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,26 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <PackageId>ElBruno.Speech.Cli</PackageId>
+    <OutputType>Exe</OutputType>
+    <Description>CLI tool for ElBruno.Speech — devices, transcribe, vad, talk, serve, and benchmark commands.</Description>
+    <PackageTags>speech;cli;tool;dotnet</PackageTags>
+    <PackAsTool>true</PackAsTool>
+    <ToolCommandName>elbrunospeech</ToolCommandName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ElBruno.Speech.Abstractions\ElBruno.Speech.Abstractions.csproj" />
+    <ProjectReference Include="..\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+    <ProjectReference Include="..\ElBruno.Speech.Pipeline\ElBruno.Speech.Pipeline.csproj" />
+    <ProjectReference Include="..\ElBruno.Speech.Vad.Silero\ElBruno.Speech.Vad.Silero.csproj" />
+    <ProjectReference Include="..\ElBruno.Speech.NAudio\ElBruno.Speech.NAudio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+    <PackageReference Include="Microsoft.Extensions.AI" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,53 @@
+<Project>
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <!-- On machines with only .NET 8 SDK, limit to net8.0 for local builds -->
+    <TargetFrameworks Condition="'$(NETCoreSdkVersion)' != '' AND $([System.Version]::Parse('$(NETCoreSdkVersion)').Major) &lt; 9">net8.0</TargetFrameworks>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!-- MEAI speech/TTS APIs are experimental by design — suppress until stable -->
+    <!-- CS1591: enforce XML docs per-package when implementing, not at scaffold stage -->
+    <!-- NU5118: README.md duplicate — SDK auto-includes for some TFMs, our explicit include is deduped safely -->
+    <NoWarn>$(NoWarn);MEAI001;CS1591;NU5118</NoWarn>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+
+    <!-- Package metadata -->
+    <Authors>Bruno Capuano</Authors>
+    <Company>ElBruno</Company>
+    <PackageProjectUrl>https://github.com/elbruno/ElBruno.Speech</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/elbruno/ElBruno.Speech</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright © Bruno Capuano</Copyright>
+
+    <!-- Source Link and symbols -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- Deterministic builds -->
+    <ContinuousIntegrationBuild Condition="'$(CI)' == 'true'">true</ContinuousIntegrationBuild>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+
+  <!-- Include root README.md in every NuGet package -->
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)README.md" Pack="true" PackagePath="\" Visible="false" />
+  </ItemGroup>
+
+  <!-- Source Link for GitHub -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
+  </ItemGroup>
+  <!-- Suppress known moderate OpenTelemetry.Api vulnerability warning (GHSA-g94r-2vxg-569j).
+       Tracked for Phase 7 hardening — update to fixed version when available. -->
+  <ItemGroup>
+    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-g94r-2vxg-569j" />
+  </ItemGroup>
+
+</Project>

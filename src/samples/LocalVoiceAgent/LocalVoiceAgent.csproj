@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Description>Sample: local microphone → Silero VAD → Whisper → LocalLLM → VibeVoice → speaker, with barge-in</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\ElBruno.Speech.Abstractions\ElBruno.Speech.Abstractions.csproj" />
+    <ProjectReference Include="..\..\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+    <ProjectReference Include="..\..\ElBruno.Speech.Pipeline\ElBruno.Speech.Pipeline.csproj" />
+    <ProjectReference Include="..\..\ElBruno.Speech.Vad.Silero\ElBruno.Speech.Vad.Silero.csproj" />
+    <ProjectReference Include="..\..\ElBruno.Speech.NAudio\ElBruno.Speech.NAudio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.AI" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
+  </ItemGroup>
+
+</Project>

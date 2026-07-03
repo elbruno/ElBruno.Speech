@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <PackageId>ElBruno.Speech.Vad.Silero</PackageId>
+    <Description>Silero VAD provider for ElBruno.Speech — ONNX Runtime inference, stateful streaming voice activity detection.</Description>
+    <PackageTags>speech;vad;silero;onnx;voice-activity-detection;dotnet</PackageTags>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ElBruno.Speech.Abstractions\ElBruno.Speech.Abstractions.csproj" />
+    <ProjectReference Include="..\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>
