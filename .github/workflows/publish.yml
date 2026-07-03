@@ -76,8 +76,10 @@ jobs:
           --output ./artifacts/packages
 
       - name: Publish to NuGet.org
+        env:
+          NUGET_KEY: ${{ secrets.NUGET_USER }}
         run: >
           dotnet nuget push ./artifacts/packages/*.nupkg
           --source https://api.nuget.org/v3/index.json
-          --api-key ${{ secrets.NUGET_USER }}
+          --api-key "$NUGET_KEY"
           --skip-duplicate
