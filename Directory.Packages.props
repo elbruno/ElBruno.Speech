@@ -27,7 +27,7 @@
     <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.13.0" />
 
     <!-- NAudio (isolated to ElBruno.Speech.NAudio) -->
-    <PackageVersion Include="NAudio" Version="2.2.1" />
+    <PackageVersion Include="NAudio" Version="2.3.0" />
 
     <!-- Source Link -->
     <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
