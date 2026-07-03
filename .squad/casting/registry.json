@@ -1,0 +1,39 @@
+{
+  "agents": {
+    "lead-architect": {
+      "persistent_name": "Morpheus",
+      "universe": "The Matrix",
+      "created_at": "2026-07-03T07:56:53Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "backend-pipeline": {
+      "persistent_name": "Trinity",
+      "universe": "The Matrix",
+      "created_at": "2026-07-03T07:56:53Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "backend-audio-vad": {
+      "persistent_name": "Tank",
+      "universe": "The Matrix",
+      "created_at": "2026-07-03T07:56:53Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "backend-platform": {
+      "persistent_name": "Apoc",
+      "universe": "The Matrix",
+      "created_at": "2026-07-03T07:56:53Z",
+      "legacy_named": false,
+      "status": "active"
+    },
+    "tester": {
+      "persistent_name": "Switch",
+      "universe": "The Matrix",
+      "created_at": "2026-07-03T07:56:53Z",
+      "legacy_named": false,
+      "status": "active"
+    }
+  }
+}
