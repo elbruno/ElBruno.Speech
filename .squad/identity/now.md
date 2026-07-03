@@ -1,6 +1,6 @@
 ---
-updated_at: 2026-07-03T20:32:00Z
-focus_area: v0.5.0 NuGet publish — BLOCKED on NUGET_API_KEY secret
+updated_at: 2026-07-03T20:35:00Z
+focus_area: v0.5.0 NuGet publish — BLOCKED on NUGET_USER secret scoping
 active_issues:
   - nuget-publish-v0.5.0-blocked
 ---
