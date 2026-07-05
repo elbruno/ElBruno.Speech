@@ -1,13 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <TargetFrameworks></TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
     <PackageId>ElBruno.Speech.Cli</PackageId>
     <OutputType>Exe</OutputType>
     <Description>CLI tool for ElBruno.Speech — devices, transcribe, vad, talk, serve, and benchmark commands.</Description>
     <PackageTags>speech;cli;tool;dotnet</PackageTags>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>elbrunospeech</ToolCommandName>
+    <!-- Keep the tool package under NuGet's size limit; a net8.0 tool runs on newer runtimes. -->
+    <RollForward>Major</RollForward>
   </PropertyGroup>
 
   <ItemGroup>
