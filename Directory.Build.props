@@ -51,10 +51,4 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" PrivateAssets="All" />
   </ItemGroup>
-  <!-- Suppress known moderate OpenTelemetry.Api vulnerability warning (GHSA-g94r-2vxg-569j).
-       Tracked for Phase 7 hardening — update to fixed version when available. -->
-  <ItemGroup>
-    <NuGetAuditSuppress Include="https://github.com/advisories/GHSA-g94r-2vxg-569j" />
-  </ItemGroup>
-
 </Project>
