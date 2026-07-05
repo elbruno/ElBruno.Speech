@@ -19,29 +19,29 @@
     <!-- ASP.NET Core (framework reference — version comes from SDK) -->
 
     <!-- ONNX Runtime -->
-    <PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.22.0" />
+    <PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.27.0" />
 
     <!-- OpenTelemetry -->
-    <PackageVersion Include="OpenTelemetry" Version="1.13.0" />
-    <PackageVersion Include="OpenTelemetry.Api" Version="1.13.0" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.13.0" />
+    <PackageVersion Include="OpenTelemetry" Version="1.16.0" />
+    <PackageVersion Include="OpenTelemetry.Api" Version="1.16.0" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.16.0" />
 
     <!-- NAudio (isolated to ElBruno.Speech.NAudio) -->
-    <PackageVersion Include="NAudio" Version="2.2.1" />
+    <PackageVersion Include="NAudio" Version="2.3.0" />
 
     <!-- Source Link -->
-    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.SourceLink.GitHub" Version="10.0.300" />
 
     <!-- Test packages -->
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.12.0" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.7.0" />
     <PackageVersion Include="xunit" Version="2.9.3" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="2.8.2" />
-    <PackageVersion Include="coverlet.collector" Version="6.0.4" />
-    <PackageVersion Include="FluentAssertions" Version="7.2.0" />
+    <PackageVersion Include="coverlet.collector" Version="10.0.1" />
+    <PackageVersion Include="FluentAssertions" Version="8.10.0" />
 
-    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.0" />
+    <PackageVersion Include="Microsoft.AspNetCore.Mvc.Testing" Version="8.0.28" />
 
     <!-- Benchmarks -->
-    <PackageVersion Include="BenchmarkDotNet" Version="0.14.0" />
+    <PackageVersion Include="BenchmarkDotNet" Version="0.15.8" />
   </ItemGroup>
 </Project>
