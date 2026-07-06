@@ -415,7 +415,7 @@ All documentation lives under `/docs`, except `README.md` and `LICENSE`.
 │   └── ElBruno.Speech.Benchmarks/
 ├── Directory.Build.props
 ├── Directory.Packages.props
-├── ElBruno.Speech.slnx
+├── ElBruno.Speech.sln
 ├── global.json
 ├── LICENSE
 └── README.md
@@ -1586,18 +1586,18 @@ jobs:
           echo "value=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Restore
-        run: dotnet restore ElBruno.Speech.slnx
+        run: dotnet restore ElBruno.Speech.sln
 
       - name: Build
         run: >
-          dotnet build ElBruno.Speech.slnx
+          dotnet build ElBruno.Speech.sln
           --configuration Release
           --no-restore
           /p:Version=${{ steps.version.outputs.value }}
 
       - name: Test
         run: >
-          dotnet test ElBruno.Speech.slnx
+          dotnet test ElBruno.Speech.sln
           --configuration Release
           --no-build
           --filter "Category!=Integration&Category!=Gpu&Category!=LongRunning"
@@ -1606,7 +1606,7 @@ jobs:
 
       - name: Pack
         run: >
-          dotnet pack ElBruno.Speech.slnx
+          dotnet pack ElBruno.Speech.sln
           --configuration Release
           --no-build
           --output artifacts/packages
