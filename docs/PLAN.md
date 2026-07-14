@@ -137,7 +137,7 @@ Replace `AudioPlaceholder.cs` stub with:
 | MEAI version | `10.7.0` (stable) |
 | Microsoft.Extensions.* | `10.0.9` |
 | OpenTelemetry | `1.16.0` |
-| ONNX Runtime | `1.27.0` |
+| ONNX Runtime | `1.27.1` |
 | NAudio | `2.3.0` |
 | Canonical audio format | 16 kHz, mono, Int16 PCM |
 | MEAI001 suppression | global (speech APIs are `[Experimental]`) |
