@@ -6,14 +6,14 @@
   <ItemGroup>
     <!-- Microsoft.Extensions.AI -->
     <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="10.8.0" />
-    <PackageVersion Include="Microsoft.Extensions.AI" Version="10.7.0" />
+    <PackageVersion Include="Microsoft.Extensions.AI" Version="10.8.0" />
 
     <!-- Microsoft.Extensions — must be compatible with MEAI 10.7.0 -->
-    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.10" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.10" />
     <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.9" />
-    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.9" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.10" />
+    <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.10" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.9" />
 
     <!-- ASP.NET Core (framework reference — version comes from SDK) -->
@@ -22,9 +22,9 @@
     <PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.27.1" />
 
     <!-- OpenTelemetry -->
-    <PackageVersion Include="OpenTelemetry" Version="1.16.0" />
+    <PackageVersion Include="OpenTelemetry" Version="1.17.0" />
     <PackageVersion Include="OpenTelemetry.Api" Version="1.17.0" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.16.0" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.17.0" />
 
     <!-- NAudio (isolated to ElBruno.Speech.NAudio) -->
     <PackageVersion Include="NAudio" Version="2.3.0" />
