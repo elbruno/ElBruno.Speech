@@ -5,13 +5,18 @@
 
   <ItemGroup>
     <!-- Microsoft.Extensions.AI -->
-    <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="10.8.1" />
-    <PackageVersion Include="Microsoft.Extensions.AI" Version="10.8.0" />
+<<<<<<< HEAD
+    $110.8.1" />
+    $110.8.1" />
+=======
+    $110.8.1" />
+    $110.8.1" />
+>>>>>>> origin/main
 
     <!-- Microsoft.Extensions — must be compatible with MEAI 10.7.0 -->
     <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.10" />
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.10" />
-    <PackageVersion Include="Microsoft.Extensions.Hosting.Abstractions" Version="10.0.10" />
+    $110.0.10" />
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.10" />
     <PackageVersion Include="Microsoft.Extensions.Options" Version="10.0.10" />
     <PackageVersion Include="Microsoft.Extensions.Http" Version="10.0.9" />
@@ -19,7 +24,7 @@
     <!-- ASP.NET Core (framework reference — version comes from SDK) -->
 
     <!-- ONNX Runtime -->
-    <PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.28.0" />
+    $11.28.0" />
 
     <!-- OpenTelemetry -->
     <PackageVersion Include="OpenTelemetry" Version="1.17.0" />
