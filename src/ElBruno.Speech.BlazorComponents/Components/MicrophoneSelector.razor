@@ -1,0 +1,27 @@
+@namespace ElBruno.Speech.BlazorComponents
+<div class="microphone-selector">
+    <select @onchange="OnChange">
+        @foreach (var device in _devices) {
+            <option value="@device.Id" selected="@(device.Id == SelectedDeviceId)">@device.Name</option>
+        }
+    </select>
+</div>
+
+@code {
+    [Inject] private IAudioDeviceProvider DeviceProvider { get; set; } = default!;
+    [Parameter] public string? SelectedDeviceId { get; set; }
+    [Parameter] public EventCallback<string> OnDeviceChanged { get; set; }
+
+    private IReadOnlyList<AudioDeviceInfo> _devices = [];
+
+    protected override async Task OnInitializedAsync() {
+        _devices = await DeviceProvider.GetInputDevicesAsync();
+        if (SelectedDeviceId is null && _devices.Count > 0)
+            SelectedDeviceId = _devices[0].Id;
+    }
+
+    public async Task OnChange(ChangeEventArgs e) {
+        SelectedDeviceId = e.Value?.ToString();
+        await OnDeviceChanged.InvokeAsync(SelectedDeviceId ?? "");
+    }
+}

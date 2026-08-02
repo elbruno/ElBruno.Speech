@@ -1,0 +1,23 @@
+@namespace ElBruno.Speech.BlazorComponents
+<div class="tts-player">
+    <button @onclick="Play" disabled="@(!CanPlay)">&#9654; Play</button>
+    <button @onclick="Pause" disabled="@(!IsPlaying)">&#9646;&#9646; Pause</button>
+    <button @onclick="Stop" disabled="@(!IsPlaying && !IsPaused)">&#9632; Stop</button>
+    <input type="range" min="0" max="100" @bind="Volume" />
+    @if (ShowVolumeLabel) { <span>@Volume%</span> }
+</div>
+
+@code {
+    [Parameter] public bool AutoPlay { get; set; }
+    [Parameter] public bool ShowVolumeLabel { get; set; } = true;
+    [Parameter] public EventCallback OnPlaybackCompleted { get; set; }
+
+    public bool IsPlaying { get; private set; }
+    public bool IsPaused { get; private set; }
+    public int Volume { get; set; } = 80;
+    private bool CanPlay => !IsPlaying;
+
+    public async Task Play() { IsPlaying = true; IsPaused = false; await InvokeAsync(StateHasChanged); }
+    public async Task Pause() { IsPlaying = false; IsPaused = true; await InvokeAsync(StateHasChanged); }
+    public async Task Stop() { IsPlaying = false; IsPaused = false; await InvokeAsync(StateHasChanged); await OnPlaybackCompleted.InvokeAsync(); }
+}

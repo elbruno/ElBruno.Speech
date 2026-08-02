@@ -1,0 +1,19 @@
+@namespace ElBruno.Speech.BlazorComponents
+<div class="vad-visualizer">
+    <div class="vad-bar-track">
+        <div class="vad-bar-fill @(IsSpeech ? "speech" : "silence")" style="width: @((int)(Probability * 100))%"></div>
+    </div>
+    @if (ShowProbabilityLabel) { <span class="vad-prob">@Probability.ToString("P0")</span> }
+</div>
+
+@code {
+    [Parameter] public float Probability { get; set; }
+    [Parameter] public bool ShowProbabilityLabel { get; set; } = true;
+
+    public bool IsSpeech => Probability >= 0.5f;
+
+    public void UpdateProbability(float probability) {
+        Probability = Math.Clamp(probability, 0f, 1f);
+        InvokeAsync(StateHasChanged);
+    }
+}

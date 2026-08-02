@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <PackageId>ElBruno.Speech.BlazorComponents</PackageId>
+    <Description>Blazor Razor Class Library providing ready-to-use speech pipeline UI components for ElBruno.Speech.</Description>
+    <PackageTags>speech;blazor;components;rcl;vad;stt;tts;dotnet</PackageTags>
+    <AddRazorSupportForMvc>false</AddRazorSupportForMvc>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ElBruno.Speech.Abstractions\ElBruno.Speech.Abstractions.csproj" />
+    <ProjectReference Include="..\ElBruno.Speech.Pipeline\ElBruno.Speech.Pipeline.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+</Project>

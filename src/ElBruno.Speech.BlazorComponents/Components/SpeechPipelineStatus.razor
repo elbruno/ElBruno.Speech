@@ -1,0 +1,19 @@
+@namespace ElBruno.Speech.BlazorComponents
+<div class="speech-pipeline-status">
+    <span class="badge @GetBadgeClass()">@CurrentState</span>
+    @if (ShowStateLabel) { <span class="state-label">@CurrentState</span> }
+</div>
+
+@code {
+    [Parameter] public PipelineState CurrentState { get; set; } = PipelineState.Idle;
+    [Parameter] public bool ShowStateLabel { get; set; } = true;
+    [Parameter] public EventCallback<PipelineState> OnStateChanged { get; set; }
+
+    private string GetBadgeClass() => CurrentState switch {
+        PipelineState.Listening => "badge-success",
+        PipelineState.Transcribing => "badge-warning",
+        PipelineState.Responding => "badge-info",
+        PipelineState.Speaking => "badge-primary",
+        _ => "badge-secondary"
+    };
+}

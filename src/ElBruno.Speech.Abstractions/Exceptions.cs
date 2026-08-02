@@ -30,6 +30,10 @@ public class SpeechPipelineException : Exception
         SessionId = sessionId;
         TurnId = turnId;
     }
+
+    /// <summary>Convenience constructor for generic audio errors.</summary>
+    public SpeechPipelineException(string message, Exception? innerException = null)
+        : this("AUDIO_ERROR", message, innerException: innerException) { }
 }
 
 /// <summary>The audio format is not supported by this component.</summary>

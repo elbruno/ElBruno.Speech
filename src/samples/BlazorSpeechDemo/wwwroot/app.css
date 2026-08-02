@@ -1,0 +1,14 @@
+.badge { padding: 4px 8px; border-radius: 4px; color: white; font-size: 0.85em; }
+.badge-secondary { background: #6c757d; }
+.badge-success { background: #28a745; }
+.badge-warning { background: #ffc107; color: black; }
+.badge-info { background: #17a2b8; }
+.badge-primary { background: #007bff; }
+.vad-bar-track { width: 200px; height: 16px; background: #eee; border-radius: 8px; overflow: hidden; }
+.vad-bar-fill { height: 100%; transition: width 0.1s; }
+.vad-bar-fill.speech { background: #28a745; }
+.vad-bar-fill.silence { background: #6c757d; }
+.segment.final { font-weight: normal; }
+.segment.interim { font-style: italic; color: #888; }
+.timestamp { font-size: 0.75em; color: #999; margin-right: 4px; }
+section { margin: 20px 0; padding: 16px; border: 1px solid #ddd; border-radius: 8px; }

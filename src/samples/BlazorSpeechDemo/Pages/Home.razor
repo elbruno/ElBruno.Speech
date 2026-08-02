@@ -1,0 +1,62 @@
+@page "/"
+@rendermode @(new Microsoft.AspNetCore.Components.Web.InteractiveServerRenderMode())
+@using ElBruno.Speech
+@using ElBruno.Speech.BlazorComponents
+
+<h1>Blazor Speech Demo</h1>
+<p>Demonstrating all ElBruno.Speech.BlazorComponents components.</p>
+
+<section>
+    <h2>Pipeline Status</h2>
+    <SpeechPipelineStatus CurrentState="_pipelineState" ShowStateLabel="true" />
+    <div>
+        @foreach (var s in Enum.GetValues<PipelineState>()) {
+            <button @onclick="() => _pipelineState = s">@s</button>
+        }
+    </div>
+</section>
+
+<section>
+    <h2>STT Transcript</h2>
+    <SttTranscriptBox @ref="_transcriptBox" MaxSegments="10" ShowTimestamps="true" />
+    <button @onclick="AddSampleTranscript">Add Sample</button>
+</section>
+
+<section>
+    <h2>TTS Player</h2>
+    <TtsPlayer AutoPlay="false" ShowVolumeLabel="true" />
+</section>
+
+<section>
+    <h2>Microphone Selector</h2>
+    <MicrophoneSelector OnDeviceChanged="OnDeviceChanged" />
+    <p>Selected: @_selectedDevice</p>
+</section>
+
+<section>
+    <h2>VAD Visualizer</h2>
+    <VadVisualizer @ref="_vadVisualizer" ShowProbabilityLabel="true" />
+    <input type="range" min="0" max="100" @bind="_vadSlider" @bind:after="UpdateVad" />
+</section>
+
+<section>
+    <h2>Pipeline Builder</h2>
+    <PipelineBuilder OnConfigured="OnPipelineConfigured" />
+    @if (_lastOptions is not null) {
+        <p>Frame: @_lastOptions.FrameDurationMs ms | Capacity: @_lastOptions.ChannelCapacity</p>
+    }
+</section>
+
+@code {
+    private PipelineState _pipelineState = PipelineState.Idle;
+    private SttTranscriptBox? _transcriptBox;
+    private VadVisualizer? _vadVisualizer;
+    private string _selectedDevice = "none";
+    private int _vadSlider = 30;
+    private SpeechPipelineOptions? _lastOptions;
+
+    private void AddSampleTranscript() => _transcriptBox?.AddSegment("Sample transcription " + DateTime.Now.Second, isFinal: true);
+    private void OnDeviceChanged(string deviceId) => _selectedDevice = deviceId;
+    private void UpdateVad() => _vadVisualizer?.UpdateProbability(_vadSlider / 100f);
+    private void OnPipelineConfigured(SpeechPipelineOptions opts) => _lastOptions = opts;
+}

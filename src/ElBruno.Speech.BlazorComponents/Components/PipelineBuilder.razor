@@ -1,0 +1,30 @@
+@namespace ElBruno.Speech.BlazorComponents
+<div class="pipeline-builder">
+    <label>Frame Duration (ms)
+        <input type="number" @bind="_frameDurationMs" min="10" max="100" step="10" />
+    </label>
+    <label>Channel Capacity
+        <input type="number" @bind="_channelCapacity" min="16" max="256" step="16" />
+    </label>
+    <label>Pre-roll (ms)
+        <input type="number" @bind="_preRollMs" min="0" max="1000" step="100" />
+    </label>
+    <button @onclick="Configure">Apply</button>
+</div>
+
+@code {
+    [Parameter] public EventCallback<SpeechPipelineOptions> OnConfigured { get; set; }
+
+    private int _frameDurationMs = 20;
+    private int _channelCapacity = 64;
+    private int _preRollMs = 200;
+
+    public async Task Configure() {
+        var opts = new SpeechPipelineOptions {
+            FrameDurationMs = _frameDurationMs,
+            ChannelCapacity = _channelCapacity,
+            PreRollMs = _preRollMs,
+        };
+        await OnConfigured.InvokeAsync(opts);
+    }
+}

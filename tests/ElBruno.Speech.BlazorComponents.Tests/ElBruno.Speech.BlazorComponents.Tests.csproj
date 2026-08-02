@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\ElBruno.Speech.BlazorComponents\ElBruno.Speech.BlazorComponents.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Bunit" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+  </ItemGroup>
+  <!-- Work around Razor SDK static web assets consuming None items needed by xunit runner -->
+  <Target Name="CopyXunitTestAdapter" AfterTargets="CopyFilesToOutputDirectory">
+    <PropertyGroup>
+      <_XunitRunnerVersion>3.1.5</_XunitRunnerVersion>
+      <_XunitTestAdapterSrc>$(NuGetPackageRoot)xunit.runner.visualstudio\$(_XunitRunnerVersion)\build\net8.0\xunit.runner.visualstudio.testadapter.dll</_XunitTestAdapterSrc>
+    </PropertyGroup>
+    <Copy SourceFiles="$(_XunitTestAdapterSrc)"
+          DestinationFolder="$(OutputPath)"
+          SkipUnchangedFiles="true"
+          Condition="Exists('$(_XunitTestAdapterSrc)')" />
+  </Target>
+</Project>

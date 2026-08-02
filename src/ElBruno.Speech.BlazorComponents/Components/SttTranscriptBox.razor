@@ -1,0 +1,22 @@
+@namespace ElBruno.Speech.BlazorComponents
+<div class="stt-transcript-box">
+    @foreach (var seg in _segments.TakeLast(MaxSegments)) {
+        <div class="segment @(seg.IsFinal ? "final" : "interim")">
+            @if (ShowTimestamps) { <span class="timestamp">[@seg.Timestamp.ToString("HH:mm:ss")]</span> }
+            <span class="text">@seg.Text</span>
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public int MaxSegments { get; set; } = 20;
+    [Parameter] public bool ShowTimestamps { get; set; } = true;
+
+    private readonly List<TranscriptSegment> _segments = new();
+
+    public void AddSegment(string text, bool isFinal = true) {
+        _segments.Add(new TranscriptSegment(text, DateTime.Now, isFinal));
+        InvokeAsync(StateHasChanged);
+    }
+    public void Clear() { _segments.Clear(); InvokeAsync(StateHasChanged); }
+}

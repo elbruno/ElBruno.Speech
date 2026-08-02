@@ -7,6 +7,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\ElBruno.Speech.Abstractions\ElBruno.Speech.Abstractions.csproj" />
+    <ProjectReference Include="..\..\src\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+    <ProjectReference Include="..\..\src\ElBruno.Speech.Pipeline\ElBruno.Speech.Pipeline.csproj" />
+    <ProjectReference Include="..\..\src\ElBruno.Speech.Vad.Silero\ElBruno.Speech.Vad.Silero.csproj" />
+    <ProjectReference Include="..\..\src\ElBruno.Speech.AspNetCore\ElBruno.Speech.AspNetCore.csproj" />
     <ProjectReference Include="..\ElBruno.Speech.TestUtils\ElBruno.Speech.TestUtils.csproj" />
   </ItemGroup>
 
@@ -16,6 +20,8 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="coverlet.collector" />
     <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Microsoft.Extensions.AI" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
   </ItemGroup>
 
 </Project>
