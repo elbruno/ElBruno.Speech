@@ -1,0 +1,8 @@
+.segment.interim {
+    font-style: italic;
+}
+
+.timestamp {
+    margin-right: .35rem;
+    opacity: .7;
+}

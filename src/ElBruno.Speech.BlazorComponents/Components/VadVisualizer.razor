@@ -1,19 +1,44 @@
 @namespace ElBruno.Speech.BlazorComponents
+@implements IDisposable
+@inject SpeechStateService State
 <div class="vad-visualizer">
     <div class="vad-bar-track">
-        <div class="vad-bar-fill @(IsSpeech ? "speech" : "silence")" style="width: @((int)(Probability * 100))%"></div>
+        <div class="vad-bar-fill @(IsSpeech ? "speech" : "silence")" style="width: @((int)(EffectiveProbability * 100))%"></div>
     </div>
-    @if (ShowProbabilityLabel) { <span class="vad-prob">@Probability.ToString("P0")</span> }
+    @if (ShowProbabilityLabel) { <span class="vad-prob">@EffectiveProbability.ToString("P0")</span> }
 </div>
 
 @code {
     [Parameter] public float Probability { get; set; }
     [Parameter] public bool ShowProbabilityLabel { get; set; } = true;
+    private bool _probabilityProvided;
 
-    public bool IsSpeech => Probability >= 0.5f;
+    private float EffectiveProbability => _probabilityProvided
+        ? Math.Clamp(Probability, 0f, 1f)
+        : State.VadProbability;
+    public bool IsSpeech => EffectiveProbability >= 0.5f;
 
     public void UpdateProbability(float probability) {
         Probability = Math.Clamp(probability, 0f, 1f);
-        InvokeAsync(StateHasChanged);
+        _probabilityProvided = true;
+        State.SetVadProbability(probability);
     }
+
+    public override Task SetParametersAsync(ParameterView parameters)
+    {
+        _probabilityProvided = parameters.TryGetValue(nameof(Probability), out float _);
+        return base.SetParametersAsync(parameters);
+    }
+
+    protected override void OnInitialized() => State.Changed += HandleStateChanged;
+
+    protected override void OnParametersSet()
+    {
+        if (_probabilityProvided)
+            State.SetVadProbability(Probability);
+    }
+
+    private void HandleStateChanged(object? sender, EventArgs args) => _ = InvokeAsync(StateHasChanged);
+
+    public void Dispose() => State.Changed -= HandleStateChanged;
 }

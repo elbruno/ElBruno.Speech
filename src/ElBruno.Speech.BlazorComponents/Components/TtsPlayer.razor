@@ -10,14 +10,63 @@
 @code {
     [Parameter] public bool AutoPlay { get; set; }
     [Parameter] public bool ShowVolumeLabel { get; set; } = true;
+    [Parameter] public EventCallback OnPlayRequested { get; set; }
+    [Parameter] public EventCallback OnPauseRequested { get; set; }
+    [Parameter] public EventCallback OnStopRequested { get; set; }
     [Parameter] public EventCallback OnPlaybackCompleted { get; set; }
 
     public bool IsPlaying { get; private set; }
     public bool IsPaused { get; private set; }
     public int Volume { get; set; } = 80;
     private bool CanPlay => !IsPlaying;
+    private bool _autoPlayHandled;
 
-    public async Task Play() { IsPlaying = true; IsPaused = false; await InvokeAsync(StateHasChanged); }
-    public async Task Pause() { IsPlaying = false; IsPaused = true; await InvokeAsync(StateHasChanged); }
-    public async Task Stop() { IsPlaying = false; IsPaused = false; await InvokeAsync(StateHasChanged); await OnPlaybackCompleted.InvokeAsync(); }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender && AutoPlay && !_autoPlayHandled)
+        {
+            _autoPlayHandled = true;
+            await Play();
+        }
+    }
+
+    public async Task Play()
+    {
+        IsPlaying = true;
+        IsPaused = false;
+        await OnPlayRequested.InvokeAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task Pause()
+    {
+        if (!IsPlaying)
+            return;
+
+        IsPlaying = false;
+        IsPaused = true;
+        await OnPauseRequested.InvokeAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    public async Task Stop()
+    {
+        if (!IsPlaying && !IsPaused)
+            return;
+
+        IsPlaying = false;
+        IsPaused = false;
+        await OnStopRequested.InvokeAsync();
+        await OnPlaybackCompleted.InvokeAsync();
+        await InvokeAsync(StateHasChanged);
+    }
+
+    /// <summary>Signals completion after the host's audio output finishes.</summary>
+    public async Task CompletePlayback()
+    {
+        IsPlaying = false;
+        IsPaused = false;
+        await OnPlaybackCompleted.InvokeAsync();
+        await InvokeAsync(StateHasChanged);
+    }
 }

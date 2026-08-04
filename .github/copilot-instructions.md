@@ -6,6 +6,10 @@ You are working on a project that uses **Squad**, an AI team framework. When pic
 
 A reusable, local-first .NET 8/10 speech runtime. It orchestrates a **VAD → STT → LLM → TTS** pipeline using `Microsoft.Extensions.AI` provider boundaries. Full spec: `docs/PRD.md`. Implementation plan and current status: `docs/PLAN.md`.
 
+## NuGet release review gate
+
+Every NuGet release requires a review before publishing. The reviewer must confirm the version, release notes, package metadata, and the complete package set (including `ElBruno.Speech.BlazorComponents`), and verify that the release workflow's build, test, pack, and package-presence checks pass. Use `.github/workflows/publish.yml` for publishing; do not bypass the review gate or publish from an unreviewed change.
+
 **When the user says "continue with the plan":**
 1. Read `docs/PLAN.md` to find the first phase marked as `⬅️ NEXT`
 2. Read `.squad/identity/now.md` for the current focus and next task

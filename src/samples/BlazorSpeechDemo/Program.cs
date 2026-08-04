@@ -17,6 +17,9 @@ builder.Services.AddSingleton<ITextToSpeechClient>(_ =>
 
 builder.Services.AddSpeechPipeline();
 builder.Services.AddSpeechBlazorComponents();
+// Keep the sample deterministic; production apps can use the browser provider
+// registered by AddSpeechBlazorComponents or replace it with their own provider.
+builder.Services.AddScoped<IAudioDeviceProvider, DefaultAudioDeviceProvider>();
 
 var app = builder.Build();
 app.UseStaticFiles();

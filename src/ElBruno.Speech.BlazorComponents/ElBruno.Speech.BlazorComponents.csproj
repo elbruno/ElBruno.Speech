@@ -15,7 +15,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ElBruno.Speech.Abstractions\ElBruno.Speech.Abstractions.csproj" />
-    <ProjectReference Include="..\ElBruno.Speech.Pipeline\ElBruno.Speech.Pipeline.csproj" />
   </ItemGroup>
 
   <ItemGroup>

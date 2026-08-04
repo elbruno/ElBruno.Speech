@@ -6,7 +6,8 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddSpeechBlazorComponents(this IServiceCollection services)
     {
-        services.AddSingleton<IAudioDeviceProvider, DefaultAudioDeviceProvider>();
+        services.AddScoped<SpeechStateService>();
+        services.AddScoped<IAudioDeviceProvider, BrowserAudioDeviceProvider>();
         return services;
     }
 }

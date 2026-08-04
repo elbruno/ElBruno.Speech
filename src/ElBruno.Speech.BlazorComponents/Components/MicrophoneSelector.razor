@@ -1,8 +1,10 @@
 @namespace ElBruno.Speech.BlazorComponents
+@implements IAsyncDisposable
+@inject SpeechStateService State
 <div class="microphone-selector">
     <select @onchange="OnChange">
         @foreach (var device in _devices) {
-            <option value="@device.Id" selected="@(device.Id == SelectedDeviceId)">@device.Name</option>
+            <option value="@device.Id" selected="@(device.Id == EffectiveSelectedDeviceId)">@device.Name</option>
         }
     </select>
 </div>
@@ -13,15 +15,50 @@
     [Parameter] public EventCallback<string> OnDeviceChanged { get; set; }
 
     private IReadOnlyList<AudioDeviceInfo> _devices = [];
+    private CancellationTokenSource? _loadCancellation;
+    private string? EffectiveSelectedDeviceId => SelectedDeviceId ?? State.SelectedDeviceId;
 
-    protected override async Task OnInitializedAsync() {
-        _devices = await DeviceProvider.GetInputDevicesAsync();
-        if (SelectedDeviceId is null && _devices.Count > 0)
-            SelectedDeviceId = _devices[0].Id;
+    protected override void OnInitialized() => State.Changed += HandleStateChanged;
+
+    protected override void OnParametersSet()
+    {
+        if (SelectedDeviceId is not null)
+            State.SetSelectedDevice(SelectedDeviceId);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (!firstRender)
+            return;
+
+        _loadCancellation = new CancellationTokenSource();
+        _devices = await DeviceProvider.GetInputDevicesAsync(_loadCancellation.Token);
+        if (EffectiveSelectedDeviceId is null && _devices.Count > 0)
+            State.SetSelectedDevice(_devices[0].Id);
+        if (SelectedDeviceId is null)
+            SelectedDeviceId = State.SelectedDeviceId;
+
+        await InvokeAsync(StateHasChanged);
     }
 
     public async Task OnChange(ChangeEventArgs e) {
-        SelectedDeviceId = e.Value?.ToString();
-        await OnDeviceChanged.InvokeAsync(SelectedDeviceId ?? "");
+        var selectedDeviceId = e.Value?.ToString() ?? "";
+        SelectedDeviceId = selectedDeviceId;
+        State.SetSelectedDevice(selectedDeviceId);
+        await OnDeviceChanged.InvokeAsync(selectedDeviceId);
+    }
+
+    private void HandleStateChanged(object? sender, EventArgs args) => _ = InvokeAsync(StateHasChanged);
+
+    public async ValueTask DisposeAsync()
+    {
+        State.Changed -= HandleStateChanged;
+        if (_loadCancellation is not null)
+        {
+            _loadCancellation.Cancel();
+            _loadCancellation.Dispose();
+        }
+
+        await Task.CompletedTask;
     }
 }

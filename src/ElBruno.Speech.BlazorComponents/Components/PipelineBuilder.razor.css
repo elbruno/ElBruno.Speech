@@ -1,0 +1,5 @@
+.pipeline-builder {
+    display: grid;
+    gap: .5rem;
+    max-width: 22rem;
+}

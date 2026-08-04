@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\ElBruno.Speech.BlazorComponents\ElBruno.Speech.BlazorComponents.csproj" />
     <ProjectReference Include="..\..\src\ElBruno.Speech.Pipeline\ElBruno.Speech.Pipeline.csproj" />
+    <ProjectReference Include="..\..\src\samples\BlazorSpeechDemo\BlazorSpeechDemo.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" />
@@ -15,6 +16,7 @@
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="coverlet.collector" />
     <PackageReference Include="FluentAssertions" />
+    <PackageReference Include="Bunit" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
   <!-- Work around Razor SDK static web assets consuming None items needed by xunit runner -->
