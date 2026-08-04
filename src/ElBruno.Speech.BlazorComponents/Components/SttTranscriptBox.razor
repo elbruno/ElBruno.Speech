@@ -1,6 +1,8 @@
 @namespace ElBruno.Speech.BlazorComponents
+@implements IDisposable
+@inject SpeechStateService State
 <div class="stt-transcript-box">
-    @foreach (var seg in _segments.TakeLast(MaxSegments)) {
+    @foreach (var seg in State.Transcript.TakeLast(Math.Max(0, MaxSegments))) {
         <div class="segment @(seg.IsFinal ? "final" : "interim")">
             @if (ShowTimestamps) { <span class="timestamp">[@seg.Timestamp.ToString("HH:mm:ss")]</span> }
             <span class="text">@seg.Text</span>
@@ -12,11 +14,13 @@
     [Parameter] public int MaxSegments { get; set; } = 20;
     [Parameter] public bool ShowTimestamps { get; set; } = true;
 
-    private readonly List<TranscriptSegment> _segments = new();
+    protected override void OnInitialized() => State.Changed += HandleStateChanged;
 
-    public void AddSegment(string text, bool isFinal = true) {
-        _segments.Add(new TranscriptSegment(text, DateTime.Now, isFinal));
-        InvokeAsync(StateHasChanged);
-    }
-    public void Clear() { _segments.Clear(); InvokeAsync(StateHasChanged); }
+    public void AddSegment(string text, bool isFinal = true) => State.AddTranscript(text, isFinal);
+
+    public void Clear() => State.ClearTranscript();
+
+    private void HandleStateChanged(object? sender, EventArgs args) => _ = InvokeAsync(StateHasChanged);
+
+    public void Dispose() => State.Changed -= HandleStateChanged;
 }

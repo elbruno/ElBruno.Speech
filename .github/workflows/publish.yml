@@ -75,6 +75,35 @@ jobs:
           /p:Version=${{ steps.version.outputs.value }}
           --output ./artifacts/packages
 
+      - name: Verify expected packages
+        shell: bash
+        run: |
+          expected=(
+            "ElBruno.Speech.Abstractions"
+            "ElBruno.Speech.Audio"
+            "ElBruno.Speech.Vad.Silero"
+            "ElBruno.Speech.Pipeline"
+            "ElBruno.Speech.AspNetCore"
+            "ElBruno.Speech.NAudio"
+            "ElBruno.Speech.OpenTelemetry"
+            "ElBruno.Speech.Cli"
+            "ElBruno.Speech.BlazorComponents"
+          )
+
+          for package in "${expected[@]}"; do
+            if ! compgen -G "./artifacts/packages/${package}.*.nupkg" > /dev/null; then
+              echo "::error::Expected package was not produced: ${package}"
+              exit 1
+            fi
+          done
+
+          actual_count=$(find ./artifacts/packages -maxdepth 1 -type f -name '*.nupkg' ! -name '*.symbols.nupkg' | wc -l)
+          if [ "$actual_count" -ne "${#expected[@]}" ]; then
+            echo "::error::Expected ${#expected[@]} packages, found ${actual_count}"
+            exit 1
+          fi
+          echo "✅ Verified ${actual_count} NuGet packages, including ElBruno.Speech.BlazorComponents"
+
       - name: NuGet login (OIDC → temp API key)
         uses: NuGet/login@v1
         id: login

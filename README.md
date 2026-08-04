@@ -36,13 +36,13 @@ Audio output
 
 ## What's New
 
-| Version | Feature |
-|---------|---------|
-| 1.1.0 | **BlazorComponents** — `ElBruno.Speech.BlazorComponents` RCL with 6 ready-to-use speech pipeline UI components |
-| 1.0.0 | **First Stable Release** — all 7 phases complete, 70+ tests, OpenTelemetry, CLI tool, Aspire sample |
-| 0.6.0 | **Dependency updates** — MEAI 10.8.1, ONNX Runtime 1.28.0, Extensions 10.0.10 |
-| 0.5.4 | **Production hardening** — STT timeout, error isolation per pipeline stage |
-| 0.5.3 | **MEAI IRealtimeClient adapter** — `SpeechPipelineRealtimeAdapter` wrapping pipeline as `IRealtimeClient` |
+| Date | Version | Highlights |
+|------|---------|------------|
+| 2026-08-02 | 1.1.0 | **BlazorComponents** — `ElBruno.Speech.BlazorComponents` Razor Class Library with six ready-to-use speech pipeline UI components |
+| 2026-08-02 | 1.0.0 | **First stable release** — production pipeline, 70+ tests, OpenTelemetry, CLI tool, and Aspire sample |
+| 2026-07-30 | 0.6.0 | **Dependency updates** — MEAI 10.8.1, ONNX Runtime 1.28.0, and Extensions 10.0.10 |
+| 2026-07-21 | 0.5.4 | **Production hardening** — STT timeout and error isolation per pipeline stage |
+| 2026-07-05 | 0.5.3 | **MEAI `IRealtimeClient` adapter** — `SpeechPipelineRealtimeAdapter` wrapping the pipeline as an `IRealtimeClient` |
 
 ## Packages
 
@@ -203,4 +203,3 @@ If you like this project, consider following my work across platforms:
 - [Silero VAD](https://github.com/snakers4/silero-vad) — voice activity detection model
 - [ONNX Runtime](https://github.com/microsoft/onnxruntime) — local model inference
 - [NAudio](https://github.com/naudio/NAudio) — Windows audio I/O
-
