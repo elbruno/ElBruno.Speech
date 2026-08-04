@@ -1,11 +1,12 @@
 @namespace ElBruno.Speech.BlazorComponents
+@using System.Globalization
 @implements IDisposable
 @inject SpeechStateService State
 <div class="vad-visualizer">
     <div class="vad-bar-track">
         <div class="vad-bar-fill @(IsSpeech ? "speech" : "silence")" style="width: @((int)(EffectiveProbability * 100))%"></div>
     </div>
-    @if (ShowProbabilityLabel) { <span class="vad-prob">@EffectiveProbability.ToString("P0")</span> }
+    @if (ShowProbabilityLabel) { <span class="vad-prob">@FormatProbability()</span> }
 </div>
 
 @code {
@@ -16,6 +17,10 @@
     private float EffectiveProbability => _probabilityProvided
         ? Math.Clamp(Probability, 0f, 1f)
         : State.VadProbability;
+
+    private string FormatProbability() =>
+        MathF.Round(EffectiveProbability * 100f).ToString(CultureInfo.InvariantCulture) + "%";
+
     public bool IsSpeech => EffectiveProbability >= 0.5f;
 
     public void UpdateProbability(float probability) {

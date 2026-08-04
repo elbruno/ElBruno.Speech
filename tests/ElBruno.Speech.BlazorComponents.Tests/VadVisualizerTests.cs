@@ -1,3 +1,5 @@
+using System.Globalization;
+
 public class VadVisualizerTests : BunitContext
 {
     public VadVisualizerTests()
@@ -12,6 +14,23 @@ public class VadVisualizerTests : BunitContext
         cut.Find(".vad-bar-fill").ClassList.Should().Contain("silence");
         cut.Find(".vad-bar-fill").GetAttribute("style").Should().Be("width: 0%");
         cut.Find(".vad-prob").TextContent.Should().Be("0%");
+    }
+
+    [Fact]
+    public void Probability_label_is_culture_independent()
+    {
+        var previousCulture = CultureInfo.CurrentCulture;
+        try
+        {
+            CultureInfo.CurrentCulture = CultureInfo.GetCultureInfo("fr-FR");
+            var cut = Render<VadVisualizer>(p => p.Add(x => x.Probability, 0f));
+
+            cut.Find(".vad-prob").TextContent.Should().Be("0%");
+        }
+        finally
+        {
+            CultureInfo.CurrentCulture = previousCulture;
+        }
     }
 
     [Fact]
