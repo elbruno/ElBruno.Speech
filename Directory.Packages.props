@@ -25,7 +25,7 @@
     <!-- OpenTelemetry -->
     <PackageVersion Include="OpenTelemetry" Version="1.17.0" />
     <PackageVersion Include="OpenTelemetry.Api" Version="1.19.1" />
-    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.18.0" />
+    <PackageVersion Include="OpenTelemetry.Extensions.Hosting" Version="1.19.1" />
 
     <!-- NAudio (isolated to ElBruno.Speech.NAudio) -->
     <PackageVersion Include="NAudio" Version="2.3.0" />
