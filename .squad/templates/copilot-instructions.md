@@ -2,19 +2,13 @@
 
 You are working on a project that uses **Squad**, an AI team framework. When picking up issues autonomously, follow these guidelines.
 
-## Coordinator Canary Check
+## Copilot and Squad session scope
 
-**IMPORTANT — run this check on EVERY session start, before doing any work:**
+Normal Copilot sessions do not load the custom Squad coordinator and do not need it to work on this repository. Do not run a coordinator canary check, emit a missing-coordinator warning, or adopt the coordinator role in a normal Copilot session.
 
-Look for the exact token `SQUAD_COORDINATOR_CANARY_a8f3` in your `agent_instructions`. This token is placed at the end of `squad.agent.md`. If it is missing, the coordinator file is missing or truncated.
+Squad is opt-in: select the **Squad** custom agent in your client, or start the CLI with `copilot --agent squad`. Only that agent loads `.github/agents/squad.agent.md` and runs its coordinator integrity check. If the coordinator cannot be loaded completely, stop Squad orchestration; do not manufacture a canary or bypass its safety rules.
 
-**When the token is missing, you MUST:**
-1. **STOP** — do not proceed with standard Squad behavior.
-2. **WARN the user** with this exact message:
-   ```
-   ⚠️ Squad coordinator (squad.agent.md) appears to be missing or truncated. The canary token was not found. Do NOT proceed with standard Squad behavior — Squad's safety rails are not loaded. Please restart your session.
-   ```
-3. Do not continue with normal Squad routing, spawning, PR, or branch-protection behavior after emitting the warning.
+The Squad-specific instructions below apply only when working on an explicitly Squad-managed task (for example, an issue labeled `squad:*`). Otherwise, use the normal Copilot workflow.
 
 ## Team Context
 
