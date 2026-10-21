@@ -177,6 +177,22 @@ dotnet test --filter "Category!=Integration"
 
 ---
 
+## Working with Copilot and Squad
+
+Normal Copilot sessions can work on this repository without loading Squad.
+Squad is optional: select the **Squad** custom agent in your client or run
+`copilot --agent squad` to use its team orchestration and safety rules.
+The coordinator integrity check runs only in that custom agent.
+
+If a normal session reports that the Squad coordinator is missing or truncated,
+update your checkout to include the instruction-scope fix and start a **new
+Copilot session** so it reloads `.github/copilot-instructions.md`. Existing
+sessions can retain the old instructions. If you select Squad and its loaded
+instructions are incomplete, stop orchestration and restart with the complete
+custom agent; do not add a canary to bypass the check.
+
+---
+
 ## 📄 License
 
 MIT — see [LICENSE](LICENSE).
