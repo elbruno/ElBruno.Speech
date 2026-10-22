@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <PackageId>ElBruno.Speech.Stt.Parakeet</PackageId>
+    <Description>Opt-in local multilingual Parakeet TDT v3 speech recognition with ONNX Runtime.</Description>
+    <PackageTags>speech;stt;parakeet;onnx;multilingual</PackageTags>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="..\..\tools\parakeet\THIRD_PARTY_NOTICES.txt" Pack="true" PackagePath="\" />
+    <ProjectReference Include="..\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+    <PackageReference Include="Microsoft.Extensions.AI.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Include="Microsoft.ML.OnnxRuntime" />
+  </ItemGroup>
+  <ItemGroup>
+    <AssemblyAttribute Include="System.Runtime.CompilerServices.InternalsVisibleToAttribute">
+      <_Parameter1>ElBruno.Speech.Stt.Parakeet.Tests</_Parameter1>
+    </AssemblyAttribute>
+  </ItemGroup>
+</Project>

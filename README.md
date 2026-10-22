@@ -115,6 +115,15 @@ await foreach (var update in session.GetUpdatesAsync())
 
 ---
 
+## Experimental multilingual Parakeet STT
+
+An opt-in local Parakeet TDT v3 provider is available from source in
+`ElBruno.Speech.Stt.Parakeet`, using the verified
+[elbruno ONNX model bundle](https://huggingface.co/elbruno/parakeet-tdt-0.6b-v3-onnx).
+It supports Spanish and other model languages without changing Whisper defaults.
+Native token-start metadata is preserved; word/segment intervals and language ID
+are explicitly unavailable. See [usage, requirements, and evaluation limits](docs/parakeet.md).
+
 ## CLI Tool
 
 ```bash
@@ -141,6 +150,7 @@ builder.Services.AddOpenTelemetry()
 | Sample | Description |
 |--------|-------------|
 | `FileToSpeech` | WAV file → transcript → answer → WAV output |
+| `ParakeetTranscribe` | Local WAV → Parakeet transcript and native token-start JSON (opt-in) |
 | `LocalVoiceAgent` | Microphone → VAD → Whisper → LLM → VibeVoice → speaker (barge-in) |
 | `WebSocketVoiceAgent` | ASP.NET Core WebSocket endpoint + browser client |
 | `AspireVoiceAgent` | Full Aspire AppHost with tracing, metrics, and dashboard |
