@@ -17,6 +17,7 @@ on:
 
 jobs:
   build-test-pack-publish:
+    if: github.event_name != 'release' || !startsWith(github.event.release.tag_name, 'speech-fixtures-')
     runs-on: ubuntu-latest
     environment: release
     permissions:

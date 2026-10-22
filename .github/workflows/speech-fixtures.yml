@@ -1,0 +1,99 @@
+name: Speech fixture evaluation and bundle
+
+on:
+  workflow_dispatch:
+    inputs:
+      publish_bundle:
+        description: Publish immutable fixture archive after review (main branch only, no NuGet)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure evaluation directories
+        run: |
+          echo "PARAKEET_MODEL_DIRECTORY=$RUNNER_TEMP/speech-fixture-model" >> "$GITHUB_ENV"
+          echo "SPEECH_FIXTURES_REPORT_DIRECTORY=$RUNNER_TEMP/speech-fixture-reports" >> "$GITHUB_ENV"
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: |
+            8.0.x
+            10.0.x
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Offline fixture and scoring checks
+        run: |
+          python tools/speech-fixtures/fixtures.py verify
+          python -m unittest discover -s tools/speech-fixtures -p "test_*.py"
+          dotnet test tests/ElBruno.Speech.Fixtures.Tests --configuration Release
+      - name: Cache pinned model
+        uses: actions/cache@v5
+        with:
+          path: ${{ env.PARAKEET_MODEL_DIRECTORY }}
+          key: parakeet-fixtures-${{ runner.os }}-2a5f66ac53dfc1c817e75609d9903d75b4ec5895-${{ hashFiles('src/ElBruno.Speech.Stt.Parakeet/ParakeetModel.cs') }}
+      - name: Explicit model download or cache verification and full evaluation
+        run: >
+          dotnet test tests/ElBruno.Speech.Stt.Parakeet.Tests
+          --configuration Release --framework net10.0
+          --filter "Category=SpeechFixtureEvaluation"
+          --logger "trx;LogFileName=fleurs.trx"
+          --results-directory "${{ runner.temp }}/speech-fixture-reports"
+      - name: Require complete evaluation report
+        run: |
+          python tools/speech-fixtures/check_report.py "$SPEECH_FIXTURES_REPORT_DIRECTORY/fleurs-10.json"
+      - name: Upload evaluation evidence
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: speech-fixture-evaluation
+          path: ${{ env.SPEECH_FIXTURES_REPORT_DIRECTORY }}
+          if-no-files-found: error
+
+  bundle:
+    needs: evaluate
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Package and verify extracted bundle
+        run: |
+          python tools/speech-fixtures/fixtures.py pack --output "$RUNNER_TEMP/bundle"
+          python -m zipfile -e "$RUNNER_TEMP/bundle/speech-fixtures-v1.0.0.zip" "$RUNNER_TEMP/extracted"
+          python tools/speech-fixtures/fixtures.py verify --bundle "$RUNNER_TEMP/extracted"
+      - uses: actions/upload-artifact@v7
+        with:
+          name: speech-fixtures-v1.0.0
+          path: ${{ runner.temp }}/bundle/*
+      - name: Publish fixture release after review
+        if: inputs.publish_bundle
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ "$GITHUB_REF" != "refs/heads/main" ]; then
+            echo "::error::Fixture publication requires reviewed content on main."
+            exit 1
+          fi
+          gh release create speech-fixtures-v1.0.0 \
+            "$RUNNER_TEMP/bundle/speech-fixtures-v1.0.0.zip" \
+            "$RUNNER_TEMP/bundle/speech-fixtures-v1.0.0.zip.sha256" \
+            --target "$GITHUB_SHA" \
+            --title "Speech fixtures 1.0.0" \
+            --notes-file tools/speech-fixtures/release-notes.md \
+            --latest=false
+          mkdir "$RUNNER_TEMP/download-check"
+          gh release download speech-fixtures-v1.0.0 --dir "$RUNNER_TEMP/download-check"
+          cd "$RUNNER_TEMP/download-check"
+          sha256sum --check speech-fixtures-v1.0.0.zip.sha256

@@ -187,6 +187,11 @@ dotnet test --filter "Category!=Integration"
 
 ---
 
+## Speech test fixtures
+
+Reusable Spanish/English speech fixtures, CC BY 4.0 licensing, offline validation,
+and opt-in model evaluation are documented in [Speech test fixtures](docs/speech-fixtures.md).
+
 ## Working with Copilot and Squad
 
 Normal Copilot sessions can work on this repository without loading Squad.
@@ -206,6 +211,9 @@ custom agent; do not add a canary to bypass the check.
 ## 📄 License
 
 MIT — see [LICENSE](LICENSE).
+
+The FLEURS audio and reference transcripts under `tests/fixtures/speech` are
+separately licensed CC BY 4.0. See their attribution and license notices.
 
 ---
 

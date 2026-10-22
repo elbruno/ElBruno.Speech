@@ -65,6 +65,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElBruno.Speech.Stt.Parakeet
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParakeetTranscribe", "src\samples\ParakeetTranscribe\ParakeetTranscribe.csproj", "{E8AD40DC-C742-40B8-A1C0-297C355B9CF7}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElBruno.Speech.Fixtures.Tests", "tests\ElBruno.Speech.Fixtures.Tests\ElBruno.Speech.Fixtures.Tests.csproj", "{3F925326-4B3D-410E-8F4D-C798D51B05BC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -399,6 +401,18 @@ Global
 		{E8AD40DC-C742-40B8-A1C0-297C355B9CF7}.Release|x64.Build.0 = Release|Any CPU
 		{E8AD40DC-C742-40B8-A1C0-297C355B9CF7}.Release|x86.ActiveCfg = Release|Any CPU
 		{E8AD40DC-C742-40B8-A1C0-297C355B9CF7}.Release|x86.Build.0 = Release|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Debug|x64.Build.0 = Debug|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Debug|x86.Build.0 = Debug|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Release|x64.ActiveCfg = Release|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Release|x64.Build.0 = Release|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Release|x86.ActiveCfg = Release|Any CPU
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -432,5 +446,6 @@ Global
 		{6751D2AF-ADCA-46A9-94CE-D8824C92F3FE} = {D0BDB2AA-05BB-4C02-8951-498CA481091D}
 		{0BF95436-672A-4482-B519-9D8509824913} = {A825FC0C-2942-4C9A-9819-B2970F7EB71E}
 		{E8AD40DC-C742-40B8-A1C0-297C355B9CF7} = {2A9C1A32-8681-401E-B0AE-8E86D098FA15}
+		{3F925326-4B3D-410E-8F4D-C798D51B05BC} = {A825FC0C-2942-4C9A-9819-B2970F7EB71E}
 	EndGlobalSection
 EndGlobal

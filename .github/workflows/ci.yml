@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-and-test:
-    name: Build and Test (${{ matrix.os }}, .NET ${{ matrix.dotnet }})
+    name: Build and Test (${{ matrix.os }}, .NET 8 and 10)
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -35,6 +35,16 @@ jobs:
 
       - name: Build
         run: dotnet build ElBruno.Speech.sln --configuration Release --no-restore
+
+      - name: Setup Python for offline fixture tooling checks
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Verify reusable speech fixtures
+        run: |
+          python tools/speech-fixtures/fixtures.py verify
+          python -m unittest discover -s tools/speech-fixtures -p "test_*.py"
 
       - name: Test
         run: >
@@ -83,3 +93,21 @@ jobs:
         with:
           name: nuget-packages
           path: ./artifacts/packages/*.nupkg
+
+      - name: Setup Python for fixture archive
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+
+      - name: Package reusable fixture archive
+        run: |
+          python tools/speech-fixtures/fixtures.py pack --output ./artifacts/speech-fixtures
+          python -m zipfile -e ./artifacts/speech-fixtures/speech-fixtures-v1.0.0.zip ./artifacts/extracted-fixtures
+          python tools/speech-fixtures/fixtures.py verify --bundle ./artifacts/extracted-fixtures
+
+      - name: Upload reusable fixture archive
+        uses: actions/upload-artifact@v7
+        with:
+          name: speech-fixtures-v1.0.0
+          path: ./artifacts/speech-fixtures/*
+          if-no-files-found: error
