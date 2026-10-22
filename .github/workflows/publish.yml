@@ -89,6 +89,7 @@ jobs:
             "ElBruno.Speech.Audio"
             "ElBruno.Speech.Vad.Silero"
             "ElBruno.Speech.Stt.Parakeet"
+            "ElBruno.Speech.Stt.Whisper"
             "ElBruno.Speech.Pipeline"
             "ElBruno.Speech.AspNetCore"
             "ElBruno.Speech.NAudio"

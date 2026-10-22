@@ -2,11 +2,14 @@
 
 `ElBruno.Speech.Stt.Parakeet` is an opt-in `ISpeechToTextClient` for local,
 multilingual transcription. It does not replace Whisper, change pipeline defaults,
-or require a cloud inference service. The provider is available from source;
-no NuGet release is part of this change.
+or require a cloud inference service. The provider was released in
+[`1.6.0-preview.1`](https://github.com/elbruno/ElBruno.Speech/releases/tag/v1.6.0-preview.1).
+See the [prerelease notes](releases/1.6.0-preview.1.md).
 
-The proposed distribution is `1.6.0-preview.1`, pending API and release review.
-See the [prerelease notes and publishing checklist](releases/1.6.0-preview.1.md).
+The subsequent [fixed-reference comparison](speech-benchmark.md) evaluates
+INT8, FP32, and Whisper large-v3 without changing this provider's model or
+pipeline defaults. The new Whisper provider remains source-only pending its
+own review and release.
 
 ## Model and runtime
 

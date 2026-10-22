@@ -1,4 +1,3 @@
-using System.Buffers.Binary;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using ElBruno.Speech.Audio;
@@ -44,16 +43,8 @@ public sealed class ParakeetSpeechToTextClient : ISpeechToTextClient
         try
         {
             ObjectDisposedException.ThrowIf(_disposed, this);
-            using var data = new MemoryStream();
-            byte[] buffer = new byte[8192];
-            int read;
-            while ((read = await audioStream.ReadAsync(buffer, cancellationToken).ConfigureAwait(false)) > 0)
-            {
-                if (data.Length + read > _options.MaxInputBytes)
-                    throw new InvalidDataException($"Audio exceeds MaxInputBytes ({_options.MaxInputBytes}).");
-                data.Write(buffer, 0, read);
-            }
-            var pcm = ReadPcm(data.ToArray(), _options.InputFormat);
+            var pcm = await Pcm16AudioInput.ReadAsync(audioStream, (Pcm16InputFormat)_options.InputFormat,
+                _options.MaxInputBytes, cancellationToken).ConfigureAwait(false);
             var tokens = await Task.Run(() => Transcribe(pcm, cancellationToken), cancellationToken).ConfigureAwait(false);
             string text = DecodeText(tokens);
             var result = new ParakeetTranscript(text, tokens.AsReadOnly());
@@ -114,57 +105,7 @@ public sealed class ParakeetSpeechToTextClient : ISpeechToTextClient
     }
 
     internal static byte[] ReadPcm(byte[] data, ParakeetInputFormat format)
-    {
-        ReadOnlyMemory<byte> pcm = data;
-        if (format == ParakeetInputFormat.Wav)
-        {
-            if (data.Length < 44 || !data.AsSpan(0, 4).SequenceEqual("RIFF"u8) ||
-                !data.AsSpan(8, 4).SequenceEqual("WAVE"u8) ||
-                BinaryPrimitives.ReadUInt32LittleEndian(data.AsSpan(4)) != data.Length - 8)
-                throw new InvalidDataException("Expected a complete RIFF/WAVE PCM16 file.");
-            bool foundFormat = false, foundData = false;
-            int offset = 12;
-            while (offset <= data.Length - 8)
-            {
-                uint length = BinaryPrimitives.ReadUInt32LittleEndian(data.AsSpan(offset + 4));
-                if (length > data.Length - offset - 8)
-                    throw new InvalidDataException("Truncated WAV chunk.");
-                var chunk = data.AsSpan(offset, 4);
-                if (chunk.SequenceEqual("fmt "u8))
-                {
-                    if (foundFormat || length < 16 ||
-                        BinaryPrimitives.ReadUInt16LittleEndian(data.AsSpan(offset + 8)) != 1 ||
-                        BinaryPrimitives.ReadUInt16LittleEndian(data.AsSpan(offset + 10)) != 1 ||
-                        BinaryPrimitives.ReadUInt32LittleEndian(data.AsSpan(offset + 12)) != 16000 ||
-                        BinaryPrimitives.ReadUInt32LittleEndian(data.AsSpan(offset + 16)) != 32000 ||
-                        BinaryPrimitives.ReadUInt16LittleEndian(data.AsSpan(offset + 20)) != 2 ||
-                        BinaryPrimitives.ReadUInt16LittleEndian(data.AsSpan(offset + 22)) != 16)
-                        throw new InvalidDataException("WAV input must be mono 16 kHz PCM16.");
-                    foundFormat = true;
-                }
-                if (chunk.SequenceEqual("data"u8))
-                {
-                    if (!foundFormat || foundData)
-                        throw new InvalidDataException("Expected one data chunk after fmt.");
-                    foundData = true;
-                }
-                long next = offset + 8L + length + (length & 1);
-                if (next > data.Length)
-                    throw new InvalidDataException("Missing WAV padding byte.");
-                offset = checked((int)next);
-            }
-            if (!foundFormat || !foundData || offset != data.Length)
-                throw new InvalidDataException("Incomplete WAV structure.");
-            pcm = WavReader.ParseWav(data).Samples;
-        }
-        else if (data.AsSpan().StartsWith("RIFF"u8))
-        {
-            throw new InvalidDataException("Select ParakeetInputFormat.Wav for WAV-wrapped input.");
-        }
-        if ((pcm.Length & 1) != 0)
-            throw new InvalidDataException("PCM16 input contains an incomplete sample.");
-        return pcm.ToArray();
-    }
+        => Pcm16AudioInput.Parse(data, (Pcm16InputFormat)format);
 
     public async IAsyncEnumerable<SpeechToTextResponseUpdate> GetStreamingTextAsync(Stream audioStream,
         SpeechToTextOptions? options = null, [EnumeratorCancellation] CancellationToken cancellationToken = default)

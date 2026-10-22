@@ -90,6 +90,13 @@ replaced by synthetic audio or model references.
 
 ## Real-model evaluation
 
+For a fixed-reference INT8/FP32 Parakeet versus Whisper large-v3 CPU comparison,
+see the [benchmark commands and measurement limits](../tools/speech-benchmark/README.md).
+The [recorded comparison](speech-benchmark.md) preserves all hypotheses and
+explains why a larger or higher-precision model is not automatically better.
+The separate [Whisper provider](whisper.md) uses this same immutable bundle and
+scorer. Its real-model evaluations are opt-in, not ordinary CI downloads.
+
 Explicit local invocation:
 
 ```powershell

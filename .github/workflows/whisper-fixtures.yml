@@ -1,0 +1,45 @@
+name: Whisper large-v3 fixture evaluation
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  evaluate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v7
+      - name: Configure explicit model and report paths
+        run: |
+          echo "WHISPER_MODEL_PATH=$RUNNER_TEMP/whisper-large-v3/ggml-large-v3.bin" >> "$GITHUB_ENV"
+          echo "SPEECH_FIXTURES_REPORT_DIRECTORY=$RUNNER_TEMP/whisper-reports" >> "$GITHUB_ENV"
+      - uses: actions/setup-dotnet@v6
+        with:
+          dotnet-version: '10.0.x'
+      - uses: actions/setup-python@v6
+        with:
+          python-version: '3.12'
+      - name: Cache immutable model
+        uses: actions/cache@v5
+        with:
+          path: ${{ runner.temp }}/whisper-large-v3
+          key: whisper-large-v3-${{ runner.os }}-5359861c739e955e79d9a303bcbc70fb988958b1-64d182b440b98d5203c4f9bd541544d84c605196c4f7b845dfa11fb23594d1e2
+      - name: Explicitly download or verify and evaluate all fixtures
+        run: >
+          dotnet test tests/ElBruno.Speech.Stt.Whisper.Tests
+          --configuration Release --framework net10.0
+          --filter "Category=WhisperFixtureEvaluation"
+          --logger "trx;LogFileName=whisper-fleurs.trx"
+          --results-directory "${{ env.SPEECH_FIXTURES_REPORT_DIRECTORY }}"
+      - name: Require complete and internally consistent evidence
+        run: python tools/speech-benchmark/check_report.py "$SPEECH_FIXTURES_REPORT_DIRECTORY/whisper-fleurs-10.json"
+      - name: Upload evidence including partial failures
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: whisper-large-v3-evaluation
+          path: ${{ env.SPEECH_FIXTURES_REPORT_DIRECTORY }}
+          if-no-files-found: error
