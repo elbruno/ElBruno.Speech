@@ -8,6 +8,8 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <IncludeSpeechFixtures Condition="'$(IncludeSpeechFixtures)' == '' AND '$(GITHUB_ACTIONS)' == 'true'">false</IncludeSpeechFixtures>
+    <IncludeSpeechFixtures Condition="'$(IncludeSpeechFixtures)' == ''">true</IncludeSpeechFixtures>
     <!-- MEAI speech/TTS APIs are experimental by design — suppress until stable -->
     <!-- CS1591: enforce XML docs per-package when implementing, not at scaffold stage -->
     <!-- NU5118: README.md duplicate — SDK auto-includes for some TFMs, our explicit include is deduped safely -->

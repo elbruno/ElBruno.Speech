@@ -71,7 +71,7 @@ jobs:
           dotnet test ElBruno.Speech.sln
           --configuration Release
           --no-build
-          --filter "Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
+          --filter "Category!=AudioFixture&Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
 
       - name: Pack
         run: >

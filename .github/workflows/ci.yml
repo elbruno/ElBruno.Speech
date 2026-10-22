@@ -36,27 +36,12 @@ jobs:
       - name: Build
         run: dotnet build ElBruno.Speech.sln --configuration Release --no-restore
 
-      - name: Setup Python for offline fixture tooling checks
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-
-      - name: Verify reusable speech fixtures
-        run: |
-          python tools/speech-fixtures/fixtures.py verify
-          python -m unittest discover -s tools/speech-fixtures -p "test_*.py"
-          python -m unittest discover -s tools/speech-benchmark -p "test_*.py"
-          python tools/speech-benchmark/check_report.py docs/benchmarks/speech-fixtures-v1/int8.json
-          python tools/speech-benchmark/check_report.py docs/benchmarks/speech-fixtures-v1/fp32.json
-          python tools/speech-benchmark/check_report.py docs/benchmarks/speech-fixtures-v1/whisper.json
-          python tools/speech-benchmark/check_report.py docs/benchmarks/speech-fixtures-v1/whisper-provider.json
-
       - name: Test
         run: >
           dotnet test ElBruno.Speech.sln
           --configuration Release
           --no-build
-          --filter "Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
+          --filter "Category!=AudioFixture&Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
           --logger "trx;LogFileName=test-results.trx"
           --collect "XPlat Code Coverage"
 
@@ -98,21 +83,3 @@ jobs:
         with:
           name: nuget-packages
           path: ./artifacts/packages/*.nupkg
-
-      - name: Setup Python for fixture archive
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
-
-      - name: Package reusable fixture archive
-        run: |
-          python tools/speech-fixtures/fixtures.py pack --output ./artifacts/speech-fixtures
-          python -m zipfile -e ./artifacts/speech-fixtures/speech-fixtures-v1.0.0.zip ./artifacts/extracted-fixtures
-          python tools/speech-fixtures/fixtures.py verify --bundle ./artifacts/extracted-fixtures
-
-      - name: Upload reusable fixture archive
-        uses: actions/upload-artifact@v7
-        with:
-          name: speech-fixtures-v1.0.0
-          path: ./artifacts/speech-fixtures/*
-          if-no-files-found: error

@@ -123,7 +123,9 @@ dotnet test tests\ElBruno.Speech.Stt.Whisper.Tests -c Release -f net8.0 --filter
 The first command explicitly downloads/verifies the pinned model, transcribes
 all twenty versioned FLEURS fixtures with the shared scorer, and saves complete
 or partial JSON evidence. The smoke test requires the prepared cache and checks
-native cancellation/reuse plus Spanish detection. Accuracy thresholds remain
+native cancellation/reuse plus Spanish detection. Run these locally before a
+major release or a model upgrade/addition, not in GitHub Actions. Retain the
+reports with release/model review evidence. Accuracy thresholds remain
 unapproved. The read-speech bundle provides no reviewed timestamp references
 and does not close the podcast evaluation requirement in issue #101.
 
@@ -131,9 +133,9 @@ Use the [comparison tool](../tools/speech-benchmark/README.md) for warmed,
 isolated performance runs. Provider integration tests include cold inference
 and should not be mixed into those timings.
 The [recorded comparison](speech-benchmark.md) explains the measured quality
-and CPU cost tradeoff. The manual **Whisper large-v3 fixture evaluation**
-workflow runs the opt-in full evaluation on Ubuntu and preserves JSON/TRX
-evidence, including partial failures. It never publishes packages or fixtures.
+and CPU cost tradeoff. No GitHub Actions audio-evaluation workflow is included;
+the [local evaluation policy](speech-fixtures.md#offline-checks-and-reproducibility)
+separates recorded-audio checks from lightweight CI unit tests.
 
 ## Licensing and release review
 

@@ -8,6 +8,11 @@ thresholds. All hypotheses are scored by the existing .NET
 The [recorded comparison and recommendation](../../docs/speech-benchmark.md)
 includes the complete public-reference JSON reports.
 
+Run this comparison **locally before a major release, a model upgrade, or a new
+model/provider addition**. It is not a GitHub Actions job. Keep reviewed local
+reports with the release/model-change evidence. Normal CI retains lightweight
+scorer and synthetic-input unit tests, not recorded-audio evaluation or archives.
+
 ## Reproduce on Windows
 
 Use .NET 10 and Python 3.11+. Model downloads are explicit: comparison models

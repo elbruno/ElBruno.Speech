@@ -7,6 +7,7 @@ using Xunit;
 
 namespace ElBruno.Speech.Fixtures.Tests;
 
+[Trait("Category", "AudioFixture")]
 public sealed class SpeechFixtureTests : IDisposable
 {
     private static string Bundle => Path.Combine(AppContext.BaseDirectory, "speech-fixtures");

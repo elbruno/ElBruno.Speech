@@ -8,6 +8,7 @@ using Xunit;
 
 namespace ElBruno.Speech.Stt.Parakeet.Tests;
 
+[Trait("Category", "AudioFixture")]
 public sealed class FleursEvaluationTests
 {
     private static readonly JsonSerializerOptions JsonOptions = new()

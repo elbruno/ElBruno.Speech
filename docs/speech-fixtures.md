@@ -58,7 +58,23 @@ join their components using your platform's filesystem API.
 
 ## Offline checks and reproducibility
 
-Run from the repository root, using Python 3.11+ and the repository's .NET SDK:
+**Audio-fixture tests and real-model benchmarks are local-only release/model
+checks.** Run them before a major release, when upgrading model assets or runtime
+behavior, or when adding a model/provider. They are not part of GitHub Actions,
+including the NuGet publishing workflow. Review the saved results before release;
+the publishing workflow still runs build, lightweight unit tests, pack, and
+complete package-presence checks.
+
+Ordinary CI retains scorer unit tests using strings and provider/audio contract
+tests using tiny synthetic in-memory inputs. It does not read the recorded audio,
+run fixture tooling, download models, evaluate recordings, or package/upload
+fixture archives. `AudioFixture` categorizes recorded-audio tests and is excluded
+by both CI and publishing test filters. `IncludeSpeechFixtures` defaults to false
+inside GitHub Actions, so builds do not copy the recorded fixture bundle to test
+outputs. Locally it defaults to true; it can be set explicitly with
+`-p:IncludeSpeechFixtures=true`.
+
+Run locally from the repository root, using Python 3.11+ and the repository's .NET SDK:
 
 ```powershell
 python tools\speech-fixtures\fixtures.py verify
@@ -67,8 +83,7 @@ dotnet test tests\ElBruno.Speech.Fixtures.Tests --configuration Release
 ```
 
 These commands need no models, credentials, package-specific speech provider, or
-dataset access after normal .NET restore. CI runs offline fixture/scorer checks on
-Windows and Ubuntu for .NET 8 and .NET 10. Validation includes counts, distinct
+dataset access after normal .NET restore. Local validation includes counts, distinct
 sentences, size, provenance, safe paths, exact file inventory, hashes, WAV headers,
 and malformed/corrupt input cases.
 
@@ -95,7 +110,7 @@ see the [benchmark commands and measurement limits](../tools/speech-benchmark/RE
 The [recorded comparison](speech-benchmark.md) preserves all hypotheses and
 explains why a larger or higher-precision model is not automatically better.
 The separate [Whisper provider](whisper.md) uses this same immutable bundle and
-scorer. Its real-model evaluations are opt-in, not ordinary CI downloads.
+scorer. All recorded-audio evaluations are local, not GitHub Actions jobs.
 
 Explicit local invocation:
 
@@ -111,13 +126,11 @@ all cached assets when present. It loads a client once per framework, evaluates 
 twenty clips, and writes a report per framework. Existing Python/.NET
 implementation-parity tests remain separate and unchanged.
 
-The manual **Speech fixture evaluation and bundle** workflow uses an Ubuntu 24.04
-CPU runner with .NET 10, immutable model/cache identifiers, hash verification,
-complete-coverage checks, and uploaded JSON/TRX reports. Ordinary pull requests
-never download the model. Reports preserve per-clip hypotheses and scores, model
+Retain local JSON reports with the reviewed release/model-change evidence.
+Reports preserve per-clip hypotheses and scores, model
 and dataset revisions, framework/ONNX versions, language/corpus totals, timing,
 coverage, and threshold status. Partial inference runs write partial reports and
-fail; absent reports also fail the workflow.
+fail; the local report checker rejects incomplete evidence.
 
 ### Scoring policy and baseline
 
@@ -173,7 +186,7 @@ No automatic baseline update occurs.
 
 For an intentional new baseline only, `SPEECH_FIXTURES_RECORD_BASELINE=1` records
 evidence without loading thresholds. The report checker rejects baseline-recording
-reports as configured regression runs, and CI never sets this variable. Do not
+reports as configured regression runs. Do not
 alter selection/references or regenerate limits just to hide a regression.
 
 Native Parakeet metadata contains token starts only. Word-end, segment, and
@@ -247,14 +260,12 @@ The manifest SHA-256 is
 Git attributes disable line-ending conversion for the immutable bundle so these
 digests remain identical on Windows and Linux.
 
-Publication is a separate reviewed operation. Run the manual workflow on `main`
-with `publish_bundle: true` after merging the reviewed implementation. It creates
-the `speech-fixtures-v1.0.0` release, uploads ZIP/checksum assets, downloads them
-again, and verifies the archive digest. The NuGet publishing workflow excludes
+Publication is a separate reviewed operation, not automated by this change.
+After local validation and reviewed merge, a maintainer can publish the locally
+generated ZIP/checksum as a `speech-fixtures-v1.0.0` GitHub release, download them
+again, and verify the archive digest. The NuGet publishing workflow excludes
 the `speech-fixtures-` namespace. A fixture release neither requires nor publishes
-a new NuGet package. Default manual runs upload workflow artifacts only.
-Ordinary CI also packages and verifies the ZIP as a downloadable artifact, without
-running model inference or publishing a release.
+a new NuGet package. GitHub Actions does not evaluate or package the audio bundle.
 
 Once published, other ElBruno repositories can pin the asset version and the
 reviewed ZIP digest in their own test tooling:

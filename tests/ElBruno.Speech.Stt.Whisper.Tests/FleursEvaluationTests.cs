@@ -8,6 +8,7 @@ using Xunit;
 
 namespace ElBruno.Speech.Stt.Whisper.Tests;
 
+[Trait("Category", "AudioFixture")]
 public sealed class FleursEvaluationTests
 {
     [Fact]

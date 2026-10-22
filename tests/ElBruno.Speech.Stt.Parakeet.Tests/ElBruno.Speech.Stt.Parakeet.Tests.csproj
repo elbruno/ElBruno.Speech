@@ -9,7 +9,7 @@
     <PackageReference Include="xunit" />
     <PackageReference Include="xunit.runner.visualstudio" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
-    <None Include="..\fixtures\speech\v1.0.0\**\*" Link="speech-fixtures\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\fixtures\speech\v1.0.0\**\*" Link="speech-fixtures\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Condition="'$(IncludeSpeechFixtures)' == 'true'" />
     <None Include="FleursRegression.json" CopyToOutputDirectory="PreserveNewest" Condition="Exists('FleursRegression.json')" />
   </ItemGroup>
 </Project>
