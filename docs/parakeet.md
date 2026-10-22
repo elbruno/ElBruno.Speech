@@ -138,6 +138,16 @@ INT8 output changed when the Python reference used ONNX Runtime 1.28.0.
 Matching 1.31.0 produced exact text and token-start parity. Re-evaluate both
 text and timing before upgrading the runtime or changing execution providers.
 
+### Independent text references
+
+The [reusable FLEURS fixtures](speech-fixtures.md#scoring-policy-and-baseline)
+provide a separate small independent-reference regression test. Initial WER was
+5.66% English (12 word edits over 212 reference words) and 3.37% Spanish
+(seven over 208). **WER is an error rate: lower is better and 0% is perfect.**
+These are not recognition-success percentages or podcast accuracy measurements.
+See the fixture documentation for scoring limitations and
+[candidate quality improvements](speech-fixtures.md#improving-quality-without-confusing-the-measurements).
+
 ### User-provided podcast recordings
 
 Both complete Spanish recordings supplied by Bruno Capuano were processed locally:

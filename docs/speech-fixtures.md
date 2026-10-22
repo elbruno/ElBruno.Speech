@@ -114,6 +114,28 @@ fail; absent reports also fail the workflow.
 
 ### Scoring policy and baseline
 
+**WER means word error rate, not an accuracy score: lower is better, and 0% is
+perfect.** It counts substitutions (wrong words), deletions (missing words), and
+insertions (extra words), divided by the number of reference words:
+
+```text
+WER = (substitutions + deletions + insertions) / reference words
+```
+
+English WER of 5.66% means 12 word edits over 212 reference words, approximately
+six edits per 100 words. Spanish WER of 3.37% means seven edits over 208 reference
+words, approximately three edits per 100 words. Neither means that only 5.66% or
+3.37% of words were recognized correctly. Do not label `100% - WER` as accuracy:
+insertions also count, and WER can exceed 100%. CER is the analogous character
+error rate, also lower-is-better.
+
+There is no universal good/bad cutoff. A wrong name, amount, or instruction can
+matter more than several spelling differences. These twenty short read-speech
+clips provide preliminary regression evidence, not production acceptance.
+One extra word edit changes the English score by about 0.47 percentage points
+and the Spanish score by about 0.48 percentage points. The lower Spanish value
+does not establish that the model is generally better at Spanish.
+
 Policy `unicode-nfc-lower-punctuation-space-v1` applies NFC normalization and
 invariant lowercase, retains Unicode letters/numbers/combining marks (including
 Spanish accents), replaces other characters with word separators, and collapses
@@ -150,6 +172,53 @@ alter selection/references or regenerate limits just to hide a regression.
 Native Parakeet metadata contains token starts only. Word-end, segment, and
 reviewed timestamp accuracy are unsupported and are explicitly not scored.
 Whisper and other provider adapters can consume the same references later.
+
+### Improving quality without confusing the measurements
+
+First inspect per-clip references and hypotheses. The initial outputs include
+`splendours` versus `splendors` (a spelling variant), `3:2` versus `free to two`
+(number/word representation plus a possible recognition error), and differences
+in proper names and omitted words. These are text comparisons, not adjudicated
+audio findings. Listen before deciding which are genuine recognition errors.
+Keep the original references and primary scoring policy unchanged. Any additional
+spelling/number-normalized metric must have its own documented policy and be
+reported alongside, never substituted to make the baseline look better.
+
+Keep this frozen bundle for fast regression tests. Use a separate, larger
+evaluation set and independently reviewed podcast excerpts for model selection.
+Compare on the same audio and scoring policy, recording WER/CER, names/numbers,
+silence hallucinations, inference time, model size, and peak memory. Do not tune
+models or thresholds on the twenty regression clips and claim held-out accuracy.
+
+As checked on 2026-10-22, the official model catalogue still lists
+[Parakeet TDT 0.6B v3](https://huggingface.co/nvidia/parakeet-tdt-0.6b-v3)
+as a Spanish/English multilingual option. A newer Parakeet family model,
+[Parakeet Unified English 0.6B](https://huggingface.co/nvidia/parakeet-unified-en-0.6b),
+targets English, not a drop-in multilingual upgrade, and has different licensing.
+No newer suitable multilingual Parakeet successor was identified in that search.
+
+Candidate experiments, not implemented provider changes:
+
+| Candidate | Reason to evaluate | Constraint |
+|---|---|---|
+| Existing Parakeet v3, FP32 versus current INT8 | Isolate any quantization-related quality loss before replacing the architecture | Larger assets/memory; verify preprocessing, source checkpoint, decoder and runtime parity; improvement is not guaranteed |
+| [Whisper large-v3](https://huggingface.co/openai/whisper-large-v3) | Independent multilingual architecture and an accuracy-oriented baseline | Measure actual CPU/GPU latency and memory; requires a separately validated adapter/runtime |
+| [Whisper large-v3-turbo](https://huggingface.co/openai/whisper-large-v3-turbo) | Faster multilingual Whisper comparison | Official card describes a speed/quality tradeoff, not guaranteed better accuracy |
+| [Canary 1B v2](https://huggingface.co/nvidia/canary-1b-v2) | NVIDIA multilingual alternative with Spanish support and CC BY 4.0 weights | Different encoder-decoder/tokenizer/runtime integration; not a filename substitution in the TDT decoder |
+
+The official full-FLEURS model cards report Parakeet v3 WER of 4.85% English
+and 3.45% Spanish, and Canary v2 WER of 4.50% English and 2.90% Spanish.
+These vendor-reported figures motivate a comparison, not a reproduced result:
+their evaluation scope/runtime/scoring differs from our twenty-clip INT8 run.
+Do not compare the vendor percentages directly against our subset or promise that
+Canary will improve our recordings.
+
+For long recordings, test pause-aware chunk boundaries and appropriate context
+separately from model selection. Preserve complete coverage and original timeline
+offsets, and measure missing/duplicated words. Denoising or VAD can remove speech;
+neither should become a default just because it improves one example. Avoid an
+LLM rewrite of hypotheses as an apparent recognition improvement, especially for
+names, numbers, or instructions.
 
 ## Versioned archive and other repositories
 
