@@ -103,6 +103,10 @@ jobs:
               echo "::error::Expected package was not produced: ${package}"
               exit 1
             fi
+            if [ ! -f "./artifacts/packages/${package}.${{ steps.version.outputs.value }}.snupkg" ]; then
+              echo "::error::Expected symbol package was not produced: ${package}"
+              exit 1
+            fi
           done
 
           actual_count=$(find ./artifacts/packages -maxdepth 1 -type f -name '*.nupkg' ! -name '*.symbols.nupkg' | wc -l)
@@ -110,7 +114,12 @@ jobs:
             echo "::error::Expected ${#expected[@]} packages, found ${actual_count}"
             exit 1
           fi
-          echo "✅ Verified ${actual_count} NuGet packages, including ElBruno.Speech.BlazorComponents"
+          symbol_count=$(find ./artifacts/packages -maxdepth 1 -type f -name '*.snupkg' | wc -l)
+          if [ "$symbol_count" -ne "${#expected[@]}" ]; then
+            echo "::error::Expected ${#expected[@]} symbol packages, found ${symbol_count}"
+            exit 1
+          fi
+          echo "✅ Verified ${actual_count} NuGet packages and ${symbol_count} symbol packages, including ElBruno.Speech.BlazorComponents"
 
       - name: NuGet login (OIDC → temp API key)
         if: github.event_name == 'release' || !inputs.dry_run
@@ -131,4 +140,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: nuget-packages
-          path: ./artifacts/packages/*.nupkg
+          path: |
+            ./artifacts/packages/*.nupkg
+            ./artifacts/packages/*.snupkg
