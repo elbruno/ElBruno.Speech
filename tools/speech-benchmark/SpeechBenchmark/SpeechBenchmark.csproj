@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\tests\ElBruno.Speech.TestUtils\ElBruno.Speech.TestUtils.csproj" />
+    <ProjectReference Include="..\..\..\src\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+    <PackageReference Include="Whisper.net" />
+    <PackageReference Include="Whisper.net.Runtime" />
+  </ItemGroup>
+</Project>

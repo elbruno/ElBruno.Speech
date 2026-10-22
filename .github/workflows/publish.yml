@@ -17,6 +17,7 @@ on:
 
 jobs:
   build-test-pack-publish:
+    if: github.event_name != 'release' || !startsWith(github.event.release.tag_name, 'speech-fixtures-')
     runs-on: ubuntu-latest
     environment: release
     permissions:
@@ -70,7 +71,7 @@ jobs:
           dotnet test ElBruno.Speech.sln
           --configuration Release
           --no-build
-          --filter "Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
+          --filter "Category!=AudioFixture&Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
 
       - name: Pack
         run: >
@@ -88,6 +89,7 @@ jobs:
             "ElBruno.Speech.Audio"
             "ElBruno.Speech.Vad.Silero"
             "ElBruno.Speech.Stt.Parakeet"
+            "ElBruno.Speech.Stt.Whisper"
             "ElBruno.Speech.Pipeline"
             "ElBruno.Speech.AspNetCore"
             "ElBruno.Speech.NAudio"

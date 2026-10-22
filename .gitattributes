@@ -5,3 +5,8 @@
 .squad/orchestration-log/** merge=union
 .squad/rai/audit-trail.md merge=union
 .squad/fact-checker/audit-trail.md merge=union
+
+# Fixture hashes and deterministic archives require byte-identical checkouts.
+tests/fixtures/speech/** -text
+# Preserve the upstream legal text verbatim, including its final blank line.
+tests/fixtures/speech/**/LICENSE.txt whitespace=-blank-at-eof

@@ -21,6 +21,8 @@
 
     <!-- ONNX Runtime -->
     <PackageVersion Include="Microsoft.ML.OnnxRuntime" Version="1.31.0" />
+    <PackageVersion Include="Whisper.net" Version="1.9.1" />
+    <PackageVersion Include="Whisper.net.Runtime" Version="1.9.1" />
 
     <!-- OpenTelemetry -->
     <PackageVersion Include="OpenTelemetry" Version="1.17.0" />

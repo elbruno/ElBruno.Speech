@@ -41,6 +41,8 @@ coverage/
 *.trx
 *.coverage
 *.coveragexml
+__pycache__/
+*.pyc
 
 ## Benchmarks output
 BenchmarkDotNet.Artifacts/

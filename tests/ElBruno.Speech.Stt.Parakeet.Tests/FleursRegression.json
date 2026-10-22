@@ -1,0 +1,11 @@
+{
+  "status": "proposed",
+  "scoringPolicy": "unicode-nfc-lower-punctuation-space-v1",
+  "manifestSha256": "14940a5d06617d5c79ee5c050cdaa5a0e249e03af55fbd40e52791ff2adad2e1",
+  "modelRevision": "2a5f66ac53dfc1c817e75609d9903d75b4ec5895",
+  "rationale": "Windows x64 CPU baseline on .NET 8 and 10 with ONNX Runtime 1.31.0: English WER 12/212, CER 22/1007; Spanish WER 7/208, CER 11/1030. Proposed limits add two absolute percentage points and round upward to the next whole percentage point. These limits require review, including the Linux run, before status can become approved. They are regression tolerances, not a product accuracy specification.",
+  "languages": {
+    "en_us": { "maximumWer": 0.08, "maximumCer": 0.05 },
+    "es_419": { "maximumWer": 0.06, "maximumCer": 0.04 }
+  }
+}

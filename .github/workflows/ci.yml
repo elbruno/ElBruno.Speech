@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-and-test:
-    name: Build and Test (${{ matrix.os }}, .NET ${{ matrix.dotnet }})
+    name: Build and Test (${{ matrix.os }}, .NET 8 and 10)
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -41,7 +41,7 @@ jobs:
           dotnet test ElBruno.Speech.sln
           --configuration Release
           --no-build
-          --filter "Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
+          --filter "Category!=AudioFixture&Category!=Integration&Category!=ModelDownload&Category!=Gpu&Category!=WebSocket&Category!=LongRunning"
           --logger "trx;LogFileName=test-results.trx"
           --collect "XPlat Code Coverage"
 

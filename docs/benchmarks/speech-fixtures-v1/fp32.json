@@ -1,0 +1,611 @@
+{
+  "complete": true,
+  "provenance": {
+    "model": "parakeet-tdt-0.6b-v3",
+    "precision": "fp32",
+    "repository": "istupakov/parakeet-tdt-0.6b-v3-onnx",
+    "revision": "8f23f0c03c8761650bdb5b40aaf3e40d2c15f1ce",
+    "runtime": "Python 3.14.4, ONNX Runtime 1.31.0, NumPy 2.4.6",
+    "threads": 4,
+    "provider": "CPUExecutionProvider",
+    "language": "automatic, no reference hints",
+    "loadSeconds": 4.714942700054962,
+    "warmupSeconds": 0.6763689999934286,
+    "peakWorkingSetBytes": 2741358592,
+    "operatingSystem": "Windows-11-10.0.26300-SP0",
+    "modelBytes": 2549945622
+  },
+  "bundleVersion": "1.0.0",
+  "manifestSha256": "14940a5d06617d5c79ee5c050cdaa5a0e249e03af55fbd40e52791ff2adad2e1",
+  "scoringPolicy": "unicode-nfc-lower-punctuation-space-v1",
+  "audioSeconds": 193.39999999999998,
+  "inferenceSeconds": 10.538312300050166,
+  "realTimeFactor": 0.05448972233738452,
+  "languages": {
+    "en_us": {
+      "words": {
+        "substitutions": 6,
+        "deletions": 2,
+        "insertions": 2,
+        "referenceCount": 212,
+        "hypothesisCount": 212,
+        "errors": 10,
+        "rate": 0.04716981132075472
+      },
+      "characters": {
+        "substitutions": 6,
+        "deletions": 13,
+        "insertions": 4,
+        "referenceCount": 1007,
+        "hypothesisCount": 998,
+        "errors": 23,
+        "rate": 0.022840119165839126
+      },
+      "inferenceSeconds": 4.997002899996005
+    },
+    "es_419": {
+      "words": {
+        "substitutions": 5,
+        "deletions": 3,
+        "insertions": 0,
+        "referenceCount": 208,
+        "hypothesisCount": 205,
+        "errors": 8,
+        "rate": 0.038461538461538464
+      },
+      "characters": {
+        "substitutions": 3,
+        "deletions": 10,
+        "insertions": 2,
+        "referenceCount": 1030,
+        "hypothesisCount": 1022,
+        "errors": 15,
+        "rate": 0.014563106796116505
+      },
+      "inferenceSeconds": 5.5413094000541605
+    }
+  },
+  "clips": [
+    {
+      "id": "fleurs-en_us-test-1003119935936341070",
+      "language": "en_us",
+      "reference": "however due to the slow communication channels styles in the west could lag behind by 25 to 30 year",
+      "hypothesis": "However, due to the slow communication channels, styles in the west could lag behind by 25-30 years.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 1,
+          "insertions": 0,
+          "referenceCount": 19,
+          "hypothesisCount": 18,
+          "errors": 2,
+          "rate": 0.10526315789473684
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 2,
+          "insertions": 1,
+          "referenceCount": 81,
+          "hypothesisCount": 80,
+          "errors": 3,
+          "rate": 0.037037037037037035
+        }
+      },
+      "inferenceSeconds": 0.5696336000110023
+    },
+    {
+      "id": "fleurs-en_us-test-10052240106321793346",
+      "language": "en_us",
+      "reference": "all nouns alongside the word sie for you always begin with a capital letter even in the middle of a sentence",
+      "hypothesis": "All nouns alongside the word say for you always begin with a capital letter even in the middle of a sentence.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 21,
+          "hypothesisCount": 21,
+          "errors": 1,
+          "rate": 0.047619047619047616
+        },
+        "characters": {
+          "substitutions": 2,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 88,
+          "hypothesisCount": 88,
+          "errors": 2,
+          "rate": 0.022727272727272728
+        }
+      },
+      "inferenceSeconds": 0.47439670003950596
+    },
+    {
+      "id": "fleurs-en_us-test-10167324587744183095",
+      "language": "en_us",
+      "reference": "to the north and within easy reach is the romantic and fascinating town of sintra and which was made famous to foreigners after a glowing account of its splendours recorded by lord byron",
+      "hypothesis": "To the north and within easy reach is the romantic and fascinating town of Sintra, and which was made famous to foreigners after a glowing account of its splendours recorded by Lord Byron.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 33,
+          "hypothesisCount": 33,
+          "errors": 0,
+          "rate": 0
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 154,
+          "hypothesisCount": 154,
+          "errors": 0,
+          "rate": 0
+        }
+      },
+      "inferenceSeconds": 0.626140000007581
+    },
+    {
+      "id": "fleurs-en_us-test-10197164397713068203",
+      "language": "en_us",
+      "reference": "the cabbage juice changes color depending on how acidic or basic alkaline the chemical is",
+      "hypothesis": "The cabbage juice changes color depending on how acidic, basic alkaline the chemical is.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 1,
+          "insertions": 0,
+          "referenceCount": 15,
+          "hypothesisCount": 14,
+          "errors": 1,
+          "rate": 0.06666666666666667
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 2,
+          "insertions": 0,
+          "referenceCount": 75,
+          "hypothesisCount": 73,
+          "errors": 2,
+          "rate": 0.02666666666666667
+        }
+      },
+      "inferenceSeconds": 0.3363011999754235
+    },
+    {
+      "id": "fleurs-en_us-test-10233995782544396174",
+      "language": "en_us",
+      "reference": "many people don\u0027t think about them as dinosaurs because they have feathers and can fly",
+      "hypothesis": "Many people don\u0027t think about them as dinosaurs because they have feathers and can fly.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 16,
+          "hypothesisCount": 16,
+          "errors": 0,
+          "rate": 0
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 71,
+          "hypothesisCount": 71,
+          "errors": 0,
+          "rate": 0
+        }
+      },
+      "inferenceSeconds": 0.25760820001596585
+    },
+    {
+      "id": "fleurs-en_us-test-10235738076911595987",
+      "language": "en_us",
+      "reference": "the hospital has followed protocol for infection control including separating the patient from others to prevent possible infection of others",
+      "hypothesis": "The hospital has followed protocols for infection control, including separating the patient from others to prevent possible infection of others.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 20,
+          "hypothesisCount": 20,
+          "errors": 1,
+          "rate": 0.05
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 1,
+          "referenceCount": 122,
+          "hypothesisCount": 123,
+          "errors": 1,
+          "rate": 0.00819672131147541
+        }
+      },
+      "inferenceSeconds": 0.6182755000190809
+    },
+    {
+      "id": "fleurs-en_us-test-10323357556845456822",
+      "language": "en_us",
+      "reference": "the northern marianas emergency management office said that there were no damages reported in the nation",
+      "hypothesis": "The Northern Mariana\u0027s Emergency Management office said that there were no damages reported in the nation.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 1,
+          "referenceCount": 16,
+          "hypothesisCount": 17,
+          "errors": 2,
+          "rate": 0.125
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 89,
+          "hypothesisCount": 89,
+          "errors": 0,
+          "rate": 0
+        }
+      },
+      "inferenceSeconds": 0.5842959999572486
+    },
+    {
+      "id": "fleurs-en_us-test-10335587906469246566",
+      "language": "en_us",
+      "reference": "twentieth century research has shown that there are two pools of genetic variation hidden and expressed",
+      "hypothesis": "20th century research has shown that there are two pools of genetic variation hidden and expressed.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 16,
+          "hypothesisCount": 16,
+          "errors": 1,
+          "rate": 0.0625
+        },
+        "characters": {
+          "substitutions": 2,
+          "deletions": 5,
+          "insertions": 0,
+          "referenceCount": 88,
+          "hypothesisCount": 83,
+          "errors": 7,
+          "rate": 0.07954545454545454
+        }
+      },
+      "inferenceSeconds": 0.3844754000310786
+    },
+    {
+      "id": "fleurs-en_us-test-10344335557154974057",
+      "language": "en_us",
+      "reference": "the aspect ratio of this format dividing by twelve to obtain the simplest whole-number ratio is therefore said to be 3:2",
+      "hypothesis": "The aspect ratio of this format, dividing by 12 to obtain the simplest whole number ratio, is therefore said to be 3 to 2.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 1,
+          "referenceCount": 23,
+          "hypothesisCount": 24,
+          "errors": 2,
+          "rate": 0.08695652173913043
+        },
+        "characters": {
+          "substitutions": 2,
+          "deletions": 4,
+          "insertions": 2,
+          "referenceCount": 98,
+          "hypothesisCount": 96,
+          "errors": 8,
+          "rate": 0.08163265306122448
+        }
+      },
+      "inferenceSeconds": 0.6045789999770932
+    },
+    {
+      "id": "fleurs-en_us-test-1036771894648013441",
+      "language": "en_us",
+      "reference": "as light pollution in their heyday was not the kind of problem it is today they are usually located in cities or at campuses easier to reach than those built in modern times",
+      "hypothesis": "As light pollution in their heyday was not the kind of problem it is today, they are usually located in cities or at campuses easier to reach than those built in modern times.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 33,
+          "hypothesisCount": 33,
+          "errors": 0,
+          "rate": 0
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 141,
+          "hypothesisCount": 141,
+          "errors": 0,
+          "rate": 0
+        }
+      },
+      "inferenceSeconds": 0.5412972999620251
+    },
+    {
+      "id": "fleurs-es_419-test-1001146817223348054",
+      "language": "es_419",
+      "reference": "se recomienda enf\u00E1ticamente a los viajeros que se informen sobre cualquier riesgo de clima extremo en el \u00E1rea que visitan dado que ello puede afectar sus planes de viaje",
+      "hypothesis": "Se recomienda enf\u00E1ticamente a los viajeros que se informen sobre cualquier riesgo del clima extremo en el \u00E1rea que visitan, dado que ello pueda afectar sus planes de viaje.",
+      "score": {
+        "words": {
+          "substitutions": 2,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 29,
+          "hypothesisCount": 29,
+          "errors": 2,
+          "rate": 0.06896551724137931
+        },
+        "characters": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 1,
+          "referenceCount": 141,
+          "hypothesisCount": 142,
+          "errors": 2,
+          "rate": 0.014184397163120567
+        }
+      },
+      "inferenceSeconds": 0.7039833000162616
+    },
+    {
+      "id": "fleurs-es_419-test-1008205615316519958",
+      "language": "es_419",
+      "reference": "fue tanta la cantidad de gente que se concentr\u00F3 que no todos pudieron acceder al funeral en la plaza de san pedro",
+      "hypothesis": "Fue tanta la cantidad de gente que se concentr\u00F3 que no todos pudieron acceder al funeral en la plaza de San Pedro.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 22,
+          "hypothesisCount": 22,
+          "errors": 0,
+          "rate": 0
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 92,
+          "hypothesisCount": 92,
+          "errors": 0,
+          "rate": 0
+        }
+      },
+      "inferenceSeconds": 0.5295349000371061
+    },
+    {
+      "id": "fleurs-es_419-test-10084850086754329587",
+      "language": "es_419",
+      "reference": "esto parece tener sentido ya que en la tierra no se percibe su movimiento \u00BFcierto?",
+      "hypothesis": "Esto parece tener sentido, ya que en la Tierra no se percibe su movimiento, \u00BFcierto?",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 15,
+          "hypothesisCount": 15,
+          "errors": 0,
+          "rate": 0
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 66,
+          "hypothesisCount": 66,
+          "errors": 0,
+          "rate": 0
+        }
+      },
+      "inferenceSeconds": 0.46087800001259893
+    },
+    {
+      "id": "fleurs-es_419-test-10107325335956726764",
+      "language": "es_419",
+      "reference": "carpanedo particip\u00F3 en dos carreras individuales del campeonato aparte de la competencia del mi\u00E9rcoles",
+      "hypothesis": "Carpaneo particip\u00F3 en dos carreras individuales del campeonato, aparte de la competencia del mi\u00E9rcoles.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 14,
+          "hypothesisCount": 14,
+          "errors": 1,
+          "rate": 0.07142857142857142
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 1,
+          "insertions": 0,
+          "referenceCount": 89,
+          "hypothesisCount": 88,
+          "errors": 1,
+          "rate": 0.011235955056179775
+        }
+      },
+      "inferenceSeconds": 0.5880379999871366
+    },
+    {
+      "id": "fleurs-es_419-test-1013662909103347734",
+      "language": "es_419",
+      "reference": "hoy en d\u00EDa las personas escriben mensajes en las pantallas de sus computadoras no tienen la necesidad de siquiera aproximarse a un sacapuntas",
+      "hypothesis": "Hoy en d\u00EDa, las personas escriben mensajes en las pantallas de sus computadoras, no tienen la necesidad de siquiera aproximarse sacapuntas.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 2,
+          "insertions": 0,
+          "referenceCount": 23,
+          "hypothesisCount": 21,
+          "errors": 2,
+          "rate": 0.08695652173913043
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 3,
+          "insertions": 0,
+          "referenceCount": 119,
+          "hypothesisCount": 116,
+          "errors": 3,
+          "rate": 0.025210084033613446
+        }
+      },
+      "inferenceSeconds": 0.5460650000022724
+    },
+    {
+      "id": "fleurs-es_419-test-10149016836336603986",
+      "language": "es_419",
+      "reference": "los luchadores compa\u00F1eros de luna tambi\u00E9n le rindieron homenaje",
+      "hypothesis": "Los luchadores, compa\u00F1eros de luna tambi\u00E9n le rindieron homenaje.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 9,
+          "hypothesisCount": 9,
+          "errors": 0,
+          "rate": 0
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 55,
+          "hypothesisCount": 55,
+          "errors": 0,
+          "rate": 0
+        }
+      },
+      "inferenceSeconds": 0.3161518999841064
+    },
+    {
+      "id": "fleurs-es_419-test-10150624747569080019",
+      "language": "es_419",
+      "reference": "duvall que est\u00E1 casado y tiene dos hijos adultos no caus\u00F3 una buena impresi\u00F3n a miller que fue a quien le relat\u00F3 la historia",
+      "hypothesis": "Duvall, que est\u00E1 casado y tiene dos hijos adultos, no caus\u00F3 una buena impresi\u00F3n a Miller, que fue a quien le relat\u00F3 la historia.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 24,
+          "hypothesisCount": 24,
+          "errors": 0,
+          "rate": 0
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 101,
+          "hypothesisCount": 101,
+          "errors": 0,
+          "rate": 0
+        }
+      },
+      "inferenceSeconds": 0.5516634000232443
+    },
+    {
+      "id": "fleurs-es_419-test-10155332265364188477",
+      "language": "es_419",
+      "reference": "entre los fen\u00F3menos clim\u00E1ticos regionales y estacionales extremos encontramos los ventarrones las tormentas de nieve hielo o polvo",
+      "hypothesis": "Entre los fen\u00F3menos clim\u00E1ticos regionales y estacionales extremos encontramos los ventalrones, las tormentas de nieve, hielo o polvo.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 18,
+          "hypothesisCount": 18,
+          "errors": 1,
+          "rate": 0.05555555555555555
+        },
+        "characters": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 113,
+          "hypothesisCount": 113,
+          "errors": 1,
+          "rate": 0.008849557522123894
+        }
+      },
+      "inferenceSeconds": 0.567773099988699
+    },
+    {
+      "id": "fleurs-es_419-test-10192388533260519980",
+      "language": "es_419",
+      "reference": "se puede definir a una civilizaci\u00F3n como una cultura espec\u00EDfica de la que forma parte un extenso grupo de personas que viven y trabajan en conjunto es decir una sociedad",
+      "hypothesis": "Se puede definir a una civilizaci\u00F3n como una cultura espec\u00EDfica de que forma parte un extenso grupo de personas que viven y trabajan en conjunto, es decir, una sociedad.",
+      "score": {
+        "words": {
+          "substitutions": 0,
+          "deletions": 1,
+          "insertions": 0,
+          "referenceCount": 30,
+          "hypothesisCount": 29,
+          "errors": 1,
+          "rate": 0.03333333333333333
+        },
+        "characters": {
+          "substitutions": 0,
+          "deletions": 2,
+          "insertions": 0,
+          "referenceCount": 140,
+          "hypothesisCount": 138,
+          "errors": 2,
+          "rate": 0.014285714285714285
+        }
+      },
+      "inferenceSeconds": 0.6368261000025086
+    },
+    {
+      "id": "fleurs-es_419-test-10206659851013694932",
+      "language": "es_419",
+      "reference": "las playas son casi todas de arena con lugares seguros para nadar y en su mayor\u00EDa tienen \u00E1rboles pohutukawa que ofrecen lugares de sombra",
+      "hypothesis": "Las playas son casi todas de arena con lugares seguros para nadar y, en su mayor\u00EDa, tienen \u00E1rboles Buthuka que ofrecen lugares de sombra.",
+      "score": {
+        "words": {
+          "substitutions": 1,
+          "deletions": 0,
+          "insertions": 0,
+          "referenceCount": 24,
+          "hypothesisCount": 24,
+          "errors": 1,
+          "rate": 0.041666666666666664
+        },
+        "characters": {
+          "substitutions": 1,
+          "deletions": 4,
+          "insertions": 1,
+          "referenceCount": 114,
+          "hypothesisCount": 111,
+          "errors": 6,
+          "rate": 0.05263157894736842
+        }
+      },
+      "inferenceSeconds": 0.6403957000002265
+    }
+  ],
+  "timestampMetrics": "unsupported: no reviewed timestamp references"
+}

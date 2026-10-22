@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ElBruno.Speech.TestUtils\ElBruno.Speech.TestUtils.csproj" />
+    <ProjectReference Include="..\..\src\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+    <None Include="..\fixtures\speech\v1.0.0\**\*" Link="speech-fixtures\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" Condition="'$(IncludeSpeechFixtures)' == 'true'" />
+  </ItemGroup>
+</Project>

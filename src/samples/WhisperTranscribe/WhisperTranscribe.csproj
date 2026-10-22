@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Description>Sample: opt-in local Whisper large-v3 WAV transcription and native segment JSON.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ElBruno.Speech.Stt.Whisper\ElBruno.Speech.Stt.Whisper.csproj" />
+  </ItemGroup>
+</Project>
