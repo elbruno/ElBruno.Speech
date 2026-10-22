@@ -19,6 +19,7 @@
 
     <!-- Version — override at publish time with /p:Version=X.Y.Z -->
     <Version>1.0.0</Version>
+    <PackageReleaseNotes Condition="'$(Version)' == '1.6.0-preview.1'">Experimental opt-in Parakeet TDT v3 local multilingual STT provider, pinned integrity-checked ONNX model bundle, native token-start metadata, and file-transcription sample. Whisper defaults unchanged. Word/segment intervals and language ID are unavailable. Podcast accuracy comparison remains pending.</PackageReleaseNotes>
 
     <!-- Package metadata -->
     <Authors>Bruno Capuano</Authors>

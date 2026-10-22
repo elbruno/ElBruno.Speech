@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Description>Sample: local WAV transcription with native Parakeet token starts.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ElBruno.Speech.Stt.Parakeet\ElBruno.Speech.Stt.Parakeet.csproj" />
+  </ItemGroup>
+</Project>

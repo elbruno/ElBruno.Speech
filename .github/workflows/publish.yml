@@ -9,6 +9,11 @@ on:
         description: Optional package version (e.g. 0.5.0)
         required: false
         type: string
+      dry_run:
+        description: Build, test, and pack for review without publishing to NuGet
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   build-test-pack-publish:
@@ -44,7 +49,7 @@ jobs:
             echo "Unable to resolve version from tag or input."
             exit 1
           fi
-          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]]; then
+          if ! [[ "$VERSION" =~ ^[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z]+([.-][0-9A-Za-z]+)*)?$ ]]; then
             echo "❌ Invalid version: '$VERSION'"; exit 1
           fi
           echo "value=$VERSION" >> "$GITHUB_OUTPUT"
@@ -82,6 +87,7 @@ jobs:
             "ElBruno.Speech.Abstractions"
             "ElBruno.Speech.Audio"
             "ElBruno.Speech.Vad.Silero"
+            "ElBruno.Speech.Stt.Parakeet"
             "ElBruno.Speech.Pipeline"
             "ElBruno.Speech.AspNetCore"
             "ElBruno.Speech.NAudio"
@@ -91,7 +97,7 @@ jobs:
           )
 
           for package in "${expected[@]}"; do
-            if ! compgen -G "./artifacts/packages/${package}.*.nupkg" > /dev/null; then
+            if [ ! -f "./artifacts/packages/${package}.${{ steps.version.outputs.value }}.nupkg" ]; then
               echo "::error::Expected package was not produced: ${package}"
               exit 1
             fi
@@ -105,12 +111,14 @@ jobs:
           echo "✅ Verified ${actual_count} NuGet packages, including ElBruno.Speech.BlazorComponents"
 
       - name: NuGet login (OIDC → temp API key)
+        if: github.event_name == 'release' || !inputs.dry_run
         uses: NuGet/login@v1
         id: login
         with:
           user: ${{ vars.NUGET_USER }}
 
       - name: Push to NuGet.org
+        if: github.event_name == 'release' || !inputs.dry_run
         run: >
           dotnet nuget push ./artifacts/packages/*.nupkg
           --api-key ${{ steps.login.outputs.NUGET_API_KEY }}
