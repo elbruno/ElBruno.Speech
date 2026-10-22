@@ -3,7 +3,8 @@
 `ElBruno.Speech.Stt.Whisper` implements MEAI `ISpeechToTextClient` with
 Whisper.net 1.9.1 / whisper.cpp. It is an alternative local architecture to
 Parakeet, **not a replacement for the existing ElBruno.Whisper package or its
-defaults**. This new provider is available from source pending review/release.
+defaults**. The provider is source-only; `1.6.0-preview.2` is under release
+review and has not been published.
 
 The single supported model is the pinned multilingual `ggml-large-v3.bin` from
 [`ggerganov/whisper.cpp`](https://huggingface.co/ggerganov/whisper.cpp/tree/5359861c739e955e79d9a303bcbc70fb988958b1).
@@ -143,7 +144,7 @@ The pinned GGML repository declares MIT. OpenAI Whisper and runtime dependency
 attribution is preserved in the package's `THIRD_PARTY_NOTICES.txt`. Dataset
 fixtures remain CC BY 4.0 with their own required attribution.
 
-A future release must review all **eleven** packages, including both STT
+The preview.2 release review covers all **eleven** packages, including both STT
 providers and `ElBruno.Speech.BlazorComponents`. The existing `publish.yml`
-build/test/pack/package-presence review gate remains required. No release or
-provider-default change is part of this addition.
+build/test/pack/package-presence dry-run on the exact reviewed commit remains
+required before publication. No provider-default change is part of this release.

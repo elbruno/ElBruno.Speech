@@ -51,6 +51,8 @@ Audio output
 | `ElBruno.Speech.Abstractions` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Abstractions.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Abstractions) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Abstractions.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Abstractions) | Audio types, VAD contracts, session interfaces, error types |
 | `ElBruno.Speech.Audio` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Audio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Audio) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Audio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Audio) | WAV I/O, PCM conversion, resampling, framing, ring buffers |
 | `ElBruno.Speech.Vad.Silero` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Vad.Silero.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Vad.Silero) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Vad.Silero.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Vad.Silero) | Silero VAD via ONNX Runtime — streaming voice activity detection |
+| `ElBruno.Speech.Stt.Parakeet` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Stt.Parakeet.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Stt.Parakeet) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Stt.Parakeet.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Stt.Parakeet) | Experimental opt-in multilingual Parakeet TDT v3 local STT, available since `1.6.0-preview.1` |
+| `ElBruno.Speech.Stt.Whisper` | Source only; pending `1.6.0-preview.2` release | Not released | Experimental opt-in multilingual Whisper large-v3 local CPU STT; not yet on NuGet |
 | `ElBruno.Speech.Pipeline` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Pipeline.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Pipeline.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline) | VAD → STT → LLM → TTS orchestration, bounded channels, barge-in |
 | `ElBruno.Speech.AspNetCore` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.AspNetCore) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.AspNetCore) | WebSocket endpoint, session registry, health checks |
 | `ElBruno.Speech.NAudio` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.NAudio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.NAudio) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.NAudio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.NAudio) | Windows microphone and speaker via NAudio |
@@ -126,11 +128,12 @@ are explicitly unavailable. See [usage, requirements, and evaluation limits](doc
 
 ## Opt-in Whisper large-v3
 
-`ElBruno.Speech.Stt.Whisper` adds a separate local whisper.cpp CPU provider from
-source, without replacing the existing `ElBruno.Whisper` package or sample
-defaults. It uses a pinned, explicitly downloaded multilingual large-v3 model.
+`ElBruno.Speech.Stt.Whisper` is currently source-only, pending the unpublished
+`1.6.0-preview.2` release. It adds a separate local whisper.cpp CPU provider
+without replacing the existing `ElBruno.Whisper` package or changing defaults.
+It uses a pinned, explicitly downloaded multilingual large-v3 model.
 See [setup, native requirements, and limitations](docs/whisper.md) and the
-[fixed-reference comparison tools](tools/speech-benchmark/README.md).
+[fixed-reference FLEURS comparison](docs/speech-benchmark.md).
 
 ## CLI Tool
 
