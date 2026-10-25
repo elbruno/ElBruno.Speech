@@ -4,10 +4,11 @@
     <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ElBruno.Speech.Tts.Ollama" Version="1.6.0-preview.4" />
-    <PackageReference Include="ElBruno.Speech.Audio" Version="1.6.0-preview.4" />
-    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.13" />
+    <ProjectReference Include="..\..\..\..\src\ElBruno.Speech.Tts.Ollama\ElBruno.Speech.Tts.Ollama.csproj" />
+    <ProjectReference Include="..\..\..\..\src\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
   </ItemGroup>
 </Project>

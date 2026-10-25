@@ -56,7 +56,7 @@ public sealed class OllamaSpeechClientTests
     [InlineData("http://localhost:11434/v1/audio/", "http://localhost:11434/v1/audio/speech")]
     [InlineData("http://localhost:11434/v1/audio/speech", "http://localhost:11434/v1/audio/speech")]
     [InlineData("http://localhost:11434/v1/audio/speech/", "http://localhost:11434/v1/audio/speech")]
-    [InlineData("https://speech.example:8443/v1", "https://speech.example:8443/v1/audio/speech")]
+    [InlineData("https://speech.example:8443/proxy%20name/v1?region=west%2Feast", "https://speech.example:8443/proxy%20name/v1/audio/speech?region=west%2Feast")]
     [InlineData("https://speech.example/proxy/v1/", "https://speech.example/proxy/v1/audio/speech")]
     [InlineData("https://speech.example/proxy/v1/audio/", "https://speech.example/proxy/v1/audio/speech")]
     [InlineData("https://speech.example/proxy/v1/audio/speech", "https://speech.example/proxy/v1/audio/speech")]
