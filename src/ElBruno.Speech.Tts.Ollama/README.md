@@ -67,4 +67,4 @@ the NuGet package; their licenses are separate from this MIT client.
 
 See [Ollama speech documentation](https://docs.ollama.com/capabilities/speech) for model and voice details.
 
-For a runnable C# example with WAV/PCM validation, incremental streaming, and optional playback, see [OllamaSpeechDemo](https://github.com/elbruno/ElBruno.Speech/tree/main/src/samples/OllamaSpeechDemo) in the repository.
+For a runnable C# example with WAV/PCM validation, incremental streaming, and optional playback, see [OllamaSpeechDemo](https://github.com/elbruno/ElBruno.Speech/tree/v1.6.0-preview.3/src/samples/OllamaSpeechDemo) in the repository.
