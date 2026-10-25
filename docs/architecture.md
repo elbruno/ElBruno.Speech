@@ -16,6 +16,8 @@ graph TD
     NAU["ElBruno.Speech.NAudio<br/>(NAudioMicrophoneInput,<br/>NAudioSpeakerOutput,<br/>AudioDeviceEnumerator)"]
     OTL["ElBruno.Speech.OpenTelemetry<br/>(SpeechPipelineMeter,<br/>SpeechPipelineTracer)"]
     CLI["ElBruno.Speech.Cli<br/>(elbrunospeech dotnet tool)"]
+    OLL["ElBruno.Speech.Tts.Ollama<br/>(OllamaSpeechClient, OllamaSpeechOptions)"]
+    MEAI["Microsoft.Extensions.AI<br/>(ITextToSpeechClient)"]
 
     AUD --> ABS
     VAD --> ABS
@@ -28,6 +30,7 @@ graph TD
     OTL --> PIP
     CLI --> PIP
     CLI --> NAU
+    OLL --> MEAI
 ```
 
 ### Dependency Rules
@@ -38,6 +41,21 @@ graph TD
 | **Abstractions has zero external dependencies** | Keeps the public API surface portable |
 | **Audio has no knowledge of Pipeline** | Prevents circular dependency |
 | **AspNetCore references Audio directly** | `WebSocketAudioInput` uses `AudioFramer` at compile time |
+| **Ollama TTS is a separate opt-in HTTP provider** | No dependency on Pipeline, QwenTTS, native MLX libraries, or model weights in the client package |
+
+### Ollama Phonon TTS (1.6.0-preview.3)
+
+`AddOllamaSpeech()` registers `ITextToSpeechClient`. The implementation calls
+`POST /v1/audio/speech` with only model, input, optional voice, and response
+format. Full responses expose MEAI `DataContent` and compatibility byte arrays;
+streaming uses `ResponseHeadersRead` and yields copied audio chunks as received.
+Cancellation and disposal release the HTTP response and its stream.
+
+The .NET client is portable, but the Ollama inference server currently requires
+Apple Silicon and MLX. Windows/Linux server support remains pending upstream.
+The release includes a [C# sample](../src/samples/OllamaSpeechDemo/README.md) and
+synthetic tests, not a verified live speech/quality claim. Pipeline defaults and
+audio-format conversion behavior are unchanged; see [audio formats](audio-formats.md).
 
 ---
 

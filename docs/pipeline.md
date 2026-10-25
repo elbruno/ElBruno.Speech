@@ -88,6 +88,19 @@ if (completed != sttTask)
 
 ## DI Registration
 
+### Opt-in Ollama TTS
+
+The separate `ElBruno.Speech.Tts.Ollama` package provides `AddOllamaSpeech()` and
+implements `ITextToSpeechClient`; no pipeline provider defaults are replaced
+unless the application registers it. Ollama's native audio is 24 kHz mono PCM16,
+optionally WAV-wrapped. The current pipeline reads `RawRepresentation` as raw
+PCM matching its configured `TargetFormat`. It does not parse provider WAV
+containers or automatically convert 24 kHz to 16 kHz. Select PCM and adapt to
+your application's output format before wiring this provider into a pipeline.
+Use the [standalone C# sample](../src/samples/OllamaSpeechDemo/README.md) to
+generate and save native-format audio directly. Live synthesis verification is
+pending on a supported Apple Silicon Ollama server.
+
 `AddSpeechPipeline()` registers:
 
 - `DefaultSpeechPipeline` → `ISpeechPipeline` as **transient**

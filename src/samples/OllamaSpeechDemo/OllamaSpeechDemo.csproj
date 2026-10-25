@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <IsPackable>false</IsPackable>
+    <Description>Sample: Ollama Phonon speech generation, streaming, WAV validation, and playback.</Description>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\ElBruno.Speech.Tts.Ollama\ElBruno.Speech.Tts.Ollama.csproj" />
+    <ProjectReference Include="..\..\ElBruno.Speech.Audio\ElBruno.Speech.Audio.csproj" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+  </ItemGroup>
+</Project>

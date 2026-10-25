@@ -38,6 +38,7 @@ Audio output
 
 | Date | Version | Highlights |
 |------|---------|------------|
+| 2026-10-25 | 1.6.0-preview.3 | **Ollama Phonon TTS**: opt-in MEAI provider, WAV/PCM streaming, runnable C# sample, and explicit platform/verification limits. See [release notes](docs/releases/1.6.0-preview.3.md). |
 | 2026-08-02 | 1.1.0 | **BlazorComponents** — `ElBruno.Speech.BlazorComponents` Razor Class Library with six ready-to-use speech pipeline UI components |
 | 2026-08-02 | 1.0.0 | **First stable release** — production pipeline, 70+ tests, OpenTelemetry, CLI tool, and Aspire sample |
 | 2026-07-30 | 0.6.0 | **Dependency updates** — MEAI 10.8.1, ONNX Runtime 1.28.0, and Extensions 10.0.10 |
@@ -52,7 +53,8 @@ Audio output
 | `ElBruno.Speech.Audio` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Audio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Audio) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Audio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Audio) | WAV I/O, PCM conversion, resampling, framing, ring buffers |
 | `ElBruno.Speech.Vad.Silero` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Vad.Silero.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Vad.Silero) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Vad.Silero.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Vad.Silero) | Silero VAD via ONNX Runtime — streaming voice activity detection |
 | `ElBruno.Speech.Stt.Parakeet` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Stt.Parakeet.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Stt.Parakeet) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Stt.Parakeet.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Stt.Parakeet) | Experimental opt-in multilingual Parakeet TDT v3 local STT, available since `1.6.0-preview.1` |
-| `ElBruno.Speech.Stt.Whisper` | Source only; pending `1.6.0-preview.2` release | Not released | Experimental opt-in multilingual Whisper large-v3 local CPU STT; not yet on NuGet |
+| `ElBruno.Speech.Stt.Whisper` | [NuGet](https://www.nuget.org/packages/ElBruno.Speech.Stt.Whisper) | [Downloads](https://www.nuget.org/packages/ElBruno.Speech.Stt.Whisper) | Experimental opt-in multilingual Whisper large-v3 local CPU STT, available since `1.6.0-preview.2` |
+| `ElBruno.Speech.Tts.Ollama` | [1.6.0-preview.3](https://www.nuget.org/packages/ElBruno.Speech.Tts.Ollama/1.6.0-preview.3) (release candidate; see release notes) | Not yet verified on NuGet | Ollama Phonon TTS via `ITextToSpeechClient`, including incremental audio streaming |
 | `ElBruno.Speech.Pipeline` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Pipeline.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Pipeline.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline) | VAD → STT → LLM → TTS orchestration, bounded channels, barge-in |
 | `ElBruno.Speech.AspNetCore` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.AspNetCore) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.AspNetCore) | WebSocket endpoint, session registry, health checks |
 | `ElBruno.Speech.NAudio` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.NAudio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.NAudio) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.NAudio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.NAudio) | Windows microphone and speaker via NAudio |
@@ -68,6 +70,26 @@ Audio output
 dotnet add package ElBruno.Speech.Pipeline
 dotnet add package ElBruno.Speech.Vad.Silero
 ```
+
+### Ollama Phonon text-to-speech (preview)
+
+```powershell
+dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.3
+```
+
+Register `services.AddOllamaSpeech()` from `ElBruno.Speech.Tts.Ollama` to resolve
+`Microsoft.Extensions.AI.ITextToSpeechClient`. The provider supports configurable
+endpoint, model, voice, WAV/PCM output, cancellation, and incremental HTTP audio
+streaming. See the [provider guide](src/ElBruno.Speech.Tts.Ollama/README.md) and
+[complete C# demo](src/samples/OllamaSpeechDemo/README.md).
+
+**Current platform limit:** Ollama speech runs on Apple Silicon Macs with MLX.
+Windows/Linux support is pending upstream, with no promised date. A Windows C#
+client can call a compatible remote Ollama server. On the local Windows host,
+Ollama 0.40.11 rejected `ollama pull phonon` because MLX was unavailable.
+Automated synthetic audio tests pass on .NET 8 and .NET 10, but live Phonon audio
+and listening verification are still pending. No standalone Phonon runtime or
+non-Ollama fallback is included.
 
 Install the CLI tool globally:
 
@@ -163,6 +185,7 @@ builder.Services.AddOpenTelemetry()
 | `FileToSpeech` | WAV file → transcript → answer → WAV output |
 | `ParakeetTranscribe` | Local WAV → Parakeet transcript and native token-start JSON (opt-in) |
 | `WhisperTranscribe` | Local WAV → opt-in Whisper large-v3 transcript and unreviewed native segment JSON |
+| [`OllamaSpeechDemo`](src/samples/OllamaSpeechDemo/README.md) | C# Phonon TTS: complete WAV, incremental PCM, audio validation, and optional playback (requires an MLX-capable Ollama host) |
 | `LocalVoiceAgent` | Microphone → VAD → Whisper → LLM → VibeVoice → speaker (barge-in) |
 | `WebSocketVoiceAgent` | ASP.NET Core WebSocket endpoint + browser client |
 | `AspireVoiceAgent` | Full Aspire AppHost with tracing, metrics, and dashboard |

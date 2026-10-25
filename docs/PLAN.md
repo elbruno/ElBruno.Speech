@@ -5,6 +5,27 @@
 
 The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-by-phase progress.
 
+## 1.6.0-preview.3: Ollama Phonon provider and C# sample
+
+- Added the opt-in `ElBruno.Speech.Tts.Ollama` package and DI registration,
+  configurable endpoint/model/voice, WAV/PCM responses, incremental streaming,
+  cancellation, explicit unsupported-option errors, and HTTP error details.
+- Added `OllamaSpeechDemo`: complete WAV generation, incremental PCM saving,
+  WAV header finalization, format/non-silence checks, timings, and optional
+  system-player launch. No alternative runtime or automatic fallback.
+- Twenty-one focused synthetic test cases cover the provider and sample on each
+  of .NET 8 and .NET 10, including bounded HTTP error-body reading.
+- Windows Ollama 0.40.11 was checked: pulling Phonon fails without MLX; direct
+  synthesis returns a missing-model HTTP 404. Real audio and listening
+  verification remain pending. Apple Silicon Ollama is currently required;
+  Windows/Linux server support is pending upstream with no promised date.
+- Pipeline defaults and its existing format-conversion behavior remain unchanged.
+- Release through `.github/workflows/publish.yml` only after the version,
+  complete twelve-package set (including BlazorComponents), artifacts, and
+  successful dry run have passed review. See [release notes](releases/1.6.0-preview.3.md).
+
+---
+
 ---
 
 ## Phase 0 — Repository Foundation ✅ DONE
