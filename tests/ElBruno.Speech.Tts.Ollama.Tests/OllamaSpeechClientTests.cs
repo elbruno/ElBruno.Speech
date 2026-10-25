@@ -25,7 +25,7 @@ public sealed class OllamaSpeechClientTests
         using var httpClient = new HttpClient(handler);
         using var client = new OllamaSpeechClient(httpClient, new()
         {
-            Endpoint = new Uri("http://localhost:11434/v1/audio/speech"),
+            Endpoint = new Uri("http://localhost:11434/"),
             Model = "phonon-custom",
             Voice = "Freya",
             AudioFormat = OllamaSpeechAudioFormat.Pcm
@@ -45,6 +45,78 @@ public sealed class OllamaSpeechClientTests
         var content = Assert.IsType<DataContent>(Assert.Single(response.Contents));
         Assert.Equal("audio/pcm", content.MediaType);
         Assert.Equal(new byte[] { 1, 2, 3 }, content.Data.ToArray());
+    }
+
+    [Theory]
+    [InlineData("http://localhost:11434", "http://localhost:11434/v1/audio/speech")]
+    [InlineData("http://localhost:11434/", "http://localhost:11434/v1/audio/speech")]
+    [InlineData("http://localhost:11434/v1", "http://localhost:11434/v1/audio/speech")]
+    [InlineData("http://localhost:11434/v1/", "http://localhost:11434/v1/audio/speech")]
+    [InlineData("http://localhost:11434/v1/audio", "http://localhost:11434/v1/audio/speech")]
+    [InlineData("http://localhost:11434/v1/audio/", "http://localhost:11434/v1/audio/speech")]
+    [InlineData("http://localhost:11434/v1/audio/speech", "http://localhost:11434/v1/audio/speech")]
+    [InlineData("http://localhost:11434/v1/audio/speech/", "http://localhost:11434/v1/audio/speech")]
+    [InlineData("https://speech.example:8443/v1", "https://speech.example:8443/v1/audio/speech")]
+    [InlineData("https://speech.example/proxy/v1/", "https://speech.example/proxy/v1/audio/speech")]
+    [InlineData("https://speech.example/proxy/v1/audio/", "https://speech.example/proxy/v1/audio/speech")]
+    [InlineData("https://speech.example/proxy/v1/audio/speech", "https://speech.example/proxy/v1/audio/speech")]
+    [InlineData("https://speech.example/?region=west", "https://speech.example/v1/audio/speech?region=west")]
+    [InlineData("https://speech.example/proxy/v1/?region=west", "https://speech.example/proxy/v1/audio/speech?region=west")]
+    [InlineData("https://speech.example/custom/synthesize?region=west", "https://speech.example/custom/synthesize?region=west")]
+    [InlineData("https://speech.example/custom/", "https://speech.example/custom/")]
+    [InlineData("https://speech.example/v10", "https://speech.example/v10")]
+    public async Task ResolvesEndpointForCompleteAndStreamingRequests(string configured, string expected)
+    {
+        var requests = new List<Uri>();
+        using var http = new HttpClient(new StubHandler((request, _) =>
+        {
+            requests.Add(request.RequestUri!);
+            return Task.FromResult(AudioResponse([1, 2]));
+        }));
+        var options = new OllamaSpeechOptions { Endpoint = new Uri(configured) };
+        using var client = new OllamaSpeechClient(http, options);
+
+        await client.GetAudioAsync("Hello.");
+        await foreach (var _ in client.GetStreamingAudioAsync("Hello.")) { }
+
+        Assert.Equal(new[] { new Uri(expected), new Uri(expected) }, requests);
+        Assert.Equal(new Uri(configured), options.Endpoint);
+    }
+
+    [Fact]
+    public async Task DefaultEndpointAndOptionsSnapshotUseResolvedSpeechRoute()
+    {
+        var requests = new List<Uri>();
+        using var http = new HttpClient(new StubHandler((request, _) =>
+        {
+            requests.Add(request.RequestUri!);
+            return Task.FromResult(AudioResponse([1, 2]));
+        }));
+        var options = new OllamaSpeechOptions();
+        Assert.Equal(new Uri("http://localhost:11434/"), options.Endpoint);
+        using var defaultClient = new OllamaSpeechClient(http);
+        using var configuredClient = new OllamaSpeechClient(http, options);
+        options.Endpoint = new Uri("https://different.example/");
+
+        await defaultClient.GetAudioAsync("Hello.");
+        await configuredClient.GetAudioAsync("Hello.");
+
+        Assert.All(requests, uri => Assert.Equal(new Uri("http://localhost:11434/v1/audio/speech"), uri));
+        Assert.Equal(2, requests.Count);
+    }
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("/relative")]
+    [InlineData("ftp://speech.example/")]
+    [InlineData("file:///tmp/audio")]
+    public void RejectsInvalidEndpointsBeforeSendingRequests(string? endpoint)
+    {
+        var options = new OllamaSpeechOptions
+        {
+            Endpoint = endpoint is null ? null! : new Uri(endpoint, UriKind.RelativeOrAbsolute)
+        };
+        Assert.ThrowsAny<ArgumentException>(() => new OllamaSpeechClient(options));
     }
 
     [Fact]

@@ -9,10 +9,11 @@ if (args.Contains("--help"))
 {
     Console.WriteLine("""
         OllamaSpeechDemo [--text "..."] [--voice Freya] [--output directory]
-                         [--endpoint http://localhost:11434/v1/audio/speech] [--play]
+                         [--endpoint http://localhost:11434/] [--play]
 
         Requires Ollama 0.40.9+ with Phonon installed on a host with MLX support.
-        Run 'ollama pull phonon' on that host first. A remote endpoint is supported.
+        Run 'ollama pull phonon' on that host first. A remote server URL is supported.
+        Host roots and /v1 API bases are completed to /v1/audio/speech automatically.
         Generates complete.wav, streamed.pcm, and streamed.wav.
         --play opens streamed.wav in your default audio player after generation.
         """);
@@ -27,7 +28,7 @@ try
     string text = "Hello! This is a local text to speech demo, built with C sharp and Ollama Phonon.";
     string outputDirectory = Path.Combine("artifacts", "ollama-speech");
     string? voice = null;
-    var endpoint = new Uri("http://localhost:11434/v1/audio/speech");
+    var endpoint = new Uri("http://localhost:11434/");
     bool play = false;
 
     for (int i = 0; i < args.Length; i++)

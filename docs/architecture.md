@@ -51,6 +51,13 @@ format. Full responses expose MEAI `DataContent` and compatibility byte arrays;
 streaming uses `ResponseHeadersRead` and yields copied audio chunks as received.
 Cancellation and disposal release the HTTP response and its stream.
 
+From `1.6.0-preview.4`, configure the server root (`http://localhost:11434/`)
+rather than spelling out the route. Options snapshots resolve host roots,
+paths ending in `/v1`, and paths ending in `/v1/audio` to the speech endpoint.
+Full speech URLs are not duplicated. Proxy prefixes before `/v1`, query strings,
+and other custom endpoint paths are preserved. Both response modes and DI use
+the same resolution logic; caller-owned options remain unchanged.
+
 The .NET client is portable, but the Ollama inference server currently requires
 Apple Silicon and MLX. Windows/Linux server support remains pending upstream.
 The release includes a [C# sample](../src/samples/OllamaSpeechDemo/README.md) and

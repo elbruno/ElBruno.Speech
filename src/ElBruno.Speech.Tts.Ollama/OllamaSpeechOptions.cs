@@ -13,8 +13,10 @@ public enum OllamaSpeechAudioFormat
 /// <summary>Configuration for the Ollama Phonon text-to-speech client.</summary>
 public sealed class OllamaSpeechOptions
 {
-    /// <summary>Gets or sets the complete Ollama speech endpoint.</summary>
-    public Uri Endpoint { get; set; } = new("http://localhost:11434/v1/audio/speech");
+    /// <summary>Gets or sets the Ollama server URL, OpenAI-compatible API base, or complete speech endpoint.</summary>
+    /// <remarks>Host roots, paths ending in /v1, and paths ending in /v1/audio are completed automatically.
+    /// Complete speech endpoints and other custom endpoint paths are supported without adding a route.</remarks>
+    public Uri Endpoint { get; set; } = new("http://localhost:11434/");
 
     /// <summary>Gets or sets the model identifier. Defaults to <c>phonon</c>.</summary>
     public string Model { get; set; } = "phonon";
@@ -36,10 +38,25 @@ public sealed class OllamaSpeechOptions
 
         return new OllamaSpeechOptions
         {
-            Endpoint = Endpoint,
+            Endpoint = ResolveSpeechEndpoint(Endpoint),
             Model = Model,
             Voice = Voice,
             AudioFormat = AudioFormat
         };
+    }
+
+    private static Uri ResolveSpeechEndpoint(Uri endpoint)
+    {
+        string path = endpoint.AbsolutePath.TrimEnd('/');
+        string? completedPath = path switch
+        {
+            "" => "/v1/audio/speech",
+            _ when path.EndsWith("/v1", StringComparison.Ordinal) => path + "/audio/speech",
+            _ when path.EndsWith("/v1/audio", StringComparison.Ordinal) => path + "/speech",
+            _ when path.EndsWith("/v1/audio/speech", StringComparison.Ordinal) => path,
+            _ => null
+        };
+
+        return completedPath is null ? endpoint : new UriBuilder(endpoint) { Path = completedPath }.Uri;
     }
 }

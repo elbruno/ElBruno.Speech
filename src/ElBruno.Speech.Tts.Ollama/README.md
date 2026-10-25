@@ -14,7 +14,7 @@ An opt-in `Microsoft.Extensions.AI.ITextToSpeechClient` for Ollama's Phonon mode
 ## Registration
 
 ```powershell
-dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.3
+dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.4
 ```
 
 ```csharp
@@ -25,7 +25,7 @@ using Microsoft.Extensions.DependencyInjection;
 var services = new ServiceCollection();
 services.AddOllamaSpeech(new OllamaSpeechOptions
 {
-    Endpoint = new Uri("http://localhost:11434/v1/audio/speech"),
+    Endpoint = new Uri("http://localhost:11434/"),
     Model = "phonon",
     Voice = "Freya",
     AudioFormat = OllamaSpeechAudioFormat.Wav
@@ -36,7 +36,24 @@ var speech = provider.GetRequiredService<ITextToSpeechClient>();
 var audio = await speech.GetAudioAsync("Hello from Ollama.");
 ```
 
-`Voice` is optional; omit it to use Phonon's default voice. The endpoint defaults to the local Ollama server, the model to `phonon`, and the format to WAV. Set `AudioFormat` to `Pcm` for raw PCM output. The client also accepts per-request `VoiceId`, `ModelId`, and `AudioFormat` values through `TextToSpeechOptions`.
+`Voice` is optional; omit it to use Phonon's default voice. The endpoint defaults to `http://localhost:11434/`, the model to `phonon`, and the format to WAV. Set `AudioFormat` to `Pcm` for raw PCM output. The client also accepts per-request `VoiceId`, `ModelId`, and `AudioFormat` values through `TextToSpeechOptions`.
+
+Starting with `1.6.0-preview.4`, the library resolves the speech route automatically
+for both complete and streaming requests, without changing your options object:
+
+| Configured URL path | Request path |
+|---------------------|--------------|
+| `/` | `/v1/audio/speech` |
+| `/v1` or `/v1/` | `/v1/audio/speech` |
+| `/v1/audio` or `/v1/audio/` | `/v1/audio/speech` |
+| `/v1/audio/speech` (with or without trailing slash) | `/v1/audio/speech` |
+| `/proxy/v1/` | `/proxy/v1/audio/speech` |
+
+HTTPS, ports, proxy prefixes before `/v1`, and query strings are preserved.
+Other custom endpoint paths are used as provided for backward compatibility;
+for a proxy base, include `/v1`, for example `https://host/proxy/v1/`.
+Only absolute HTTP(S) URLs are accepted. Existing full speech URLs still work.
+The published `1.6.0-preview.3` requires a complete endpoint and does not normalize base URLs.
 
 Streaming requests read the HTTP response as it arrives and yield audio updates incrementally. Unsupported options such as language, speed, pitch, volume, and arbitrary additional properties are rejected rather than silently ignored.
 
@@ -67,4 +84,4 @@ the NuGet package; their licenses are separate from this MIT client.
 
 See [Ollama speech documentation](https://docs.ollama.com/capabilities/speech) for model and voice details.
 
-For a runnable C# example with WAV/PCM validation, incremental streaming, and optional playback, see [OllamaSpeechDemo](https://github.com/elbruno/ElBruno.Speech/tree/v1.6.0-preview.3/src/samples/OllamaSpeechDemo) in the repository.
+For a runnable C# example with WAV/PCM validation, incremental streaming, and optional playback, see [OllamaSpeechDemo](https://github.com/elbruno/ElBruno.Speech/tree/v1.6.0-preview.4/src/samples/OllamaSpeechDemo) in the repository.

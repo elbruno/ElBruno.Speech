@@ -9,7 +9,7 @@ using Microsoft.Extensions.DependencyInjection;
 var services = new ServiceCollection();
 services.AddOllamaSpeech(new OllamaSpeechOptions
 {
-    Endpoint = new Uri("http://localhost:11434/v1/audio/speech"),
+    Endpoint = new Uri("http://localhost:11434/"),
     Model = "phonon"
 });
 

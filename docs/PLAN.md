@@ -5,6 +5,18 @@
 
 The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-by-phase progress.
 
+## 1.6.0-preview.4: Ollama endpoint normalization
+
+- Default configuration and all current samples use `http://localhost:11434/`.
+  Shared options resolution completes host roots, `/v1` bases, and `/v1/audio`
+  paths for both complete and streaming requests, without mutating caller options.
+- Full speech routes, custom endpoint paths, HTTPS, ports, proxy prefixes before
+  `/v1`, and query strings remain supported. No automatic route changes apply to
+  fixed model downloads, local providers, or WebSocket/health endpoints.
+- Forty-three synthetic provider/sample cases pass per target framework.
+  Live speech verification remains pending. See
+  [release notes](releases/1.6.0-preview.4.md) for the publication gate.
+
 ## 1.6.0-preview.3: Ollama Phonon provider and C# sample
 
 - Added the opt-in `ElBruno.Speech.Tts.Ollama` package and DI registration,

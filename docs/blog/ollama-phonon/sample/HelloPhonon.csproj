@@ -6,8 +6,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="ElBruno.Speech.Tts.Ollama" Version="1.6.0-preview.3" />
-    <PackageReference Include="ElBruno.Speech.Audio" Version="1.6.0-preview.3" />
+    <PackageReference Include="ElBruno.Speech.Tts.Ollama" Version="1.6.0-preview.4" />
+    <PackageReference Include="ElBruno.Speech.Audio" Version="1.6.0-preview.4" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.13" />
   </ItemGroup>
 </Project>

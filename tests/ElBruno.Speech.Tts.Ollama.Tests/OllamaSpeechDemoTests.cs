@@ -27,13 +27,14 @@ public sealed class OllamaSpeechDemoTests
         var formats = new List<string>();
         using var http = new HttpClient(new Handler(async request =>
         {
+            Assert.Equal(new Uri("http://localhost:11434/v1/audio/speech"), request.RequestUri);
             using var json = JsonDocument.Parse(await request.Content!.ReadAsStringAsync());
             Assert.Equal("A synthetic audio test.", json.RootElement.GetProperty("input").GetString());
             string format = json.RootElement.GetProperty("response_format").GetString()!;
             formats.Add(format);
             return format == "wav" ? wav : pcm;
         }));
-        using var speech = new OllamaSpeechClient(http);
+        using var speech = new OllamaSpeechClient(http, new() { Endpoint = new Uri("http://localhost:11434/") });
         string output = Path.Combine(Path.GetTempPath(), "OllamaSpeechDemoTests-" + Guid.NewGuid());
         using var log = new StringWriter();
         try

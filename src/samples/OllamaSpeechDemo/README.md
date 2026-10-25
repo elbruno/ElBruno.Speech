@@ -17,11 +17,11 @@ The provider and this sample do not download models or change the Ollama install
 
 ## Release and verification status
 
-Included with `1.6.0-preview.3`. The provider is installed with
-`dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.3` in your own
+Updated for `1.6.0-preview.4`. The provider is installed with
+`dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.4` in your own
 project; this repository sample references the provider source project.
 
-Twenty-one focused synthetic provider/sample test cases pass on each of .NET 8 and
+Forty-three focused synthetic provider/sample test cases pass on each of .NET 8 and
 .NET 10. The console help and the failure path against the real Windows Ollama
 0.40.11 server were exercised. Live synthesis returned HTTP 404 because Phonon
 could not be pulled without MLX. **No real Phonon audio was generated or listened
@@ -43,10 +43,18 @@ Use `-f net8.0` instead if running .NET 8.
 To use a remote server:
 
 ```powershell
-dotnet run --project src\samples\OllamaSpeechDemo -f net10.0 -- --endpoint http://YOUR-OLLAMA-HOST:11434/v1/audio/speech --voice Freya --output artifacts\ollama-speech
+dotnet run --project src\samples\OllamaSpeechDemo -f net10.0 -- --endpoint http://YOUR-OLLAMA-HOST:11434/ --voice Freya --output artifacts\ollama-speech
 ```
 
 The remote server must be reachable from this machine and configured to listen on the appropriate network interface. Keep it on a trusted network; this sample does not configure authentication or expose a server.
+
+The endpoint defaults to `http://localhost:11434/`. In `preview.4` and later,
+the library completes host roots, `/v1` bases, and `/v1/audio` paths to the
+speech route for both synthesis modes. Full `/v1/audio/speech` URLs remain
+supported without duplication. Proxy prefixes before `/v1` and query strings
+are preserved; other custom endpoint paths remain unchanged. See the
+[provider URL rules](../../ElBruno.Speech.Tts.Ollama/README.md#registration).
+The original `preview.3` package requires the complete speech endpoint.
 
 If the installed .NET 11 preview SDK triggers the repository's existing `System.Version.Parse` error in `Directory.Build.props`, add `-p:NETCoreSdkVersion=11.0.100` before `--`. This is a local workaround, not a required setting on .NET 8/10.
 
