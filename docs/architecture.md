@@ -45,7 +45,11 @@ graph TD
 
 ### Ollama Phonon TTS (1.6.0-preview.3)
 
-`AddOllamaSpeech()` registers `ITextToSpeechClient`. The implementation calls
+`AddOllamaSpeech()` registers `ITextToSpeechClient` without requiring options:
+the defaults are server `http://localhost:11434/`, model `phonon`, default voice,
+and WAV output. Options override only the supplied settings. The CLI uses these
+same library defaults rather than maintaining its own endpoint/model values.
+The implementation calls
 `POST /v1/audio/speech` with only model, input, optional voice, and response
 format. Full responses expose MEAI `DataContent` and compatibility byte arrays;
 streaming uses `ResponseHeadersRead` and yields copied audio chunks as received.

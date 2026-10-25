@@ -5,6 +5,17 @@
 
 The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-by-phase progress.
 
+## 1.6.0-preview.5: No-options Ollama registration
+
+- Primary guides and blog code use `services.AddOllamaSpeech()` with no options.
+  Defaults remain the local Ollama server, `phonon`, default voice, and WAV.
+- CLI endpoint/model settings come from `OllamaSpeechOptions`, with optional
+  endpoint/voice overrides. No duplicated runtime default values.
+- Forty-nine focused provider/sample cases cover no-options, null-options,
+  and empty-options registration plus actual default requests in both modes.
+- Publish only after the exact-commit workflow and artifact review gate.
+  See [release notes](releases/1.6.0-preview.5.md).
+
 ## 1.6.0-preview.4: Ollama endpoint normalization
 
 - Default configuration and all current samples use `http://localhost:11434/`.

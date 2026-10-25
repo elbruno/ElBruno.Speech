@@ -7,6 +7,8 @@ namespace ElBruno.Speech.Tts.Ollama;
 public static class ServiceCollectionExtensions
 {
     /// <summary>Registers the Ollama Phonon client as an <see cref="ITextToSpeechClient"/>.</summary>
+    /// <remarks>Omitting options uses http://localhost:11434/, the phonon model, the default
+    /// voice, and WAV output. The speech route is resolved automatically.</remarks>
     public static IServiceCollection AddOllamaSpeech(this IServiceCollection services,
         OllamaSpeechOptions? options = null)
     {

@@ -14,7 +14,7 @@ An opt-in `Microsoft.Extensions.AI.ITextToSpeechClient` for Ollama's Phonon mode
 ## Registration
 
 ```powershell
-dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.4
+dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.5
 ```
 
 ```csharp
@@ -23,20 +23,29 @@ using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection();
-services.AddOllamaSpeech(new OllamaSpeechOptions
-{
-    Endpoint = new Uri("http://localhost:11434/"),
-    Model = "phonon",
-    Voice = "Freya",
-    AudioFormat = OllamaSpeechAudioFormat.Wav
-});
+services.AddOllamaSpeech();
 
 using var provider = services.BuildServiceProvider();
 var speech = provider.GetRequiredService<ITextToSpeechClient>();
 var audio = await speech.GetAudioAsync("Hello from Ollama.");
 ```
 
-`Voice` is optional; omit it to use Phonon's default voice. The endpoint defaults to `http://localhost:11434/`, the model to `phonon`, and the format to WAV. Set `AudioFormat` to `Pcm` for raw PCM output. The client also accepts per-request `VoiceId`, `ModelId`, and `AudioFormat` values through `TextToSpeechOptions`.
+No options are required: `AddOllamaSpeech()` uses `http://localhost:11434/`,
+model `phonon`, the model's default voice, and WAV output. The speech route is
+resolved automatically. Passing `null` or `new OllamaSpeechOptions()` uses the
+same defaults. Set only the values you want to override, for example:
+
+```csharp
+services.AddOllamaSpeech(new OllamaSpeechOptions
+{
+    Endpoint = new Uri("http://YOUR-OLLAMA-HOST:11434/"),
+    Voice = "Freya"
+});
+```
+
+This is an alternative registration, not an additional call. The model still
+defaults to `phonon`. Set `AudioFormat` to `Pcm` for raw PCM output.
+Per-request `VoiceId`, `ModelId`, and `AudioFormat` overrides are also supported.
 
 Starting with `1.6.0-preview.4`, the library resolves the speech route automatically
 for both complete and streaming requests, without changing your options object:
@@ -84,4 +93,4 @@ the NuGet package; their licenses are separate from this MIT client.
 
 See [Ollama speech documentation](https://docs.ollama.com/capabilities/speech) for model and voice details.
 
-For a runnable C# example with WAV/PCM validation, incremental streaming, and optional playback, see [OllamaSpeechDemo](https://github.com/elbruno/ElBruno.Speech/tree/v1.6.0-preview.4/src/samples/OllamaSpeechDemo) in the repository.
+For a runnable C# example with WAV/PCM validation, incremental streaming, and optional playback, see [OllamaSpeechDemo](https://github.com/elbruno/ElBruno.Speech/tree/v1.6.0-preview.5/src/samples/OllamaSpeechDemo) in the repository.

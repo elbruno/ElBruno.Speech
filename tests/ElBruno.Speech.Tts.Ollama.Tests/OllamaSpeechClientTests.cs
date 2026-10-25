@@ -9,6 +9,53 @@ namespace ElBruno.Speech.Tts.Ollama.Tests;
 
 public sealed class OllamaSpeechClientTests
 {
+    [Theory]
+    [InlineData("omitted")]
+    [InlineData("null")]
+    [InlineData("empty")]
+    public void RegistrationWithoutConfigurationUsesPhononDefaults(string configuration)
+    {
+        var services = new ServiceCollection();
+        if (configuration == "omitted") services.AddOllamaSpeech();
+        else services.AddOllamaSpeech(configuration == "null" ? null : new OllamaSpeechOptions());
+        using var provider = services.BuildServiceProvider();
+        var client = Assert.IsType<OllamaSpeechClient>(provider.GetRequiredService<ITextToSpeechClient>());
+
+        Assert.Equal("phonon", client.Metadata.DefaultModelId);
+        Assert.Same(client, provider.GetRequiredService<ITextToSpeechClient>());
+        var defaults = new OllamaSpeechOptions();
+        Assert.Equal(new Uri("http://localhost:11434/"), defaults.Endpoint);
+        Assert.Equal("phonon", defaults.Model);
+        Assert.Null(defaults.Voice);
+        Assert.Equal(OllamaSpeechAudioFormat.Wav, defaults.AudioFormat);
+    }
+
+    [Theory]
+    [InlineData("omitted")]
+    [InlineData("null")]
+    [InlineData("empty")]
+    public async Task UnconfiguredClientSendsDefaultEndpointModelVoiceAndFormat(string configuration)
+    {
+        int requests = 0;
+        using var http = new HttpClient(new StubHandler(async (request, cancellationToken) =>
+        {
+            requests++;
+            Assert.Equal(new Uri("http://localhost:11434/v1/audio/speech"), request.RequestUri);
+            using var payload = JsonDocument.Parse(await request.Content!.ReadAsStringAsync(cancellationToken));
+            Assert.Equal("phonon", payload.RootElement.GetProperty("model").GetString());
+            Assert.Equal("wav", payload.RootElement.GetProperty("response_format").GetString());
+            Assert.False(payload.RootElement.TryGetProperty("voice", out _));
+            return AudioResponse([1, 2]);
+        }));
+        using var client = configuration == "omitted"
+            ? new OllamaSpeechClient(http)
+            : new OllamaSpeechClient(http, configuration == "null" ? null : new OllamaSpeechOptions());
+
+        await client.GetAudioAsync("Hello.");
+        await foreach (var _ in client.GetStreamingAudioAsync("Hello.")) { }
+        Assert.Equal(2, requests);
+    }
+
     [Fact]
     public async Task SendsConfiguredRequestAndReturnsMediaTypedAudio()
     {

@@ -27,8 +27,7 @@ try
 {
     string text = "Hello! This is a local text to speech demo, built with C sharp and Ollama Phonon.";
     string outputDirectory = Path.Combine("artifacts", "ollama-speech");
-    string? voice = null;
-    var endpoint = new Uri("http://localhost:11434/");
+    var options = new OllamaSpeechOptions();
     bool play = false;
 
     for (int i = 0; i < args.Length; i++)
@@ -47,19 +46,19 @@ try
         switch (option)
         {
             case "--text": text = args[i]; break;
-            case "--voice": voice = args[i]; break;
+            case "--voice": options.Voice = args[i]; break;
             case "--output": outputDirectory = args[i]; break;
-            case "--endpoint": endpoint = new Uri(args[i], UriKind.Absolute); break;
+            case "--endpoint": options.Endpoint = new Uri(args[i], UriKind.Absolute); break;
         }
     }
 
     var services = new ServiceCollection();
-    services.AddOllamaSpeech(new OllamaSpeechOptions { Endpoint = endpoint, Voice = voice });
+    services.AddOllamaSpeech(options);
     using var provider = services.BuildServiceProvider();
     var speech = provider.GetRequiredService<ITextToSpeechClient>();
 
-    Console.WriteLine($"Endpoint: {endpoint}");
-    Console.WriteLine($"Model: phonon, voice: {voice ?? "default"}");
+    Console.WriteLine($"Endpoint: {options.Endpoint}");
+    Console.WriteLine($"Model: {options.Model}, voice: {options.Voice ?? "default"}");
     Console.WriteLine($"Text: {text}");
     await SpeechDemo.GenerateAsync(speech, text, outputDirectory, Console.Out, cancellation.Token);
 

@@ -17,11 +17,11 @@ The provider and this sample do not download models or change the Ollama install
 
 ## Release and verification status
 
-Updated for `1.6.0-preview.4`. The provider is installed with
-`dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.4` in your own
+Updated for `1.6.0-preview.5`. The provider is installed with
+`dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.5` in your own
 project; this repository sample references the provider source project.
 
-Forty-three focused synthetic provider/sample test cases pass on each of .NET 8 and
+Forty-nine focused synthetic provider/sample test cases pass on each of .NET 8 and
 .NET 10. The console help and the failure path against the real Windows Ollama
 0.40.11 server were exercised. Live synthesis returned HTTP 404 because Phonon
 could not be pulled without MLX. **No real Phonon audio was generated or listened
@@ -60,7 +60,11 @@ If the installed .NET 11 preview SDK triggers the repository's existing `System.
 
 ## What the sample does
 
-`Program.cs` registers the provider through DI and resolves `ITextToSpeechClient`. `SpeechDemo.cs` demonstrates both APIs:
+For local Ollama, register with `services.AddOllamaSpeech()`: defaults are
+`http://localhost:11434/`, model `phonon`, the model's default voice, and WAV.
+The CLI starts from those same library defaults and applies only supplied
+`--endpoint` and `--voice` overrides. You do not need to specify either.
+`Program.cs` resolves `ITextToSpeechClient`. `SpeechDemo.cs` demonstrates both APIs:
 
 ```csharp
 var response = await speech.GetAudioAsync(

@@ -2,7 +2,7 @@
 
 Apple Silicon users, please try this C# sample and let us know whether speech generation and playback work on your Mac!
 
-**ElBruno.Speech 1.6.0-preview.4** makes the Ollama Phonon provider even simpler: supply the server URL and the library resolves the speech route for `Microsoft.Extensions.AI.ITextToSpeechClient`. Let's turn a sentence into a WAV file, with local inference handled by Ollama.
+**ElBruno.Speech 1.6.0-preview.5** keeps setup simple: call `services.AddOllamaSpeech()` for `Microsoft.Extensions.AI.ITextToSpeechClient`. It defaults to local Ollama and the `phonon` model. Let's turn a sentence into a WAV file, with local inference handled by Ollama.
 
 ![Flow from a C# .NET app through Ollama and Phonon to streamed PCM and a WAV file, using 24 kHz mono PCM16 audio and an Apple Silicon server.](ollama-speech-flow.png)
 
@@ -16,8 +16,8 @@ Use .NET 8 or 10 and a supported **Apple Silicon Mac running Ollama with MLX**. 
 ollama pull phonon
 dotnet new console -n HelloPhonon -f net10.0
 cd HelloPhonon
-dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.4
-dotnet add package ElBruno.Speech.Audio --version 1.6.0-preview.4
+dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0-preview.5
+dotnet add package ElBruno.Speech.Audio --version 1.6.0-preview.5
 dotnet add package Microsoft.Extensions.DependencyInjection --version 10.0.13
 ```
 
@@ -39,11 +39,7 @@ using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection();
-services.AddOllamaSpeech(new OllamaSpeechOptions
-{
-    Endpoint = new Uri("http://localhost:11434/"),
-    Model = "phonon"
-});
+services.AddOllamaSpeech();
 
 using var provider = services.BuildServiceProvider();
 var speech = provider.GetRequiredService<ITextToSpeechClient>();
@@ -81,13 +77,13 @@ afplay hello.wav
 
 The client receives PCM chunks incrementally. This short example buffers them, then writes a WAV with the final sizes: **24 kHz, mono, signed 16-bit PCM**. It does not play audio while streaming.
 
-Using a remote Mac? Change `Endpoint` to its reachable Ollama server URL. From `preview.4`, the library completes host roots and `/v1` bases to `/v1/audio/speech`; existing full speech URLs still work. Keep that server on a trusted network; this example does not configure authentication or expose it.
+No configuration is required for local Ollama: the defaults are `http://localhost:11434/`, model `phonon`, the model's default voice, and WAV output. This example requests PCM per call for streaming. Using a remote Mac? Replace the registration with `services.AddOllamaSpeech(new OllamaSpeechOptions { Endpoint = new Uri("http://YOUR-MAC:11434/") });`. The library resolves the speech route automatically. Keep that server on a trusted network; this example does not configure authentication or expose it.
 
 ## 3. Try the complete demo
 
-The [full C# sample](https://github.com/elbruno/ElBruno.Speech/tree/v1.6.0-preview.4/src/samples/OllamaSpeechDemo) also saves complete WAV and streamed PCM/WAV files, validates their format, rejects silent output, and supports optional playback.
+The [full C# sample](https://github.com/elbruno/ElBruno.Speech/tree/v1.6.0-preview.5/src/samples/OllamaSpeechDemo) also saves complete WAV and streamed PCM/WAV files, validates their format, rejects silent output, and supports optional playback.
 
-**Honest status:** 43 synthetic provider/sample test cases pass on each of .NET 8 and .NET 10, including URL normalization for complete and streaming requests. My Windows host could not load Phonon because MLX was unavailable, so I have **not generated or listened to real Phonon speech yet**. Automated checks are not proof of pronunciation or sound quality.
+**Honest status:** 49 synthetic provider/sample test cases pass on each of .NET 8 and .NET 10, including no-options registration, default request values, and URL normalization for complete and streaming requests. My Windows host could not load Phonon because MLX was unavailable, so I have **not generated or listened to real Phonon speech yet**. Automated checks are not proof of pronunciation or sound quality.
 
 ![Apple Silicon laptop beside a conceptual audio waveform, play button, WAV and PCM files, and a feedback bubble inviting readers to try, listen, and share feedback.](apple-silicon-test.png)
 
@@ -95,7 +91,7 @@ The [full C# sample](https://github.com/elbruno/ElBruno.Speech/tree/v1.6.0-previ
 
 If you test it, share your Mac chip, macOS and Ollama versions, whether `hello.wav` plays, and how it sounds in [issue #106](https://github.com/elbruno/ElBruno.Speech/issues/106). Please include any error message, but no secrets or private audio.
 
-[NuGet package](https://www.nuget.org/packages/ElBruno.Speech.Tts.Ollama/1.6.0-preview.4) | [Release notes](https://github.com/elbruno/ElBruno.Speech/releases/tag/v1.6.0-preview.4) | [Ollama speech docs](https://docs.ollama.com/capabilities/speech)
+[NuGet package](https://www.nuget.org/packages/ElBruno.Speech.Tts.Ollama/1.6.0-preview.5) | [Release notes](https://github.com/elbruno/ElBruno.Speech/releases/tag/v1.6.0-preview.5) | [Ollama speech docs](https://docs.ollama.com/capabilities/speech)
 
 Happy coding!
 

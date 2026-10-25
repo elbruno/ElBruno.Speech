@@ -7,11 +7,7 @@ using Microsoft.Extensions.AI;
 using Microsoft.Extensions.DependencyInjection;
 
 var services = new ServiceCollection();
-services.AddOllamaSpeech(new OllamaSpeechOptions
-{
-    Endpoint = new Uri("http://localhost:11434/"),
-    Model = "phonon"
-});
+services.AddOllamaSpeech();
 
 using var provider = services.BuildServiceProvider();
 var speech = provider.GetRequiredService<ITextToSpeechClient>();
