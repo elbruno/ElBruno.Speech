@@ -5,6 +5,63 @@
 
 The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-by-phase progress.
 
+## 1.6.0: Stable Ollama release candidate
+
+- Integrates the previously released Ollama branch into main and preserves the
+  merged Microsoft.Extensions, OpenTelemetry, build, and test dependency updates.
+- Two users confirmed real WAV generation and playback with preview.5 on
+  Apple M2/.NET 8 and M2 Max/.NET 10, both with Ollama 0.40.11. See
+  [issue #106](https://github.com/elbruno/ElBruno.Speech/issues/106).
+- Stable package numbering does not expand platform support or remove MEAI's
+  experimental API annotation. Apple Silicon/MLX server requirements,
+  English-model limits, and explicit pipeline format conversion still apply.
+- Publish all twelve packages and symbols only after exact-commit workflow and
+  independent artifact review. See [release notes](releases/1.6.0.md).
+
+## 1.6.0-preview.5: No-options Ollama registration
+
+- Primary guides and blog code use `services.AddOllamaSpeech()` with no options.
+  Defaults remain the local Ollama server, `phonon`, default voice, and WAV.
+- CLI endpoint/model settings come from `OllamaSpeechOptions`, with optional
+  endpoint/voice overrides. No duplicated runtime default values.
+- Forty-nine focused provider/sample cases cover no-options, null-options,
+  and empty-options registration plus actual default requests in both modes.
+- Publish only after the exact-commit workflow and artifact review gate.
+  See [release notes](releases/1.6.0-preview.5.md).
+
+## 1.6.0-preview.4: Ollama endpoint normalization
+
+- Default configuration and all current samples use `http://localhost:11434/`.
+  Shared options resolution completes host roots, `/v1` bases, and `/v1/audio`
+  paths for both complete and streaming requests, without mutating caller options.
+- Full speech routes, custom endpoint paths, HTTPS, ports, proxy prefixes before
+  `/v1`, and query strings remain supported. No automatic route changes apply to
+  fixed model downloads, local providers, or WebSocket/health endpoints.
+- Forty-three synthetic provider/sample cases pass per target framework.
+  Live speech verification remains pending. See
+  [release notes](releases/1.6.0-preview.4.md) for the publication gate.
+
+## 1.6.0-preview.3: Ollama Phonon provider and C# sample
+
+- Added the opt-in `ElBruno.Speech.Tts.Ollama` package and DI registration,
+  configurable endpoint/model/voice, WAV/PCM responses, incremental streaming,
+  cancellation, explicit unsupported-option errors, and HTTP error details.
+- Added `OllamaSpeechDemo`: complete WAV generation, incremental PCM saving,
+  WAV header finalization, format/non-silence checks, timings, and optional
+  system-player launch. No alternative runtime or automatic fallback.
+- Twenty-one focused synthetic test cases cover the provider and sample on each
+  of .NET 8 and .NET 10, including bounded HTTP error-body reading.
+- Windows Ollama 0.40.11 was checked: pulling Phonon fails without MLX; direct
+  synthesis returns a missing-model HTTP 404. Real audio and listening
+  verification remain pending. Apple Silicon Ollama is currently required;
+  Windows/Linux server support is pending upstream with no promised date.
+- Pipeline defaults and its existing format-conversion behavior remain unchanged.
+- Release through `.github/workflows/publish.yml` only after the version,
+  complete twelve-package set (including BlazorComponents), artifacts, and
+  successful dry run have passed review. See [release notes](releases/1.6.0-preview.3.md).
+
+---
+
 ---
 
 ## Phase 0 — Repository Foundation ✅ DONE

@@ -14,6 +14,7 @@ bin/
 obj/
 *.nupkg
 *.snupkg
+artifacts/ollama-speech/
 
 ## Visual Studio
 .vs/

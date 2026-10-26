@@ -16,6 +16,8 @@ graph TD
     NAU["ElBruno.Speech.NAudio<br/>(NAudioMicrophoneInput,<br/>NAudioSpeakerOutput,<br/>AudioDeviceEnumerator)"]
     OTL["ElBruno.Speech.OpenTelemetry<br/>(SpeechPipelineMeter,<br/>SpeechPipelineTracer)"]
     CLI["ElBruno.Speech.Cli<br/>(elbrunospeech dotnet tool)"]
+    OLL["ElBruno.Speech.Tts.Ollama<br/>(OllamaSpeechClient, OllamaSpeechOptions)"]
+    MEAI["Microsoft.Extensions.AI<br/>(ITextToSpeechClient)"]
 
     AUD --> ABS
     VAD --> ABS
@@ -28,6 +30,7 @@ graph TD
     OTL --> PIP
     CLI --> PIP
     CLI --> NAU
+    OLL --> MEAI
 ```
 
 ### Dependency Rules
@@ -38,6 +41,32 @@ graph TD
 | **Abstractions has zero external dependencies** | Keeps the public API surface portable |
 | **Audio has no knowledge of Pipeline** | Prevents circular dependency |
 | **AspNetCore references Audio directly** | `WebSocketAudioInput` uses `AudioFramer` at compile time |
+| **Ollama TTS is a separate opt-in HTTP provider** | No dependency on Pipeline, QwenTTS, native MLX libraries, or model weights in the client package |
+
+### Ollama Phonon TTS (1.6.0-preview.3)
+
+`AddOllamaSpeech()` registers `ITextToSpeechClient` without requiring options:
+the defaults are server `http://localhost:11434/`, model `phonon`, default voice,
+and WAV output. Options override only the supplied settings. The CLI uses these
+same library defaults rather than maintaining its own endpoint/model values.
+The implementation calls
+`POST /v1/audio/speech` with only model, input, optional voice, and response
+format. Full responses expose MEAI `DataContent` and compatibility byte arrays;
+streaming uses `ResponseHeadersRead` and yields copied audio chunks as received.
+Cancellation and disposal release the HTTP response and its stream.
+
+From `1.6.0-preview.4`, configure the server root (`http://localhost:11434/`)
+rather than spelling out the route. Options snapshots resolve host roots,
+paths ending in `/v1`, and paths ending in `/v1/audio` to the speech endpoint.
+Full speech URLs are not duplicated. Proxy prefixes before `/v1`, query strings,
+and other custom endpoint paths are preserved. Both response modes and DI use
+the same resolution logic; caller-owned options remain unchanged.
+
+The .NET client is portable, but the Ollama inference server currently requires
+Apple Silicon and MLX. Windows/Linux server support remains pending upstream.
+The release includes a [C# sample](../src/samples/OllamaSpeechDemo/README.md) and
+synthetic tests, not a verified live speech/quality claim. Pipeline defaults and
+audio-format conversion behavior are unchanged; see [audio formats](audio-formats.md).
 
 ---
 

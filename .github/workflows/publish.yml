@@ -34,8 +34,8 @@ jobs:
         uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
-            8.0.x
-            10.0.x
+            8.0.426
+            10.0.402
 
       - name: Resolve version
         id: version
@@ -90,6 +90,7 @@ jobs:
             "ElBruno.Speech.Vad.Silero"
             "ElBruno.Speech.Stt.Parakeet"
             "ElBruno.Speech.Stt.Whisper"
+            "ElBruno.Speech.Tts.Ollama"
             "ElBruno.Speech.Pipeline"
             "ElBruno.Speech.AspNetCore"
             "ElBruno.Speech.NAudio"

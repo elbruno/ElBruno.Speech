@@ -18,6 +18,25 @@ AudioFormat.Pcm16KhzMono
 | `BytesPerSecond` | 32,000 |
 | Frame (20 ms) | 640 bytes / 320 samples |
 
+## Ollama Phonon output (preview)
+
+The opt-in `ElBruno.Speech.Tts.Ollama` provider returns **24 kHz, mono, signed
+16-bit little-endian PCM**, either raw (`pcm`, MEAI media type `audio/pcm`) or
+WAV-wrapped (`wav`, `audio/wav`). These are model-native output formats, not the
+pipeline's canonical 16 kHz input/output format.
+
+Ollama writes WAV headers before the final length is known, using maximum size
+fields. The [C# sample](../src/samples/OllamaSpeechDemo/README.md) validates the
+format, waits for complete audio, and rewrites final RIFF/data sizes using
+`WavWriter`. It also writes PCM chunks incrementally and wraps them in a WAV file
+after completion. Arbitrary streaming chunks may split a sample and must be
+concatenated in order.
+
+Do not pass WAV container bytes to a raw PCM output or label 24 kHz samples as
+16 kHz. Applications using the existing pipeline must select raw PCM and handle
+conversion to the configured output format. The provider does not silently
+resample or change `SpeechPipelineOptions.TargetFormat`.
+
 ---
 
 ## `AudioFormat`
