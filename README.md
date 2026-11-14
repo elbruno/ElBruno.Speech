@@ -38,7 +38,7 @@ Audio output
 
 | Date | Version | Highlights |
 |------|---------|------------|
-| 2026-11-14 | 1.6.2 (release pending) | **.NET 11 support**: adds .NET 11 assets to the runtime libraries and BlazorComponents, preserving prior targets. All twelve packages are set to the same version. See [release notes](docs/releases/1.6.2.md). |
+| 2026-11-14 | 1.6.2 | **.NET 11 support**: adds .NET 11 assets to the runtime libraries and BlazorComponents, preserving prior targets. All twelve packages use the same release version. See [release notes](docs/releases/1.6.2.md). |
 | 2026-11-03 | 1.6.1 | **Dependency patch**: updates Microsoft.Extensions.Hosting.Abstractions to 10.0.14 and ONNX Runtime to 1.31.1. No public API or pipeline-default changes. |
 | 2026-10-26 | 1.6.0 | **Stable Ollama Phonon TTS**: community-confirmed WAV generation and playback on Apple Silicon with .NET 8/10, all twelve packages, and dependency updates. See [release notes](docs/releases/1.6.0.md) for scope and platform limits. |
 | 2026-10-25 | 1.6.0-preview.5 | **Zero-configuration Ollama**: examples use `AddOllamaSpeech()` with local server and Phonon defaults, plus explicit default-value regression coverage. See [release notes](docs/releases/1.6.0-preview.5.md). |
