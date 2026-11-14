@@ -1,6 +1,6 @@
 # ElBruno.Speech — Implementation Plan
 
-> **Status as of 2026-11-14:** Phases 0–7 complete. .NET 11 support is prepared for the 1.6.2 release review; publication is pending.
+> **Status as of 2026-11-14:** Phases 0–7 complete. .NET 11 support is included in the 1.6.2 stable release.
 > **v1.0.0 released 2026-08-02** — All 8 packages published to NuGet.org. GitHub release: https://github.com/elbruno/ElBruno.Speech/releases/tag/v1.0.0
 
 The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-by-phase progress.
@@ -14,7 +14,8 @@ The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-
   NuGet.org's 250 MB package limit. Its `net8.0` asset runs on .NET 11.
 - All twelve packages are versioned `1.6.2`. Build, filtered tests, and all
   package/symbol presence checks pass locally on Windows with .NET SDK 11.0.100.
-- Publication remains pending the NuGet release review gate.
+- The trusted publish workflow verifies the complete package set, including
+  BlazorComponents, before publishing.
 
 ## 1.6.0: Stable Ollama release candidate
 
