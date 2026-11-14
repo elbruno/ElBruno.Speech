@@ -1,9 +1,18 @@
 # ElBruno.Speech — Implementation Plan
 
-> **Status as of 2026-11-14:** Phases 0–7 complete. .NET 11 support is included in the 1.6.2 stable release.
+> **Status as of 2026-11-14:** Phases 0–7 complete. .NET 11 support is included in the 1.6.2 stable release; 1.6.3 is a maintenance release.
 > **v1.0.0 released 2026-08-02** — All 8 packages published to NuGet.org. GitHub release: https://github.com/elbruno/ElBruno.Speech/releases/tag/v1.0.0
 
 The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-by-phase progress.
+
+## 1.6.3: Maintenance release
+
+- Follows the merged CodeQL GitHub Actions update.
+- Retains the existing .NET 8, .NET 10, and .NET 11 package assets and
+  dependency groups. No public API, runtime behavior, or pipeline-default
+  changes.
+- Release all twelve package IDs, including BlazorComponents, at version 1.6.3
+  through the trusted publish workflow.
 
 ## 1.6.2: .NET 11 target support
 
