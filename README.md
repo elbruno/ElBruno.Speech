@@ -38,6 +38,7 @@ Audio output
 
 | Date | Version | Highlights |
 |------|---------|------------|
+| 2026-11-14 | 1.6.3 | **Maintenance release**: follows the CI CodeQL action update; preserves existing APIs, runtime behavior, package dependencies, and .NET 8/10/11 assets. See [release notes](docs/releases/1.6.3.md). |
 | 2026-11-14 | 1.6.2 | **.NET 11 support**: adds .NET 11 assets to the runtime libraries and BlazorComponents, preserving prior targets. All twelve packages use the same release version. See [release notes](docs/releases/1.6.2.md). |
 | 2026-11-03 | 1.6.1 | **Dependency patch**: updates Microsoft.Extensions.Hosting.Abstractions to 10.0.14 and ONNX Runtime to 1.31.1. No public API or pipeline-default changes. |
 | 2026-10-26 | 1.6.0 | **Stable Ollama Phonon TTS**: community-confirmed WAV generation and playback on Apple Silicon with .NET 8/10, all twelve packages, and dependency updates. See [release notes](docs/releases/1.6.0.md) for scope and platform limits. |
@@ -59,7 +60,7 @@ Audio output
 | `ElBruno.Speech.Vad.Silero` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Vad.Silero.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Vad.Silero) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Vad.Silero.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Vad.Silero) | Silero VAD via ONNX Runtime — streaming voice activity detection |
 | `ElBruno.Speech.Stt.Parakeet` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Stt.Parakeet.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Stt.Parakeet) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Stt.Parakeet.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Stt.Parakeet) | Experimental opt-in multilingual Parakeet TDT v3 local STT, available since `1.6.0-preview.1` |
 | `ElBruno.Speech.Stt.Whisper` | [NuGet](https://www.nuget.org/packages/ElBruno.Speech.Stt.Whisper) | [Downloads](https://www.nuget.org/packages/ElBruno.Speech.Stt.Whisper) | Experimental opt-in multilingual Whisper large-v3 local CPU STT, available since `1.6.0-preview.2` |
-| `ElBruno.Speech.Tts.Ollama` | [1.6.0](https://www.nuget.org/packages/ElBruno.Speech.Tts.Ollama/1.6.0) | [Downloads](https://www.nuget.org/packages/ElBruno.Speech.Tts.Ollama) | Ollama Phonon TTS via `ITextToSpeechClient`, including incremental audio streaming |
+| `ElBruno.Speech.Tts.Ollama` | [1.6.3](https://www.nuget.org/packages/ElBruno.Speech.Tts.Ollama/1.6.3) | [Downloads](https://www.nuget.org/packages/ElBruno.Speech.Tts.Ollama) | Ollama Phonon TTS via `ITextToSpeechClient`, including incremental audio streaming |
 | `ElBruno.Speech.Pipeline` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Pipeline.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Pipeline.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline) | VAD → STT → LLM → TTS orchestration, bounded channels, barge-in |
 | `ElBruno.Speech.AspNetCore` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.AspNetCore) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.AspNetCore) | WebSocket endpoint, session registry, health checks |
 | `ElBruno.Speech.NAudio` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.NAudio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.NAudio) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.NAudio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.NAudio) | Windows microphone and speaker via NAudio |
@@ -79,7 +80,7 @@ dotnet add package ElBruno.Speech.Vad.Silero
 ### Ollama Phonon text-to-speech
 
 ```powershell
-dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.0
+dotnet add package ElBruno.Speech.Tts.Ollama --version 1.6.3
 ```
 
 Register `services.AddOllamaSpeech()` from `ElBruno.Speech.Tts.Ollama` to resolve
