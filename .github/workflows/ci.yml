@@ -11,7 +11,7 @@ permissions:
 
 jobs:
   build-and-test:
-    name: Build and Test (${{ matrix.os }}, .NET 8 and 10)
+    name: Build and Test (${{ matrix.os }}, .NET 8, 10, and 11)
     runs-on: ${{ matrix.os }}
 
     strategy:
@@ -23,12 +23,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
-      - name: Setup .NET (8 and 10)
+      - name: Setup .NET (8, 10, and 11)
         uses: actions/setup-dotnet@v6
         with:
           dotnet-version: |
             8.0.x
             10.0.x
+            11.0.x
 
       - name: Restore
         run: dotnet restore ElBruno.Speech.sln
@@ -67,6 +68,7 @@ jobs:
           dotnet-version: |
             8.0.x
             10.0.x
+            11.0.x
 
       - name: Restore
         run: dotnet restore ElBruno.Speech.sln

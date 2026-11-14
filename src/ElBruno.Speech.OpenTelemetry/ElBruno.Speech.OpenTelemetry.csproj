@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net10.0;net11.0</TargetFrameworks>
     <PackageId>ElBruno.Speech.OpenTelemetry</PackageId>
     <Description>OpenTelemetry instrumentation for ElBruno.Speech — activities, metrics, and Aspire-compatible setup.</Description>
     <PackageTags>speech;opentelemetry;metrics;tracing;aspire;dotnet</PackageTags>

@@ -6,13 +6,13 @@
 [![NuGet Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Pipeline.svg?style=flat-square&logo=nuget)](https://www.nuget.org/packages/ElBruno.Speech.Pipeline)
 [![Build Status](https://github.com/elbruno/ElBruno.Speech/actions/workflows/ci.yml/badge.svg)](https://github.com/elbruno/ElBruno.Speech/actions/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg?style=flat-square)](LICENSE)
-[![.NET](https://img.shields.io/badge/.NET-8.0%20|%2010.0-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
+[![.NET](https://img.shields.io/badge/.NET-8.0%20|%2010.0%20|%2011.0-512BD4?style=flat-square&logo=dotnet)](https://dotnet.microsoft.com/)
 [![GitHub stars](https://img.shields.io/github/stars/elbruno/ElBruno.Speech?style=social)](https://github.com/elbruno/ElBruno.Speech)
 [![Twitter Follow](https://img.shields.io/twitter/follow/elbruno?style=social)](https://twitter.com/elbruno)
 
 ## Local-first speech runtime for .NET — VAD → STT → LLM → TTS 🎙️
 
-A reusable, local-first speech runtime for .NET 8 and .NET 10. Built on [Microsoft.Extensions.AI](https://learn.microsoft.com/dotnet/ai/microsoft-extensions-ai) provider boundaries — works with local models (Whisper, VibeVoice, Qwen-TTS, Ollama) and cloud providers (Azure OpenAI, OpenAI) without changing orchestration code.
+A reusable, local-first speech runtime for .NET 8, .NET 10, and .NET 11. Built on [Microsoft.Extensions.AI](https://learn.microsoft.com/dotnet/ai/microsoft-extensions-ai) provider boundaries — works with local models (Whisper, VibeVoice, Qwen-TTS, Ollama) and cloud providers (Azure OpenAI, OpenAI) without changing orchestration code.
 
 ```text
 Audio input
@@ -38,6 +38,7 @@ Audio output
 
 | Date | Version | Highlights |
 |------|---------|------------|
+| 2026-11-14 | 1.6.2 (release pending) | **.NET 11 support**: adds .NET 11 assets to the runtime libraries and BlazorComponents, preserving prior targets. All twelve packages are set to the same version. See [release notes](docs/releases/1.6.2.md). |
 | 2026-11-03 | 1.6.1 | **Dependency patch**: updates Microsoft.Extensions.Hosting.Abstractions to 10.0.14 and ONNX Runtime to 1.31.1. No public API or pipeline-default changes. |
 | 2026-10-26 | 1.6.0 | **Stable Ollama Phonon TTS**: community-confirmed WAV generation and playback on Apple Silicon with .NET 8/10, all twelve packages, and dependency updates. See [release notes](docs/releases/1.6.0.md) for scope and platform limits. |
 | 2026-10-25 | 1.6.0-preview.5 | **Zero-configuration Ollama**: examples use `AddOllamaSpeech()` with local server and Phonon defaults, plus explicit default-value regression coverage. See [release notes](docs/releases/1.6.0-preview.5.md). |
@@ -63,7 +64,7 @@ Audio output
 | `ElBruno.Speech.AspNetCore` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.AspNetCore) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.AspNetCore.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.AspNetCore) | WebSocket endpoint, session registry, health checks |
 | `ElBruno.Speech.NAudio` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.NAudio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.NAudio) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.NAudio.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.NAudio) | Windows microphone and speaker via NAudio |
 | `ElBruno.Speech.OpenTelemetry` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.OpenTelemetry.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.OpenTelemetry) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.OpenTelemetry.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.OpenTelemetry) | Activities, metrics, Aspire-compatible instrumentation |
-| `ElBruno.Speech.Cli` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Cli.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Cli) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Cli.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Cli) | `elbrunospeech` dotnet tool |
+| `ElBruno.Speech.Cli` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.Cli.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Cli) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.Cli.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.Cli) | `elbrunospeech` .NET 8 dotnet tool, runs on newer runtimes including .NET 11 |
 | `ElBruno.Speech.BlazorComponents` | [![NuGet](https://img.shields.io/nuget/v/ElBruno.Speech.BlazorComponents.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.BlazorComponents) | [![Downloads](https://img.shields.io/nuget/dt/ElBruno.Speech.BlazorComponents.svg?style=flat-square)](https://www.nuget.org/packages/ElBruno.Speech.BlazorComponents) | Blazor Server RCL — 6 ready-to-use speech pipeline UI components |
 
 ---

@@ -4,7 +4,7 @@ You are working on a project that uses **Squad**, an AI team framework. When pic
 
 ## Project: ElBruno.Speech
 
-A reusable, local-first .NET 8/10 speech runtime. It orchestrates a **VAD → STT → LLM → TTS** pipeline using `Microsoft.Extensions.AI` provider boundaries. Full spec: `docs/PRD.md`. Implementation plan and current status: `docs/PLAN.md`.
+A reusable, local-first .NET 8/10/11 speech runtime. It orchestrates a **VAD → STT → LLM → TTS** pipeline using `Microsoft.Extensions.AI` provider boundaries. Full spec: `docs/PRD.md`. Implementation plan and current status: `docs/PLAN.md`.
 
 ## NuGet release review gate
 

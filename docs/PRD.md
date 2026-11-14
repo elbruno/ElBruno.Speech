@@ -3,7 +3,7 @@
 **Repository:** `ElBruno.Speech`  
 **Proposed URL:** https://github.com/elbruno/ElBruno.Speech  
 **Status:** Ready for repository creation  
-**Target frameworks:** .NET 8 and .NET 10  
+**Target frameworks:** .NET 8, .NET 10, and .NET 11
 **Language:** C#  
 **License:** MIT  
 **Date:** July 3, 2026
@@ -1434,7 +1434,7 @@ Shared settings:
 
 ```xml
 <PropertyGroup>
-  <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+  <TargetFrameworks>net8.0;net10.0;net11.0</TargetFrameworks>
   <LangVersion>latest</LangVersion>
   <Nullable>enable</Nullable>
   <ImplicitUsings>enable</ImplicitUsings>
@@ -1787,7 +1787,7 @@ Read docs/PRD.md completely before writing code.
 Start only with Phase 0 and Phase 1. Do not implement VAD, STT, LLM, TTS, WebSockets, or microphone support yet.
 
 Requirements:
-- Create a .NET solution targeting net8.0 and net10.0.
+- Create a .NET solution targeting net8.0, net10.0, and net11.0.
 - Use a .slnx solution file.
 - Put all production code under src.
 - Put all tests under tests.

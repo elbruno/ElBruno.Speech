@@ -1,7 +1,7 @@
 <Project>
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net10.0;net11.0</TargetFrameworks>
     <!-- On machines with only .NET 8 SDK, limit to net8.0 for local builds -->
     <TargetFrameworks Condition="'$(NETCoreSdkVersion)' != '' AND $([System.Version]::Parse('$(NETCoreSdkVersion)').Major) &lt; 9">net8.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
@@ -20,7 +20,7 @@
     <PackageIcon>logo.png</PackageIcon>
 
     <!-- Version — override at publish time with /p:Version=X.Y.Z -->
-    <Version>1.0.0</Version>
+    <Version>1.6.2</Version>
     <PackageReleaseNotes Condition="'$(Version)' == '1.6.0-preview.1'">Experimental opt-in Parakeet TDT v3 local multilingual STT provider, pinned integrity-checked ONNX model bundle, native token-start metadata, and file-transcription sample. Whisper defaults unchanged. Word/segment intervals and language ID are unavailable. Podcast accuracy comparison remains pending.</PackageReleaseNotes>
     <PackageReleaseNotes Condition="'$(Version)' == '1.6.0-preview.2'">Adds an opt-in local Whisper large-v3 CPU STT provider alongside the existing opt-in Parakeet provider. Existing Whisper and pipeline defaults are unchanged. Includes local-only FLEURS comparison evidence; no reviewed word timestamps or podcast accuracy claim. Whisper weights are not bundled; native runtime and model licensing/requirements apply.</PackageReleaseNotes>
     <PackageReleaseNotes Condition="'$(Version)' == '1.6.0-preview.3'">Adds the opt-in Ollama Phonon ITextToSpeechClient provider with WAV/PCM, incremental streaming, cancellation, HTTP error reporting, and a runnable C# sample. Ollama speech currently requires an Apple Silicon Mac with MLX; Windows/Linux support is pending upstream. Synthetic provider/sample checks pass on .NET 8/10; live Phonon generation and listening verification remain pending. Pipeline defaults are unchanged. No model weights are bundled.</PackageReleaseNotes>
@@ -29,6 +29,7 @@
     <PackageReleaseNotes Condition="'$(Version)' == '1.6.0-preview.5'">Makes no-options AddOllamaSpeech() the primary documented setup: local Ollama at http://localhost:11434/, phonon model, default voice, and WAV output. CLI defaults now come from library options. Adds regression coverage for omitted, null, and empty options and default requests in complete/streaming modes. Updates runnable samples and blog. URL normalization and explicit overrides remain supported. Apple Silicon/MLX server requirements and pending live-audio verification are unchanged.</PackageReleaseNotes>
     <PackageReleaseNotes Condition="'$(Version)' == '1.6.0'">Stable release of the opt-in Ollama Phonon TTS provider with zero-configuration AddOllamaSpeech(), automatic endpoint resolution, WAV/PCM streaming, cancellation, and explicit HTTP errors. Community reports confirm WAV generation and playback on Apple M2/.NET 8 and M2 Max/.NET 10 using preview.5. Ollama speech requires a supported Apple Silicon/MLX server; Windows/Linux server support remains pending upstream. Includes opt-in Parakeet and Whisper STT providers and refreshed central Microsoft.Extensions/OpenTelemetry versions; existing project-level overrides remain, including Microsoft.Extensions.DependencyInjection 10.0.12 in ElBruno.Speech.OpenTelemetry. Pipeline defaults and audio-conversion requirements are unchanged. No model weights or voices are bundled. See https://github.com/elbruno/ElBruno.Speech/releases/tag/v1.6.0 for evidence and limitations.</PackageReleaseNotes>
     <PackageReleaseNotes Condition="'$(Version)' == '1.6.1'">Patch release updating Microsoft.Extensions.Hosting.Abstractions to 10.0.14 and Microsoft.ML.OnnxRuntime to 1.31.1. No public API or speech pipeline default changes. All twelve ElBruno.Speech packages, including BlazorComponents, are released together.</PackageReleaseNotes>
+    <PackageReleaseNotes Condition="'$(Version)' == '1.6.2'">Adds .NET 11 target assets to all runtime libraries while retaining their existing target frameworks. BlazorComponents adds .NET 10 and .NET 11 assets alongside .NET 8. The CLI remains a .NET 8 tool with major-version roll-forward: including both tool frameworks duplicates native dependencies and exceeds NuGet.org's 250 MB package limit. .NET 8 and .NET 11 runtime-only execution are verified. No public API, runtime package dependencies, or speech pipeline defaults change. All twelve packages are released together.</PackageReleaseNotes>
 
     <!-- Package metadata -->
     <Authors>Bruno Capuano</Authors>

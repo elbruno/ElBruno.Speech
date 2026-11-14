@@ -1,9 +1,20 @@
 # ElBruno.Speech — Implementation Plan
 
-> **Status as of 2026-07-03:** Phases 0–7 complete. 1.0.0 sign-off checklist in Phase 7 section.
+> **Status as of 2026-11-14:** Phases 0–7 complete. .NET 11 support is prepared for the 1.6.2 release review; publication is pending.
 > **v1.0.0 released 2026-08-02** — All 8 packages published to NuGet.org. GitHub release: https://github.com/elbruno/ElBruno.Speech/releases/tag/v1.0.0
 
 The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-by-phase progress.
+
+## 1.6.2: .NET 11 target support
+
+- Adds `net11.0` to all runtime library packages while retaining existing
+  targets. `ElBruno.Speech.BlazorComponents` now supports `net8.0`, `net10.0`,
+  and `net11.0`. The CLI remains a `net8.0` tool with major-version roll-forward:
+  packaging both tool TFMs duplicates its native dependencies and exceeds
+  NuGet.org's 250 MB package limit. Its `net8.0` asset runs on .NET 11.
+- All twelve packages are versioned `1.6.2`. Build, filtered tests, and all
+  package/symbol presence checks pass locally on Windows with .NET SDK 11.0.100.
+- Publication remains pending the NuGet release review gate.
 
 ## 1.6.0: Stable Ollama release candidate
 
@@ -210,7 +221,7 @@ Replace `AudioPlaceholder.cs` stub with:
 
 | Constraint | Value |
 |-----------|-------|
-| Target frameworks | `net8.0;net10.0` |
+| Target frameworks | `net8.0;net10.0;net11.0` |
 | MEAI version | `10.7.0` (stable) |
 | Microsoft.Extensions.* | `10.0.9` |
 | OpenTelemetry | `1.16.0` |
