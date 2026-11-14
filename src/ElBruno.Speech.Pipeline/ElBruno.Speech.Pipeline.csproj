@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net10.0;net11.0</TargetFrameworks>
     <PackageId>ElBruno.Speech.Pipeline</PackageId>
     <Description>Speech pipeline orchestration for ElBruno.Speech — VAD → STT → LLM → TTS with bounded channels, barge-in, and session management.</Description>
     <PackageTags>speech;pipeline;vad;stt;tts;llm;streaming;dotnet</PackageTags>

@@ -9,7 +9,7 @@
     <PackageTags>speech;cli;tool;dotnet</PackageTags>
     <PackAsTool>true</PackAsTool>
     <ToolCommandName>elbrunospeech</ToolCommandName>
-    <!-- Keep the tool package under NuGet's size limit; a net8.0 tool runs on newer runtimes. -->
+    <!-- A single net8.0 tool asset rolls forward to newer runtimes without duplicating its large native dependencies. -->
     <RollForward>Major</RollForward>
   </PropertyGroup>
 

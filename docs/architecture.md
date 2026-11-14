@@ -1,6 +1,6 @@
 # Architecture
 
-> **ElBruno.Speech** — local-first .NET 8/10 speech runtime orchestrating a **VAD → STT → LLM → TTS** pipeline using `Microsoft.Extensions.AI` provider boundaries.
+> **ElBruno.Speech** — local-first .NET 8/10/11 speech runtime orchestrating a **VAD → STT → LLM → TTS** pipeline using `Microsoft.Extensions.AI` provider boundaries.
 
 ---
 

@@ -10,7 +10,7 @@
 ElBruno.Speech.OpenTelemetry
 ```
 
-Targets `net8.0;net10.0`. Depends on `ElBruno.Speech.Pipeline` + `OpenTelemetry` 1.13.0.
+Targets `net8.0;net10.0;net11.0`. Depends on `ElBruno.Speech.Pipeline` + `OpenTelemetry` 1.13.0.
 
 ---
 

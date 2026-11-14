@@ -4,7 +4,7 @@ A runnable example for generating speech with `ITextToSpeechClient`, saving a co
 
 ## Prerequisites
 
-- .NET 8 or .NET 10 SDK.
+- .NET 8, .NET 10, or .NET 11 SDK.
 - Ollama 0.40.9 or later **on a host with the MLX runtime available**.
 - Run `ollama pull phonon` on the Ollama host. Use `ollama show phonon` to list voices.
 - Phonon currently uses an English checkpoint. Requests are limited to 4,096 characters.
@@ -58,8 +58,6 @@ supported without duplication. Proxy prefixes before `/v1` and query strings
 are preserved; other custom endpoint paths remain unchanged. See the
 [provider URL rules](../../ElBruno.Speech.Tts.Ollama/README.md#registration).
 The original `preview.3` package requires the complete speech endpoint.
-
-If the installed .NET 11 preview SDK triggers the repository's existing `System.Version.Parse` error in `Directory.Build.props`, add `-p:NETCoreSdkVersion=11.0.100` before `--`. This is a local workaround, not a required setting on .NET 8/10.
 
 ## What the sample does
 
