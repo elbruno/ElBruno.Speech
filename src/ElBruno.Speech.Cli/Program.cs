@@ -31,6 +31,12 @@ return command switch
 
 static int RunDevices()
 {
+    if (!OperatingSystem.IsWindows())
+    {
+        Console.Error.WriteLine("The devices command is only supported on Windows.");
+        return 1;
+    }
+
     Console.WriteLine("=== Input Devices ===");
     var inputs = AudioDeviceEnumerator.GetInputDevices();
     if (inputs.Count == 0) Console.WriteLine("  (none found)");

@@ -1,3 +1,4 @@
+using System.Runtime.Versioning;
 using NAudio.Wave;
 using ElBruno.Speech;
 
@@ -7,6 +8,7 @@ namespace ElBruno.Speech.NAudio;
 /// An <see cref="IAudioOutput"/> that plays PCM audio through a system speaker via NAudio.
 /// Accepts 16 kHz mono Int16 frames.
 /// </summary>
+[SupportedOSPlatform("windows")]
 public sealed class NAudioSpeakerOutput : IAudioOutput
 {
     private readonly WaveOutEvent _waveOut;
@@ -18,9 +20,8 @@ public sealed class NAudioSpeakerOutput : IAudioOutput
     public NAudioSpeakerOutput(int deviceNumber = 0, int bufferDurationMs = 500)
     {
         var waveFormat = new WaveFormat(16_000, 16, 1);
-        _buffer = new BufferedWaveProvider(waveFormat)
+        _buffer = new BufferedWaveProvider(waveFormat, TimeSpan.FromMilliseconds(bufferDurationMs))
         {
-            BufferDuration = TimeSpan.FromMilliseconds(bufferDurationMs),
             DiscardOnBufferOverflow = true,
         };
 

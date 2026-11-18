@@ -38,6 +38,7 @@ Audio output
 
 | Date | Version | Highlights |
 |------|---------|------------|
+| 2026-11-17 | 1.6.4 | **Dependency maintenance candidate (not yet published)**: updates ONNX Runtime, NAudio, Microsoft.Extensions, OpenTelemetry, SourceLink, and test/ASP.NET packages; preserves .NET 8/10/11 assets. See [release notes](docs/releases/1.6.4.md). |
 | 2026-11-14 | 1.6.3 | **Maintenance release**: follows the CI CodeQL action update; preserves existing APIs, runtime behavior, package dependencies, and .NET 8/10/11 assets. See [release notes](docs/releases/1.6.3.md). |
 | 2026-11-14 | 1.6.2 | **.NET 11 support**: adds .NET 11 assets to the runtime libraries and BlazorComponents, preserving prior targets. All twelve packages use the same release version. See [release notes](docs/releases/1.6.2.md). |
 | 2026-11-03 | 1.6.1 | **Dependency patch**: updates Microsoft.Extensions.Hosting.Abstractions to 10.0.14 and ONNX Runtime to 1.31.1. No public API or pipeline-default changes. |

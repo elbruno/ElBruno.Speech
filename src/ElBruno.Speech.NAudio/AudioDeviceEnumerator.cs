@@ -1,9 +1,11 @@
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
 using NAudio.Wave;
 
 namespace ElBruno.Speech.NAudio;
 
 /// <summary>Enumerates available audio input and output devices via NAudio.</summary>
+[SupportedOSPlatform("windows")]
 public static class AudioDeviceEnumerator
 {
     /// <summary>Returns all available microphone (WaveIn) devices.</summary>
