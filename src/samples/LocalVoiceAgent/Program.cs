@@ -20,12 +20,24 @@ bool listDevices = args.Contains("--list-devices");
 
 if (listDevices)
 {
+    if (!OperatingSystem.IsWindows())
+    {
+        Console.Error.WriteLine("Audio device enumeration is only supported on Windows.");
+        return;
+    }
+
     Console.WriteLine("=== Input Devices ===");
     foreach (var d in AudioDeviceEnumerator.GetInputDevices())
         Console.WriteLine($"  [{d.DeviceNumber}] {d.Name}");
     Console.WriteLine("=== Output Devices ===");
     foreach (var d in AudioDeviceEnumerator.GetOutputDevices())
         Console.WriteLine($"  [{d.DeviceNumber}] {d.Name}");
+    return;
+}
+
+if (realMode && !OperatingSystem.IsWindows())
+{
+    Console.Error.WriteLine("Real audio mode is only supported on Windows.");
     return;
 }
 

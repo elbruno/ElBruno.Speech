@@ -1,3 +1,4 @@
+using System.Runtime.Versioning;
 using System.Threading.Channels;
 using NAudio.Wave;
 using ElBruno.Speech;
@@ -9,6 +10,7 @@ namespace ElBruno.Speech.NAudio;
 /// An <see cref="IAudioInput"/> that captures audio from a system microphone via NAudio.
 /// Produces 16 kHz mono Int16 PCM frames.
 /// </summary>
+[SupportedOSPlatform("windows")]
 public sealed class NAudioMicrophoneInput : IAudioInput
 {
     private readonly WaveInEvent _waveIn;

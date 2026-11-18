@@ -1,9 +1,21 @@
 # ElBruno.Speech — Implementation Plan
 
-> **Status as of 2026-11-14:** Phases 0–7 complete. .NET 11 support is included in the 1.6.2 stable release; 1.6.3 is a maintenance release.
+> **Status as of 2026-11-17:** Phases 0–7 complete. .NET 11 support is included in the 1.6.2 stable release; 1.6.3 is the latest published maintenance release. Version 1.6.4 is the next dependency-maintenance candidate.
 > **v1.0.0 released 2026-08-02** — All 8 packages published to NuGet.org. GitHub release: https://github.com/elbruno/ElBruno.Speech/releases/tag/v1.0.0
 
 The full specification lives in [`docs/PRD.md`](PRD.md). This file tracks phase-by-phase progress.
+
+## 1.6.4: Dependency maintenance candidate
+
+- Updates ONNX Runtime to 1.32.0, NAudio to 2.4.0, Microsoft.Extensions 10.x
+  to 10.0.15, SourceLink to 10.0.404, test tooling, and ASP.NET 8 packages.
+- Aligns OpenTelemetry core with the already-used 1.20.1 API and hosting packages.
+  Keeps Microsoft.Extensions.AI 10.11.0 and .NET 8/10/11 targets; newer major
+  dependency lines require incompatible target-framework or package combinations.
+- Preserves microphone/speaker behavior while updating NAudio 2.4 buffer setup
+  and documenting Windows-only APIs.
+- Publish all twelve package IDs, including BlazorComponents, only after the
+  exact-version release workflow and artifact review gate pass.
 
 ## 1.6.3: Maintenance release
 
